@@ -32,6 +32,28 @@ class AdbDevice:
     adb_process.call(cmd)
     pass
 
+  def tap(self, x, y):
+    cmd = ''
+    cmd += 'shell input tap ' 
+    cmd += str(x) 
+    cmd += ' ' 
+    cmd += str(y)
+    adb_process.call(cmd)
+
+  def broadcast(self, params):
+    cmd = ''
+    cmd = 'shell am broadcast -a '
+    cmd += params
+    adb_process.call(cmd)
+
+  def pm_grant(self, package, permission)
+    cmd = ''
+    cmd += 'shell pm grant '
+    cmd += package
+    cmd += ' '
+    cmd += permission
+    adb_process.call(cmd)
+
   def setprop(self, param, value):
     cmd = ''
     cmd = 'shell setprop '
