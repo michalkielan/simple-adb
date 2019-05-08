@@ -25,6 +25,9 @@ class AdbDevice:
   def reset(self):
     pass
 
+  def root(self):
+    pass
+
   def set_prop(self):
     pass
 
