@@ -1,6 +1,6 @@
 import adbprocess
 
-def get_encoding_format():
+def __get_encoding_format():
   return 'utf-8'
 
 class AdbDevice:
@@ -10,6 +10,7 @@ class AdbDevice:
   def get_id(self):
     return self.__id
 
+  # scripting
   def reboot(self):
     cmd = 'reboot'
     adbprocess.call(cmd)
@@ -18,6 +19,7 @@ class AdbDevice:
     cmd = 'root'
     adbprocess.call(cmd)
 
+  #shell
   def tap(self, x, y):
     cmd = ''
     cmd += 'shell input tap ' 
@@ -47,7 +49,8 @@ class AdbDevice:
     cmd += ' '
     cmd += value
     adbprocess.call(cmd)
-
+  
+  #file transfer
   def push(self, source, dest):
     cmd = ''
     cmd += 'push '
@@ -64,6 +67,29 @@ class AdbDevice:
     cmd += dest
     adbprocess.call(cmd)
 
+  #networking
+  def connect(self, ip, port=555)
+    cmd = ''
+    cmd += 'connect '
+    cmd += ip
+    cmd += ' '
+    cmd += str(port)
+    adbprocess.call(cmd)
+
+  def disconnect(self, ip, port=555)
+    cmd = ''
+    cmd += 'diconnect '
+    cmd += ip
+    cmd += ' '
+    cmd += str(port)
+    adbprocess.call(cmd)
+
+  def tcpip(self, port)
+    cmd = ''
+    cmd += 'tcpip '
+    cmd += str(port)
+    adbprocess.call(cmd)
+
 
 class AdbServer:
   def devices(self):
@@ -76,7 +102,7 @@ class AdbServer:
       device = line.strip().split()
       if len(device) != 0:
         device_id = device[0].decode(
-            get_encoding_format()
+            __get_encoding_format()
         )
         devices.append(AdbDevice(device_id))
     return devices
@@ -84,13 +110,3 @@ class AdbServer:
   def kill(self):
     cmd = 'kill-server'
     adbprocess.call(cmd)
-
-
-def test():
-  adb_server = AdbServer()
-  devices = adb_server.devices()
-
-  for device in devices:
-    print(device.get_id())
-
-test()
