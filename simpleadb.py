@@ -7,17 +7,25 @@ class AdbDevice:
   def __init__(self, device_id):
     self.__id = device_id
 
+  def __call(self, args):
+    cmd = ''
+    cmd += '-s '
+    cmd += str(self.__get_id())
+    cmd += ' '
+    cmd += args
+    call(cmd)
+
   def get_id(self):
     return self.__id
 
   # scripting
   def reboot(self):
     cmd = 'reboot'
-    adbprocess.call(cmd)
+    self.__call(cmd)
 
   def root(self):
     cmd = 'root'
-    adbprocess.call(cmd)
+    self.__call(cmd)
 
   #shell
   def tap(self, x, y):
@@ -26,13 +34,13 @@ class AdbDevice:
     cmd += str(x) 
     cmd += ' ' 
     cmd += str(y)
-    adbprocess.call(cmd)
+    self.__call(cmd)
 
   def broadcast(self, params):
     cmd = ''
     cmd = 'shell am broadcast -a '
     cmd += params
-    adbprocess.call(cmd)
+    self.__call(cmd)
 
   def pm_grant(self, package, permission):
     cmd = ''
@@ -40,7 +48,7 @@ class AdbDevice:
     cmd += package
     cmd += ' '
     cmd += permission
-    adbprocess.call(cmd)
+    self.__call(cmd)
 
   def setprop(self, param, value):
     cmd = ''
@@ -48,7 +56,7 @@ class AdbDevice:
     cmd += param
     cmd += ' '
     cmd += value
-    adbprocess.call(cmd)
+    self.__call(cmd)
   
   #file transfer
   def push(self, source, dest):
@@ -57,7 +65,7 @@ class AdbDevice:
     cmd += source
     cmd += ' '
     cmd += dest
-    adbprocess.call(cmd)
+    self.__call(cmd)
 
   def pull(self, source, dest='.')
     cmd = ''
@@ -65,7 +73,7 @@ class AdbDevice:
     cmd += source
     cmd += ' '
     cmd += dest
-    adbprocess.call(cmd)
+    self.__call(cmd)
 
   #networking
   def connect(self, ip, port=555)
@@ -74,7 +82,7 @@ class AdbDevice:
     cmd += ip
     cmd += ' '
     cmd += str(port)
-    adbprocess.call(cmd)
+    self.__call(cmd)
 
   def disconnect(self, ip, port=555)
     cmd = ''
@@ -82,13 +90,13 @@ class AdbDevice:
     cmd += ip
     cmd += ' '
     cmd += str(port)
-    adbprocess.call(cmd)
+    self.__call(cmd)
 
   def tcpip(self, port)
     cmd = ''
     cmd += 'tcpip '
     cmd += str(port)
-    adbprocess.call(cmd)
+    self.__call(cmd)
 
 
 class AdbServer:
