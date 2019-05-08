@@ -23,19 +23,29 @@ class AdbDevice:
     return self.__id
 
   def reset(self):
+    cmd = 'reset'
+    adb_process.call(cmd)
     pass
 
   def root(self):
+    cmd = 'root'
+    adb_process.call(cmd)
     pass
 
-  def set_prop(self):
-    pass
+  def setprop(self, param, value):
+    cmd = ''
+    cmd = 'shell setprop '
+    cmd += param
+    cmd += ' '
+    cmd += value
+    adb_process.call(cmd)
 
 
 class AdbServer:
   def devices(self):
+    cmd = 'devices'
+    output = adb_process.check_output(cmd)
     devices = []
-    output = adb_process.check_output('devices')
     devices_list = output.splitlines()
     devices_list.pop(0)
     for line in devices_list:
@@ -48,15 +58,15 @@ class AdbServer:
     return devices
 
   def kill(self):
-    self.__adb_process.call('kill-server')
+    cmd = 'kill-server'
+    self.__adb_process.call(cmd)
 
 
-def main():
+def test():
   adb_server = AdbServer()
   devices = adb_server.devices()
 
   for device in devices:
     print(device.get_id())
 
-
-main()
+test()
