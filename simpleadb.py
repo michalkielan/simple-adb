@@ -13,12 +13,10 @@ class AdbDevice:
   def reboot(self):
     cmd = 'reboot'
     adbprocess.call(cmd)
-    pass
 
   def root(self):
     cmd = 'root'
     adbprocess.call(cmd)
-    pass
 
   def tap(self, x, y):
     cmd = ''
@@ -48,6 +46,22 @@ class AdbDevice:
     cmd += param
     cmd += ' '
     cmd += value
+    adbprocess.call(cmd)
+
+  def push(self, source, dest):
+    cmd = ''
+    cmd += 'push '
+    cmd += source
+    cmd += ' '
+    cmd += dest
+    adbprocess.call(cmd)
+
+  def pull(self, source, dest='.')
+    cmd = ''
+    cmd += 'pull '
+    cmd += source
+    cmd += ' '
+    cmd += dest
     adbprocess.call(cmd)
 
 
