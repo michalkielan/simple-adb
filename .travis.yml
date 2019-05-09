@@ -9,7 +9,7 @@ android:
     - extra-google-m2repository
     - extra-android-m2repository
     - sys-img-x86-android-26
-    - sys-img-armeabi-v7a-android-17
+    - sys-img-armeabi-v7a-android-26
 
   licenses:
    - 'android-sdk-license-.+'
