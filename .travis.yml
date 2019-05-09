@@ -21,7 +21,7 @@ env:
 before_script:
   - android list target
   - echo no | android create avd --force -n test -t android-24 --abi armeabi-v7a -c 100M
-  - emulator -avd test -no-skin -no-audio -no-window &
+  - emulator -avd test -no-skin -no-window &
   - android-wait-for-emulator
 
 script:
