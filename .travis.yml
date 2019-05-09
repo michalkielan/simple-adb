@@ -3,12 +3,13 @@ jdk: oraclejdk11
 
 android:
   components:
-    - build-tools-22.0.1
-    - android-22
+    - build-tools-26.0.2
+    - android-26
     - extra-google-google_play_services
     - extra-google-m2repository
     - extra-android-m2repository
-    - sys-img-armeabi-v7a-android-21
+    - sys-img-x86-android-26
+    - sys-img-armeabi-v7a-android-17
 
   licenses:
    - 'android-sdk-license-.+'
@@ -19,7 +20,7 @@ env:
 
 before_script:
   - android list target
-  - echo no | android create avd --force -n test -t android-21 --abi armeabi-v7a
+  - echo no | android create avd --force -n test -t android-22 --abi armeabi-v7a -c 100M
   - emulator -avd test -no-skin -no-audio -no-window &
   - android-wait-for-emulator
 
