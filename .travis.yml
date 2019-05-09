@@ -1,6 +1,12 @@
 language: android
 jdk: oraclejdk11
 
+python:
+  - "3.5"
+
+install:
+  - pip install subprocess
+
 android:
   components:
     - build-tools-26.0.2
@@ -26,3 +32,4 @@ before_script:
 
 script:
   - adb devices
+  - python test_simpleadb.py
