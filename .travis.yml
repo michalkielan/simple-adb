@@ -34,4 +34,5 @@ before_script:
 
 script:
   - adb devices
+  - adb -s emulator-5554 root
   - pytest test_simpleadb.py
