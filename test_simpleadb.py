@@ -14,4 +14,28 @@ class AdbServerTest(unittest.TestCase):
     adb_server = simpleadb.AdbServer()
     devices = adb_server.devices()
     for device in devices:
-      device.root()      
+      device.root()
+
+  def test_tap(self):
+    adb_server = simpleadb.AdbServer()
+    devices = adb_server.devices()
+    for device in devices:
+      device.tap(1, 1)
+
+  def test_broadcat(self):
+    pass
+
+  def test_setprop(self):
+    adb_server = simpleadb.AdbServer()
+    devices = adb_server.devices()
+    for device in devices:
+      device.setprop("dummy_prop", "true")
+
+  def test_push(self):
+    pass
+
+  def test_pull(self):
+    pass
+
+  def test_reboot(self):
+    pass

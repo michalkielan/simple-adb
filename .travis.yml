@@ -34,4 +34,6 @@ before_script:
 
 script:
   - adb devices
+  - adb -s emulator-5554 shell input tap 1 1
+  - adb -s emulator-5554 shell setprop dummy_prop true
   - pytest test_simpleadb.py
