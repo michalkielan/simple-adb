@@ -1,6 +1,6 @@
 import adbprocess
 
-def __get_encoding_format():
+def get_encoding_format():
   return 'utf-8'
 
 class AdbDevice:
@@ -110,7 +110,7 @@ class AdbServer:
       device = line.strip().split()
       if len(device) != 0:
         device_id = device[0].decode(
-            __get_encoding_format()
+            get_encoding_format()
         )
         devices.append(AdbDevice(device_id))
     return devices
