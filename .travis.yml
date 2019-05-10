@@ -4,6 +4,11 @@ jdk: oraclejdk11
 python:
   - "3.7"
 
+addons:
+  apt:
+    packages:
+      python-logilab-common
+
 android:
   components:
     - build-tools-26.0.2
