@@ -10,7 +10,7 @@ class AdbDevice:
   def __call(self, args):
     cmd = ''
     cmd += '-s '
-    cmd += str(self.__get_id())
+    cmd += str(self.get_id())
     cmd += ' '
     cmd += args
     return adbprocess.check_call(cmd)
