@@ -30,9 +30,9 @@ class AdbDevice:
   #shell
   def tap(self, x, y):
     cmd = ''
-    cmd += 'shell input tap ' 
-    cmd += str(x) 
-    cmd += ' ' 
+    cmd += 'shell input tap '
+    cmd += str(x)
+    cmd += ' '
     cmd += str(y)
     self.__call(cmd)
 
@@ -57,7 +57,7 @@ class AdbDevice:
     cmd += ' '
     cmd += value
     self.__call(cmd)
-  
+
   #file transfer
   def push(self, source, dest):
     cmd = ''
@@ -67,7 +67,7 @@ class AdbDevice:
     cmd += dest
     self.__call(cmd)
 
-  def pull(self, source, dest='.')
+  def pull(self, source, dest='.'):
     cmd = ''
     cmd += 'pull '
     cmd += source
@@ -76,7 +76,7 @@ class AdbDevice:
     self.__call(cmd)
 
   #networking
-  def connect(self, ip, port=555)
+  def connect(self, ip, port=555):
     cmd = ''
     cmd += 'connect '
     cmd += ip
@@ -84,7 +84,7 @@ class AdbDevice:
     cmd += str(port)
     self.__call(cmd)
 
-  def disconnect(self, ip, port=555)
+  def disconnect(self, ip, port=555):
     cmd = ''
     cmd += 'diconnect '
     cmd += ip
@@ -92,7 +92,7 @@ class AdbDevice:
     cmd += str(port)
     self.__call(cmd)
 
-  def tcpip(self, port)
+  def tcpip(self, port):
     cmd = ''
     cmd += 'tcpip '
     cmd += str(port)
