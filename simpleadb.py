@@ -7,7 +7,7 @@ class AdbDevice:
   def __init__(self, device_id):
     self.__id = device_id
 
-  def __call(self, args):
+  def __check_call(self, args):
     cmd = ''
     cmd += '-s '
     cmd += str(self.get_id())
@@ -15,17 +15,26 @@ class AdbDevice:
     cmd += args
     return adbprocess.check_call(cmd)
 
+  def __check_output(self, args):
+    cmd = ''
+    cmd += '-s '
+    cmd += str(self.get_id())
+    cmd += ' '
+    cmd += args
+    output = adbprocess.check_output(cmd)
+    return output.decode(get_encoding_format())
+
   def get_id(self):
     return self.__id
 
   # scripting
   def reboot(self):
     cmd = 'reboot'
-    self.__call(cmd)
+    self.__check_call(cmd)
 
   def root(self):
     cmd = 'root'
-    return self.__call(cmd)
+    return self.__check_call(cmd)
 
   #shell
   def tap(self, x, y):
@@ -34,13 +43,13 @@ class AdbDevice:
     cmd += str(x)
     cmd += ' '
     cmd += str(y)
-    return self.__call(cmd)
+    return self.__check_call(cmd)
 
   def broadcast(self, params):
     cmd = ''
     cmd = 'shell am broadcast -a '
     cmd += params
-    return self.__call(cmd)
+    return self.__check_call(cmd)
 
   def pm_grant(self, package, permission):
     cmd = ''
@@ -48,15 +57,21 @@ class AdbDevice:
     cmd += package
     cmd += ' '
     cmd += permission
-    return self.__call(cmd)
+    return self.__check_call(cmd)
 
-  def setprop(self, param, value):
+  def setprop(self, prop, value):
     cmd = ''
     cmd = 'shell setprop '
-    cmd += param
+    cmd += prop
     cmd += ' '
     cmd += value
-    return self.__call(cmd)
+    return self.__check_call(cmd)
+
+  def getprop(self, prop):
+    cmd = ''
+    cmd = 'shell getprop '
+    cmd += prop
+    return self.__check_output(cmd)
 
   #file transfer
   def push(self, source, dest):
@@ -65,7 +80,7 @@ class AdbDevice:
     cmd += source
     cmd += ' '
     cmd += dest
-    return self.__call(cmd)
+    return self.__check_call(cmd)
 
   def pull(self, source, dest='.'):
     cmd = ''
@@ -73,7 +88,7 @@ class AdbDevice:
     cmd += source
     cmd += ' '
     cmd += dest
-    return self.__call(cmd)
+    return self.__check_call(cmd)
 
   #networking
   def connect(self, ip, port=555):
@@ -82,7 +97,7 @@ class AdbDevice:
     cmd += ip
     cmd += ' '
     cmd += str(port)
-    return self.__call(cmd)
+    return self.__check_call(cmd)
 
   def disconnect(self, ip, port=555):
     cmd = ''
@@ -90,13 +105,13 @@ class AdbDevice:
     cmd += ip
     cmd += ' '
     cmd += str(port)
-    return self.__call(cmd)
+    return self.__check_call(cmd)
 
   def tcpip(self, port):
     cmd = ''
     cmd += 'tcpip '
     cmd += str(port)
-    return self.__call(cmd)
+    return self.__check_call(cmd)
 
 
 class AdbServer:
