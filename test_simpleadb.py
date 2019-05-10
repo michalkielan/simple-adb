@@ -1,4 +1,5 @@
 import simpleadb
+import unittest
 
 def get_emulator_id():
   return 'emulator-5554'
