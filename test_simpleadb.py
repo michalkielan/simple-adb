@@ -10,7 +10,7 @@ class AdbServerTest(unittest.TestCase):
     devices = adb_server.devices()
     self.assertTrue(get_emulator_id() in (devices[0].get_id())
 
- def test_root(self):
+  def test_root(self):
     adb_server = AdbServer()
     devices = adb_server.devices()
     for device in devices:
