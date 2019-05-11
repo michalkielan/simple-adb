@@ -136,7 +136,17 @@ class AdbDevice:
 
 
 class AdbServer:
-  def devices(self):
+  @staticmethod
+  def __check_call(args):
+    return adbprocess.check_call(args)
+
+  @staticmethod
+  def __check_output(args):
+    output = adbprocess.check_output(args)
+    return output.decode(get_encoding_format())
+
+  @staticmethod
+  def devices():
     cmd = 'devices'
     output = adbprocess.check_output(cmd)
     devices = []
@@ -144,7 +154,7 @@ class AdbServer:
     devices_list.pop(0)
     for line in devices_list:
       device = line.strip().split()
-      if len(device) != 0:
+      if device:
         device_id = device[0].decode(
             get_encoding_format()
         )
@@ -153,10 +163,10 @@ class AdbServer:
 
   def kill(self):
     cmd = 'kill-server'
-    return adbprocess.call(cmd)
+    return self.__check_call(cmd)
 
   def tcpip(self, port):
     cmd = ''
     cmd += 'tcpip '
     cmd += str(port)
-    return adbprocess.check_call(cmd)
+    return self.__check_call(cmd)

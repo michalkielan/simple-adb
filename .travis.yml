@@ -22,6 +22,9 @@ android:
   licenses:
    - 'android-sdk-license-.+'
 
+install:
+  - pip install pylint
+
 env:
   global:
     - ADB_INSTALL_TIMEOUT=8
@@ -33,6 +36,7 @@ before_script:
   - android-wait-for-emulator
 
 script:
+  - pylint simpleadb.py adbprocess.py
   - adb devices
   - adb -s emulator-5554 shell input tap 1 1
   - adb -s emulator-5554 shell setprop dummy_prop true

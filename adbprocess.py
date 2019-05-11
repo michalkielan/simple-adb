@@ -11,4 +11,3 @@ def check_call(args):
 
 def check_output(args):
   return subprocess.check_output(get_adb_prefix() + args, shell=True)
-
