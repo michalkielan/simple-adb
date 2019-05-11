@@ -70,6 +70,8 @@ disable=missing-docstring
 # it should appear only once). See also the "--disable" option for examples.
 enable=c-extension-no-member
 
+# Disable relative import
+disable=relative-import
 
 [REPORTS]
 
