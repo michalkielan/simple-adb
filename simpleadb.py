@@ -30,18 +30,15 @@ class AdbDevice(object):
   # scripting
   def get_state(self):
     cmd = 'get-state'
-    output = adbprocess.check_output(cmd)
-    return output.decode(get_encoding_format())
+    return self.__check_output(cmd)
 
   def get_serialno(self):
     cmd = 'get-serialno'
-    output = adbprocess.check_output(cmd)
-    return output.decode(get_encoding_format())
+    return self.__check_output(cmd)
 
-  def get_serialno(self):
+  def get_devpath(self):
     cmd = 'get-devpath'
-    output = adbprocess.check_output(cmd)
-    return output.decode(get_encoding_format())
+    return self.__check_output(cmd)
 
   def remount(self):
     cmd = 'remount'
