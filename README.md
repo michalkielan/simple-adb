@@ -1,10 +1,15 @@
 # simple adb
 [![Travis CI](https://travis-ci.org/michalkielan/simple-adb.svg?branch=master)](https://travis-ci.org/michalkielan/simple-adb)
 
-Python wrapper for adb protocol
+> Python wrapper for adb protocol
 
-## Example usage
-```
+## Install
+
+~`python setup.py install`~ #TBD
+
+## Usage
+
+```Python
 $ python3
 >>> import simpleadb
 >>> adb_server = simpleadb.AdbServer()
@@ -17,3 +22,13 @@ restarting adbd as root
 0
 >>> emulator.reboot()
 ```
+
+## Contributing
+
+* add more adb commads
+* imrove existing setup
+* improve tests in travis
+
+## License
+
+[GPL3](./LICENSE)
