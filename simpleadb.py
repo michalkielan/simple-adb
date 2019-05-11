@@ -3,7 +3,7 @@ import adbprocess
 def get_encoding_format():
   return 'utf-8'
 
-class AdbDevice:
+class AdbDevice(object):
   def __init__(self, device_id):
     self.__id = device_id
 
@@ -30,18 +30,15 @@ class AdbDevice:
   # scripting
   def get_state(self):
     cmd = 'get-state'
-    output = adbprocess.check_output(cmd)
-    return output.decode(get_encoding_format())
+    return self.__check_output(cmd)
 
   def get_serialno(self):
     cmd = 'get-serialno'
-    output = adbprocess.check_output(cmd)
-    return output.decode(get_encoding_format())
+    return self.__check_output(cmd)
 
-  def get_serialno(self):
+  def get_devpath(self):
     cmd = 'get-devpath'
-    output = adbprocess.check_output(cmd)
-    return output.decode(get_encoding_format())
+    return self.__check_output(cmd)
 
   def remount(self):
     cmd = 'remount'
@@ -135,8 +132,21 @@ class AdbDevice:
     return self.__check_call(cmd)
 
 
-class AdbServer:
-  def devices(self):
+class AdbServer(object):
+  def __init__(self):
+    pass
+
+  @staticmethod
+  def __check_call(args):
+    return adbprocess.check_call(args)
+
+  @staticmethod
+  def __check_output(args):
+    output = adbprocess.check_output(args)
+    return output.decode(get_encoding_format())
+
+  @staticmethod
+  def devices():
     cmd = 'devices'
     output = adbprocess.check_output(cmd)
     devices = []
@@ -144,7 +154,7 @@ class AdbServer:
     devices_list.pop(0)
     for line in devices_list:
       device = line.strip().split()
-      if len(device) != 0:
+      if device:
         device_id = device[0].decode(
             get_encoding_format()
         )
@@ -153,10 +163,10 @@ class AdbServer:
 
   def kill(self):
     cmd = 'kill-server'
-    return adbprocess.call(cmd)
+    return self.__check_call(cmd)
 
   def tcpip(self, port):
     cmd = ''
     cmd += 'tcpip '
     cmd += str(port)
-    return adbprocess.check_call(cmd)
+    return self.__check_call(cmd)
