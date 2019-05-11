@@ -10,7 +10,6 @@
 ## Usage
 
 ```Python
-$ python3
 >>> import simpleadb
 >>> adb_server = simpleadb.AdbServer()
 >>> devices = adb_server.devices()
