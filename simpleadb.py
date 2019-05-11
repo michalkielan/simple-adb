@@ -4,7 +4,7 @@ import adbprefixes
 def get_encoding_format():
   return 'utf-8'
 
-class AdbDevice(object):
+class AdbDevice():
   def __init__(self, device_id):
     self.__id = device_id
 
@@ -138,7 +138,7 @@ class AdbDevice(object):
     return self.__check_call(cmd)
 
 
-class AdbServer(object):
+class AdbServer():
   def __init__(self):
     pass
 
