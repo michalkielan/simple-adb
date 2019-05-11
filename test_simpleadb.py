@@ -37,5 +37,11 @@ class AdbServerTest(unittest.TestCase):
   def test_pull(self):
     pass
 
+  def test_unroot(self):
+    adb_server = simpleadb.AdbServer()
+    devices = adb_server.devices()
+    for device in devices:
+      device.unroot()
+
   def test_reboot(self):
     pass

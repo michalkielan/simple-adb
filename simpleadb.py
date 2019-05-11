@@ -28,12 +28,39 @@ class AdbDevice:
     return self.__id
 
   # scripting
+  def get_state(self):
+    cmd = 'get-state'
+    output = adbprocess.check_output(cmd)
+    return output.decode(get_encoding_format())
+
+  def get_serialno(self):
+    cmd = 'get-serialno'
+    output = adbprocess.check_output(cmd)
+    return output.decode(get_encoding_format())
+
+  def get_serialno(self):
+    cmd = 'get-devpath'
+    output = adbprocess.check_output(cmd)
+    return output.decode(get_encoding_format())
+
+  def remount(self):
+    cmd = 'remount'
+    self.__check_call(cmd)
+
   def reboot(self):
     cmd = 'reboot'
     self.__check_call(cmd)
 
   def root(self):
     cmd = 'root'
+    return self.__check_call(cmd)
+
+  def unroot(self):
+    cmd = 'unroot'
+    return self.__check_call(cmd)
+
+  def usb(self):
+    cmd = 'usb'
     return self.__check_call(cmd)
 
   #shell
@@ -107,12 +134,6 @@ class AdbDevice:
     cmd += str(port)
     return self.__check_call(cmd)
 
-  def tcpip(self, port):
-    cmd = ''
-    cmd += 'tcpip '
-    cmd += str(port)
-    return self.__check_call(cmd)
-
 
 class AdbServer:
   def devices(self):
@@ -132,4 +153,10 @@ class AdbServer:
 
   def kill(self):
     cmd = 'kill-server'
-    adbprocess.call(cmd)
+    return adbprocess.call(cmd)
+
+  def tcpip(self, port):
+    cmd = ''
+    cmd += 'tcpip '
+    cmd += str(port)
+    return adbprocess.check_call(cmd)
