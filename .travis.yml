@@ -1,6 +1,6 @@
 language: android
 jdk: oraclejdk11
-sudo: reqired
+sudo: required
 
 python:
   - "3.7"
