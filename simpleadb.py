@@ -37,7 +37,7 @@ class AdbDevice(object):
 
   def is_available(self):
     try:
-      self.__get_serialno()
+      self.get_serialno()
       return True
     except CalledProcessError:
       return False
