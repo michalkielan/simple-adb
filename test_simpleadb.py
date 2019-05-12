@@ -23,24 +23,29 @@ class AdbServerTest(unittest.TestCase):
 
   def test_root(self):
     device = simpleadb.AdbDevice(TEST_DEVICE_ID)
-    device.root()
+    res = device.root()
+    self.assertEqual(res, 0)
     os.system('adb wait-for-device shell input keyevent 82')
 
   def test_tap(self):
     device = simpleadb.AdbDevice(TEST_DEVICE_ID)
-    device.tap(1, 1)
+    res = device.tap(1, 1)
+    self.assertEqual(res, 0)
 
   def test_install(self):
     device = simpleadb.AdbDevice(TEST_DEVICE_ID)
-    device.install(DUMMY_APK_NAME)
+    res = device.install(DUMMY_APK_NAME)
+    self.assertEqual(res, 0)
 
   def test_uninstall(self):
     device = simpleadb.AdbDevice(TEST_DEVICE_ID)
-    device.uninstall(DUMMY_PACKAGE_NAME)
+    res = device.uninstall(DUMMY_PACKAGE_NAME)
+    self.assertEqual(res, 0)
 
   def test_setprop(self):
     device = simpleadb.AdbDevice(TEST_DEVICE_ID)
-    device.setprop("dummy_prop", "true")
+    res = device.setprop("dummy_prop", "true")
+    self.assertEqual(res, 0)
 
   def test_available(self):
     device = simpleadb.AdbDevice(TEST_DEVICE_ID)
