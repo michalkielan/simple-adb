@@ -36,5 +36,9 @@ class AdbServerTest(unittest.TestCase):
     device = simpleadb.AdbDevice(get_emulator_id())
     self.assertTrue(device.is_available())
 
+  def test_no_available(self):
+    device = simpleadb.AdbDevice('dummy_id')
+    self.assertFalse(device.is_available())
+
   def test_reboot(self):
     pass
