@@ -4,6 +4,7 @@ import adbprefixes
 def get_encoding_format():
   return 'utf-8'
 
+# pylint: disable=too-many-public-methods
 class AdbDevice(object):
   def __init__(self, device_id):
     self.__id = device_id
@@ -34,6 +35,13 @@ class AdbDevice(object):
   def get_serialno(self):
     cmd = adbprefixes.get_get_serialno()
     return self.__check_output(cmd)
+
+  def is_available(self):
+    try:
+      self.get_serialno()
+      return True
+    except adbprocess.subprocess.CalledProcessError:
+      return False
 
   def get_devpath(self):
     cmd = adbprefixes.get_devpath()
