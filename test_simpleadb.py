@@ -1,10 +1,13 @@
 import unittest
-import simpleadb
 import os
+import sys
+import simpleadb
 
-TEST_DEVICE_ID = 'emulator-5554'
-DUMMY_APK_NAME = 'app-debug.apk'
-DUMMY_PACKAGE_NAME = 'com.dummy_app.dummy'
+def get_test_device_id():
+  try:
+    return os.getenv('TEST_DEVICE_ID')
+  except KeyError:
+    sys.exit('TEST_DEVICE_ID not found export device id')
 
 def clone_app():
   url = 'https://github.com/michalkielan/AndroidDummyApp.git'
@@ -13,6 +16,11 @@ def clone_app():
   os.system('./gradlew build')
   os,system('cd ..')
   os.system('cp AndroidDummyApp/app/build/outputs/apk/debug/app-debug.apk .')
+
+TEST_DEVICE_ID = get_test_device_id()
+DUMMY_APK_NAME = 'app-debug.apk'
+DUMMY_PACKAGE_NAME = 'com.dummy_app.dummy'
+
 
 class AdbServerTest(unittest.TestCase):
   def test_devices(self):
@@ -26,6 +34,11 @@ class AdbServerTest(unittest.TestCase):
     res = device.root()
     self.assertEqual(res, 0)
     os.system('adb wait-for-device shell input keyevent 82')
+
+  def test_get_id(self):
+    device = simpleadb.AdbDevice(TEST_DEVICE_ID)
+    test_device_id = device.get_id()
+    self.assertEqual(test_device_id, TEST_DEVICE_ID)
 
   def test_tap(self):
     device = simpleadb.AdbDevice(TEST_DEVICE_ID)
