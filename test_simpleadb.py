@@ -1,9 +1,18 @@
 import unittest
 import simpleadb
+import os
 
 TEST_DEVICE_ID = 'emulator-5554'
 DUMMY_APK_NAME = 'app-debug.apk'
 DUMMY_PACKAGE_NAME = 'com.dummy_app.dummy'
+
+def clone_app():
+  url = 'https://github.com/michalkielan/AndroidDummyApp.git'
+  os.system('git clone ' + url)
+  os.system('cd AndroidDummyApp')
+  os.system('./gradlew build')
+  os,system('cd ..')
+  os.system('cp AndroidDummyApp/app/build/outputs/apk/debug/app-debug.apk .')
 
 class AdbServerTest(unittest.TestCase):
   def test_devices(self):
@@ -21,12 +30,13 @@ class AdbServerTest(unittest.TestCase):
     device.tap(1, 1)
 
   def test_install(self):
+    clone_app():
     device = simpleadb.AdbDevice(TEST_DEVICE_ID)
     device.install(DUMMY_APK_NAME)
 
   def test_uninstall(self):
     device = simpleadb.AdbDevice(TEST_DEVICE_ID)
-    device.install(DUMMY_PACKAGE_NAME)
+    device.uninstall(DUMMY_PACKAGE_NAME)
 
   def test_setprop(self):
     device = simpleadb.AdbDevice(TEST_DEVICE_ID)
