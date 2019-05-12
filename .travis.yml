@@ -32,6 +32,7 @@ install:
 env:
   global:
     - ADB_INSTALL_TIMEOUT=8
+    - TEST_DEVICE_ID=emulator-5554
 
 before_script:
   - pylint simpleadb.py adbprocess.py
