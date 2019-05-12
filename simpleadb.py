@@ -129,7 +129,7 @@ class AdbDevice(object):
     ])
     return self.__check_call(cmd)
 
-  def disconnect(self, ip, port=555):
+  def disconnect(self, ip, port=5555):
     cmd = ' '.join([
         adbprefixes.get_disconnect(),
         ip,
