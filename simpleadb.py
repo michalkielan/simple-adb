@@ -4,6 +4,7 @@ import adbprefixes
 def get_encoding_format():
   return 'utf-8'
 
+# pylint: disable=too-many-public-methods
 class AdbDevice(object):
   def __init__(self, device_id):
     self.__id = device_id
