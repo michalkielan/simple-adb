@@ -33,10 +33,22 @@ class AdbDevice(object):
     return self.__check_output(cmd)
 
   def get_serialno(self):
+    """Get target device's serial number
+      Returns:
+        Serial number
+      Raises:
+        CalledProcessError: when failed
+    """
     cmd = adbprefixes.get_get_serialno()
     return self.__check_output(cmd)
 
   def is_available(self):
+    """ Check if device is available
+      Returns:
+        True if available False if not
+      Raises:
+        CalledProcessError: when failed
+    """
     try:
       self.get_serialno()
       return True
@@ -48,18 +60,42 @@ class AdbDevice(object):
     return self.__check_output(cmd)
 
   def remount(self):
+    """ Remout partition read-write
+      Returns:
+        0 if success
+      Raises:
+        CalledProcessError: when failed
+    """
     cmd = adbprefixes.get_remount()
     self.__check_call(cmd)
 
   def reboot(self):
+    """ Reboot the device
+      Returns:
+        0 if success
+      Raises:
+        CalledProcessError: when failed
+    """
     cmd = adbprefixes.get_reboot()
     self.__check_call(cmd)
 
   def root(self):
+    """ Restart adb with root permission
+      Returns:
+        0 if success
+      Raises:
+        CalledProcessError: when failed
+    """
     cmd = adbprefixes.get_root()
     return self.__check_call(cmd)
 
   def unroot(self):
+    """ Restart adb without root permission
+      Returns:
+        0 if success
+      Raises:
+        CalledProcessError: when failed
+    """
     cmd = adbprefixes.get_unroot()
     return self.__check_call(cmd)
 
@@ -68,6 +104,12 @@ class AdbDevice(object):
     return self.__check_call(cmd)
 
   def install(self, apk):
+    """ Install package
+      Returns:
+        0 if success
+      Raises:
+        CalledProcessError: when failed
+    """
     cmd = ' '.join([
         adbprefixes.get_install(),
         apk,
@@ -75,6 +117,12 @@ class AdbDevice(object):
     return self.__check_call(cmd)
 
   def uninstall(self, package):
+    """ Uninstall package 
+      Returns:
+        0 if success
+      Raises:
+        CalledProcessError: when failed
+    """
     cmd = ' '.join([
         adbprefixes.get_uninstall(),
         package,
@@ -83,6 +131,15 @@ class AdbDevice(object):
 
   #shell
   def tap(self, x, y):
+    """ Tap
+      Args:
+        x: x position
+        y: y position
+      Returns:
+        0 if success
+      Raises:
+        CalledProcessError: when failed
+    """
     cmd = ' '.join([
         adbprefixes.get_shell(),
         adbprefixes.get_input_tap(),
@@ -91,7 +148,15 @@ class AdbDevice(object):
     ])
     return self.__check_call(cmd)
 
-  def broadcast(self, params):
+  def broadcast(self, intent):
+    """ Send broadcast
+      Args:
+        intent
+      Returns:
+        0 if success
+      Raises:
+        CalledProcessError: when failed
+    """
     cmd = ' '.join([
         adbprefixes.get_shell(),
         'am broadcast -a',
