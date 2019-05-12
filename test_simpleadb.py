@@ -30,7 +30,6 @@ class AdbServerTest(unittest.TestCase):
     device.tap(1, 1)
 
   def test_install(self):
-    clone_app():
     device = simpleadb.AdbDevice(TEST_DEVICE_ID)
     device.install(DUMMY_APK_NAME)
 
