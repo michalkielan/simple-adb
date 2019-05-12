@@ -33,10 +33,8 @@ class AdbServerTest(unittest.TestCase):
     pass
 
   def test_available(self):
-    adb_server = simpleadb.AdbServer()
-    devices = adb_server.devices()
-    for device in devices:
-      device.is_available()
+    device = simpleadb.AdbDevice(get_emulator_id())
+    self.assertTrue(device.is_available())
 
   def test_reboot(self):
     pass
