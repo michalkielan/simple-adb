@@ -163,14 +163,16 @@ class AdbDevice(object):
   def wait_for_device(self, **options):
     cmd = ' '.join([
         adbprefixes.get_adb_prefix(),
+        '-s',
+        self.get_id()
         adbprefixes.get_wait_for_device(),
     ])
 
     timeout_sec = options.get("timeout")
     if timeout_sec:
-      return adbprocess.subprocess.check_call(cmd, timeout=timeout_sec)
+      return adbprocess.subprocess.check_call(cmd, shell=True, timeout=timeout_sec)
     else:
-      return adbprocess.subprocess..__check_call(cmd)
+      return adbprocess.subprocess.check_call(cmd, shell=True)
 
 
 class AdbServer(object):
