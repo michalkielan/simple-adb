@@ -27,7 +27,7 @@ android:
    - 'android-sdk-license-.+'
 
 install:
-  - sudo pip install pylint
+  - sudo pip install pylint coveralls
 
 env:
   global:
