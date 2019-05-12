@@ -35,14 +35,14 @@ before_script:
   - android list target
   - echo no | android create avd --force -n test -t android-24 --abi armeabi-v7a -c 100M
   - emulator -avd test -no-skin -no-window &
+  - android-wait-for-emulator
+  - adb shell input keyevent 82 &
+
+script:
   - git clone https://github.com/michalkielan/AndroidDummyApp.git
   - cd AndroidDummyApp
   - ./gradlew build
   - find . | grep apk 
   - cd ..
   - cp AndroidDummyApp/app/build/outputs/apk/debug/app-debug.apk .
-  - android-wait-for-emulator
-  - adb shell input keyevent 82 &
-
-script:
   - pytest test_simpleadb.py
