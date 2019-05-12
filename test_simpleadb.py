@@ -90,6 +90,6 @@ class AdbServerTest(unittest.TestCase):
     self.assertEqual(0, res)
 
   def test_wait_for_device_failed(self):
-    with self.assertRaises(TimeoutExpired):
+    with self.assertRaises(subprocess.TimeoutExpired):
       device = simpleadb.AdbDevice('dummy-device')
       device.wait_for_device(timeout=1)
