@@ -12,10 +12,16 @@ class AdbServerTest(unittest.TestCase):
     self.assertTrue(get_emulator_id() in emulator.get_id())
 
   def test_root(self):
+    adb_server = simpleadb.AdbServer()
+    adb_server.kill()
+    adb_server.devices()
     device = simpleadb.AdbDevice(get_emulator_id())
     device.root()
 
   def test_tap(self):
+    adb_server = simpleadb.AdbServer()
+    adb_server.kill()
+    adb_server.devices()
     device = simpleadb.AdbDevice(get_emulator_id())
     device.tap(1, 1)
 
@@ -23,6 +29,9 @@ class AdbServerTest(unittest.TestCase):
     pass
 
   def test_setprop(self):
+    adb_server = simpleadb.AdbServer()
+    adb_server.kill()
+    adb_server.devices()
     device = simpleadb.AdbDevice(get_emulator_id())
     device.setprop("dummy_prop", "true")
 
@@ -33,10 +42,16 @@ class AdbServerTest(unittest.TestCase):
     pass
 
   def test_available(self):
+    adb_server = simpleadb.AdbServer()
+    adb_server.kill()
+    adb_server.devices()
     device = simpleadb.AdbDevice(get_emulator_id())
     self.assertTrue(device.is_available())
 
   def test_no_available(self):
+    adb_server = simpleadb.AdbServer()
+    adb_server.kill()
+    adb_server.devices()
     device = simpleadb.AdbDevice('dummy_id')
     self.assertFalse(device.is_available())
 
