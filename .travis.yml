@@ -49,3 +49,7 @@ script:
   - cd ..
   - cp AndroidDummyApp/app/build/outputs/apk/debug/app-debug.apk .
   - pytest -v test_simpleadb.py
+  - coverage run --source=simpleadb,adbprocess,adbprefixes test_simpleadb.py
+
+after_success:
+  - coveralls
