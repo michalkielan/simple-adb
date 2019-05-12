@@ -15,7 +15,7 @@ def clone_app():
   os.system('git clone ' + url)
   os.system('cd AndroidDummyApp')
   os.system('./gradlew build')
-  os,system('cd ..')
+  os.system('cd ..')
   os.system('cp AndroidDummyApp/app/build/outputs/apk/debug/app-debug.apk .')
 
 TEST_DEVICE_ID = get_test_device_id()
@@ -93,3 +93,11 @@ class AdbServerTest(unittest.TestCase):
     with self.assertRaises(subprocess.TimeoutExpired):
       device = simpleadb.AdbDevice('dummy-device')
       device.wait_for_device(timeout=1)
+
+  def test_available(self):
+    device = simpleadb.AdbDevice(TEST_DEVICE_ID)
+    self.assertTrue(device.is_available())
+
+  def test_no_available(self):
+    device = simpleadb.AdbDevice('dummy_id')
+    self.assertFalse(device.is_available())
