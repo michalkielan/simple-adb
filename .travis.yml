@@ -14,11 +14,14 @@ android:
   components:
     - build-tools-26.0.2
     - android-24
+    - android-28
     - extra-google-google_play_services
     - extra-google-m2repository
     - extra-android-m2repository
     - sys-img-x86-android-24
+    - sys-img-x86-android-28
     - sys-img-armeabi-v7a-android-24
+    - sys-img-armeabi-v7a-android-28
 
   licenses:
    - 'android-sdk-license-.+'
