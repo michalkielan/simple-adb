@@ -32,5 +32,11 @@ class AdbServerTest(unittest.TestCase):
   def test_pull(self):
     pass
 
+  def test_available(self):
+    adb_server = simpleadb.AdbServer()
+    devices = adb_server.devices()
+    for device in devices:
+      device.is_available()
+
   def test_reboot(self):
     pass

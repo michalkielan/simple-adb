@@ -35,6 +35,13 @@ class AdbDevice(object):
     cmd = adbprefixes.get_get_serialno()
     return self.__check_output(cmd)
 
+  def is_available(self):
+    try:
+      self.__get_serialno()
+      return True
+    except CalledProcessError:
+      return False
+
   def get_devpath(self):
     cmd = adbprefixes.get_devpath()
     return self.__check_output(cmd)
