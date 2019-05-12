@@ -40,9 +40,6 @@ def get_uninstall():
 def get_install():
   return 'install'
 
-def get_uninstall():
-  return 'uninstall'
-
 def get_forward():
   return 'forward'
 
