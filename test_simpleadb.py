@@ -28,12 +28,3 @@ class AdbServerTest(unittest.TestCase):
   def test_setprop(self):
     device = simpleadb.AdbDevice(get_emulator_id())
     device.setprop("dummy_prop", "true")
-
-  def test_push(self):
-    pass
-
-  def test_pull(self):
-    pass
-
-  def test_reboot(self):
-    pass
