@@ -1,4 +1,5 @@
 import adbprocess
+import adbprefixes
 
 def get_encoding_format():
   return 'utf-8'
@@ -8,19 +9,17 @@ class AdbDevice(object):
     self.__id = device_id
 
   def __check_call(self, args):
-    cmd = ''
-    cmd += '-s '
-    cmd += str(self.get_id())
-    cmd += ' '
-    cmd += args
+    cmd = ' '.join([
+        adbprefixes.get_set_device(self.get_id()),
+        args,
+    ])
     return adbprocess.check_call(cmd)
 
   def __check_output(self, args):
-    cmd = ''
-    cmd += '-s '
-    cmd += str(self.get_id())
-    cmd += ' '
-    cmd += args
+    cmd = ' '.join([
+        adbprefixes.get_set_device(self.get_id()),
+        args,
+    ])
     output = adbprocess.check_output(cmd)
     return output.decode(get_encoding_format())
 
@@ -29,106 +28,113 @@ class AdbDevice(object):
 
   # scripting
   def get_state(self):
-    cmd = 'get-state'
+    cmd = adbprefixes.get_get_state()
     return self.__check_output(cmd)
 
   def get_serialno(self):
-    cmd = 'get-serialno'
+    cmd = adbprefixes.get_get_serialno()
     return self.__check_output(cmd)
 
   def get_devpath(self):
-    cmd = 'get-devpath'
+    cmd = adbprefixes.get_devpath()
     return self.__check_output(cmd)
 
   def remount(self):
-    cmd = 'remount'
+    cmd = adbprefixes.get_remount()
     self.__check_call(cmd)
 
   def reboot(self):
-    cmd = 'reboot'
+    cmd = adbprefixes.get_reboot()
     self.__check_call(cmd)
 
   def root(self):
-    cmd = 'root'
+    cmd = adbprefixes.get_root()
     return self.__check_call(cmd)
 
   def unroot(self):
-    cmd = 'unroot'
+    cmd = adbprefixes.get_unroot()
     return self.__check_call(cmd)
 
   def usb(self):
-    cmd = 'usb'
+    cmd = adbprefixes.get_usb()
     return self.__check_call(cmd)
 
   #shell
   def tap(self, x, y):
-    cmd = ''
-    cmd += 'shell input tap '
-    cmd += str(x)
-    cmd += ' '
-    cmd += str(y)
+    cmd = ' '.join([
+        adbprefixes.get_shell(),
+        adbprefixes.get_input_tap(),
+        str(x),
+        str(y),
+    ])
     return self.__check_call(cmd)
 
   def broadcast(self, params):
-    cmd = ''
-    cmd = 'shell am broadcast -a '
-    cmd += params
+    cmd = ' '.join([
+        adbprefixes.get_shell(),
+        'am broadcast -a',
+        params,
+    ])
     return self.__check_call(cmd)
 
   def pm_grant(self, package, permission):
-    cmd = ''
-    cmd += 'shell pm grant '
-    cmd += package
-    cmd += ' '
-    cmd += permission
+    cmd = ' '.join([
+        adbprefixes.get_shell(),
+        adbprefixes.get_pm_grant(),
+        package,
+        permission,
+    ])
     return self.__check_call(cmd)
 
   def setprop(self, prop, value):
-    cmd = ''
-    cmd = 'shell setprop '
-    cmd += prop
-    cmd += ' '
-    cmd += value
+    cmd = ' '.join([
+        adbprefixes.get_shell(),
+        'setprop',
+        prop,
+        value
+    ])
     return self.__check_call(cmd)
 
   def getprop(self, prop):
-    cmd = ''
-    cmd = 'shell getprop '
-    cmd += prop
+    cmd = ' '.join([
+        adbprefixes.get_shell(),
+        'getprop',
+        prop,
+    ])
     return self.__check_output(cmd)
 
   #file transfer
   def push(self, source, dest):
-    cmd = ''
-    cmd += 'push '
-    cmd += source
-    cmd += ' '
-    cmd += dest
+    cmd = ' '.join([
+        adbprefixes.get_push(),
+        source,
+        dest,
+    ])
     return self.__check_call(cmd)
 
   def pull(self, source, dest='.'):
-    cmd = ''
-    cmd += 'pull '
-    cmd += source
-    cmd += ' '
-    cmd += dest
+    cmd = ' '.join([
+        adbprefixes.get_pull(),
+        source,
+        dest,
+    ])
     return self.__check_call(cmd)
 
   #networking
-  def connect(self, ip, port=555):
-    cmd = ''
-    cmd += 'connect '
-    cmd += ip
-    cmd += ' '
-    cmd += str(port)
+  def connect(self, ip, port=5555):
+    cmd = ' '.join([
+        adbprefixes.get_connect(),
+        ip,
+        str(port),
+    ])
     return self.__check_call(cmd)
 
-  def disconnect(self, ip, port=555):
-    cmd = ''
-    cmd += 'diconnect '
-    cmd += ip
-    cmd += ' '
-    cmd += str(port)
+  def disconnect(self, ip, port=5555):
+    cmd = ' '.join([
+        adbprefixes.get_disconnect(),
+        ip,
+        str(port),
+    ])
     return self.__check_call(cmd)
 
 
@@ -147,7 +153,7 @@ class AdbServer(object):
 
   @staticmethod
   def devices():
-    cmd = 'devices'
+    cmd = adbprefixes.get_devices()
     output = adbprocess.check_output(cmd)
     devices = []
     devices_list = output.splitlines()
@@ -162,11 +168,12 @@ class AdbServer(object):
     return devices
 
   def kill(self):
-    cmd = 'kill-server'
+    cmd = adbprefixes.get_kill_server()
     return self.__check_call(cmd)
 
   def tcpip(self, port):
-    cmd = ''
-    cmd += 'tcpip '
-    cmd += str(port)
+    cmd = ' '.join([
+        adbprefixes.get_tcpip(),
+        str(port)
+    ])
     return self.__check_call(cmd)

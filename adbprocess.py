@@ -1,13 +1,23 @@
 import subprocess
-
-def get_adb_prefix():
-  return 'adb '
+import adbprefixes
 
 def call(args):
-  return subprocess.call([get_adb_prefix() + args], shell=True)
+  cmd = ' '.join([
+      adbprefixes.get_adb_prefix(),
+      args,
+  ])
+  return subprocess.call(cmd, shell=True)
 
 def check_call(args):
-  return subprocess.check_call([get_adb_prefix() + args], shell=True)
+  cmd = ' '.join([
+      adbprefixes.get_adb_prefix(),
+      args,
+  ])
+  return subprocess.check_call(cmd, shell=True)
 
 def check_output(args):
-  return subprocess.check_output(get_adb_prefix() + args, shell=True)
+  cmd = ' '.join([
+      adbprefixes.get_adb_prefix(),
+      args,
+  ])
+  return subprocess.check_output(cmd, shell=True)
