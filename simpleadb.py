@@ -66,6 +66,13 @@ class AdbDevice(object):
     ])
     return self.__check_call(cmd)
 
+  def uninstall(self, package):
+    cmd = ' '.join([
+        adbprefixes.get_uninstall(),
+        package,
+    ])
+    return self.__check_call(cmd)
+
   #shell
   def tap(self, x, y):
     cmd = ' '.join([
