@@ -39,7 +39,7 @@ class AdbDevice(object):
     try:
       self.get_serialno()
       return True
-    except subprocess.CalledProcessError:
+    except adbprocess.subprocess.CalledProcessError:
       return False
 
   def get_devpath(self):
