@@ -26,6 +26,11 @@ class AdbServerTest(unittest.TestCase):
     device.root()
     os.system('adb wait-for-device shell input keyevent 82')
 
+  def test_get_id(self):
+    device = simpleadb.AdbDevice(TEST_DEVICE_ID)
+    test_device_id = device.get_id()
+    self.assertEqual(test_device_id, TEST_DEVICE_ID)
+
   def test_tap(self):
     device = simpleadb.AdbDevice(TEST_DEVICE_ID)
     device.tap(1, 1)
