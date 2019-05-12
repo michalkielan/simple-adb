@@ -170,9 +170,12 @@ class AdbDevice(object):
 
     timeout_sec = options.get("timeout")
     if timeout_sec:
-      return adbprocess.subprocess.check_call(cmd, shell=True, timeout=timeout_sec)
-    else:
-      return adbprocess.subprocess.check_call(cmd, shell=True)
+      return adbprocess.subprocess.check_call(
+          cmd,
+          shell=True,
+          timeout=timeout_sec
+      )
+    return adbprocess.subprocess.check_call(cmd, shell=True)
 
 
 class AdbServer(object):
