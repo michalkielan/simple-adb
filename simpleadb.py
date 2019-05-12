@@ -164,7 +164,7 @@ class AdbDevice(object):
     cmd = ' '.join([
         adbprefixes.get_adb_prefix(),
         '-s',
-        self.get_id()
+        self.get_id(),
         adbprefixes.get_wait_for_device(),
     ])
 
