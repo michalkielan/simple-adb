@@ -1,6 +1,8 @@
 import unittest
 import simpleadb
 
+DUMMY_APK_NAME = 'app-debug.apk'
+
 def get_emulator_id():
   return 'emulator-5554'
 
@@ -19,8 +21,9 @@ class AdbServerTest(unittest.TestCase):
     device = simpleadb.AdbDevice(get_emulator_id())
     device.tap(1, 1)
 
-  def test_broadcat(self):
-    pass
+  def test_install(self):
+    device = simpleadb.AdbDevice(get_emulator_id())
+    device.install(DUMMY_APK_NAME)
 
   def test_setprop(self):
     device = simpleadb.AdbDevice(get_emulator_id())

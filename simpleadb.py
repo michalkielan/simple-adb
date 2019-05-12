@@ -59,6 +59,13 @@ class AdbDevice(object):
     cmd = adbprefixes.get_usb()
     return self.__check_call(cmd)
 
+  def install(self, apk):
+    cmd = ' '.join([
+        adbprefixes.get_install(),
+        apk,
+    ])
+    return self.__check_call(cmd)
+
   #shell
   def tap(self, x, y):
     cmd = ' '.join([
