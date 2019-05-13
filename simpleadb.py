@@ -4,6 +4,9 @@ import adbprefixes
 def get_encoding_format():
   return 'utf-8'
 
+def get_adb_restart_timeout_sec():
+  return 5
+
 # pylint: disable=too-many-public-methods
 class AdbDevice(object):
   def __init__(self, device_id):
@@ -56,13 +59,25 @@ class AdbDevice(object):
     cmd = adbprefixes.get_reboot()
     self.__check_call(cmd)
 
-  def root(self):
+  def root(
+      self,
+      timeout_sec=get_adb_restart_timeout_sec()
+    ):
     cmd = adbprefixes.get_root()
-    return self.__check_call(cmd)
+    res = self.__check_call(cmd)
+    if res == 0:
+      return self.wait_for_device(timeout=timeout_sec)
+    return res
 
-  def unroot(self):
+  def unroot(
+      self,
+      timeout_sec=get_adb_restart_timeout_sec()
+    ):
     cmd = adbprefixes.get_unroot()
-    return self.__check_call(cmd)
+    res = self.__check_call(cmd)
+    if res == 0:
+      return self.wait_for_device(timeout=timeout_sec)
+    return res
 
   def usb(self):
     cmd = adbprefixes.get_usb()
