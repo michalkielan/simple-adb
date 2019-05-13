@@ -96,6 +96,13 @@ class AdbDevice(object):
     return self.__check_call(cmd)
 
   #shell
+  def shell(self, args):
+    cmd = ' '.join([
+        adbprefixes.get_shell(),
+        args,
+    ])
+    return self.__check_call(cmd)
+
   def tap(self, x, y):
     cmd = ' '.join([
         adbprefixes.get_shell(),
