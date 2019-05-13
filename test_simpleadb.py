@@ -1,3 +1,4 @@
+#!/bin/python3
 import unittest
 import os
 import sys
@@ -15,7 +16,7 @@ def clone_app():
   os.system('git clone ' + url)
   os.system('cd AndroidDummyApp')
   os.system('./gradlew build')
-  os,system('cd ..')
+  os.system('cd ..')
   os.system('cp AndroidDummyApp/app/build/outputs/apk/debug/app-debug.apk .')
 
 TEST_DEVICE_ID = get_test_device_id()
