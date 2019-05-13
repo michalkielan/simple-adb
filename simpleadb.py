@@ -61,8 +61,7 @@ class AdbDevice(object):
 
   def root(
       self,
-      timeout_sec=get_adb_restart_timeout_sec()
-    ):
+      timeout_sec=get_adb_restart_timeout_sec()):
     cmd = adbprefixes.get_root()
     res = self.__check_call(cmd)
     if res == 0:
@@ -71,8 +70,7 @@ class AdbDevice(object):
 
   def unroot(
       self,
-      timeout_sec=get_adb_restart_timeout_sec()
-    ):
+      timeout_sec=get_adb_restart_timeout_sec()):
     cmd = adbprefixes.get_unroot()
     res = self.__check_call(cmd)
     if res == 0:
