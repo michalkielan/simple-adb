@@ -7,8 +7,11 @@ python:
 
 addons:
   apt:
+    sources:
+      - deadsnakes 
     packages:
-      python-logilab-common
+      - python-logilab-common
+      - python3.5
 
 android:
   components:
@@ -27,7 +30,7 @@ android:
    - 'android-sdk-license-.+'
 
 install:
-  - sudo pip install pylint
+  - sudo pip3 install pylint coveralls
 
 env:
   global:
@@ -36,6 +39,7 @@ env:
 
 before_script:
   - python --version
+  - pyenv versions
   - pylint simpleadb.py adbprocess.py
   - android list target
   - echo no | android create avd --force -n test -t android-24 --abi armeabi-v7a -c 100M
