@@ -35,7 +35,6 @@ class AdbServerTest(unittest.TestCase):
     device = simpleadb.AdbDevice(TEST_DEVICE_ID)
     res = device.root()
     self.assertEqual(res, 0)
-    os.system('adb wait-for-device shell input keyevent 82')
 
   def test_get_id(self):
     device = simpleadb.AdbDevice(TEST_DEVICE_ID)
@@ -102,3 +101,8 @@ class AdbServerTest(unittest.TestCase):
   def test_no_available(self):
     device = simpleadb.AdbDevice('dummy_id')
     self.assertFalse(device.is_available())
+  
+  def test_unroot(self):
+    device = simpleadb.AdbDevice(TEST_DEVICE_ID)
+    res = device.unroot()
+    self.assertEqual(res, 0)
