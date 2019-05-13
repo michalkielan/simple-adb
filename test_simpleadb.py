@@ -60,6 +60,11 @@ class AdbServerTest(unittest.TestCase):
     res = device.setprop("dummy_prop", "true")
     self.assertEqual(res, 0)
 
+  def test_get_state(self):
+    device = simpleadb.AdbDevice(TEST_DEVICE_ID)
+    state = device.get_state()
+    self.assertEqual(state, 'device')
+
   def test_available(self):
     device = simpleadb.AdbDevice(TEST_DEVICE_ID)
     self.assertTrue(device.is_available())
