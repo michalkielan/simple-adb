@@ -22,7 +22,8 @@ class AdbDevice(object):
         args,
     ])
     output = adbprocess.check_output(cmd)
-    return output.decode(get_encoding_format())
+    decoded = output.decode(get_encoding_format())
+    return decoded.rstrip("\n\r")
 
   def get_id(self):
     return self.__id
