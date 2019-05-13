@@ -49,6 +49,7 @@ script:
   - find . | grep apk 
   - cd ..
   - cp AndroidDummyApp/app/build/outputs/apk/debug/app-debug.apk .
+  - sudo python3 setup.py install
   - pytest -v test_simpleadb.py
   - coverage run --source=simpleadb,adbprocess,adbprefixes test_simpleadb.py
 
