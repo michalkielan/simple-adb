@@ -2,13 +2,13 @@ language: android
 jdk: oraclejdk11
 sudo: required
 
-python:
-  - "3.7"
-
 addons:
   apt:
+    sources:
+      - deadsnakes 
     packages:
-      python-logilab-common
+      - python-logilab-common
+      - python3.5
 
 android:
   components:
@@ -49,8 +49,8 @@ script:
   - find . | grep apk 
   - cd ..
   - cp AndroidDummyApp/app/build/outputs/apk/debug/app-debug.apk .
-  - pytest -v test_simpleadb.py
-  - coverage run --source=simpleadb,adbprocess,adbprefixes test_simpleadb.py
+  - python3 -m unittest discover .
+  - coverage run --source=simpleadb,adbprocess,adbprefixes test_simpleadb.py || true
 
 after_success:
   - coveralls
