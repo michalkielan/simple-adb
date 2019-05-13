@@ -2,6 +2,7 @@
 import unittest
 import os
 import sys
+import subprocess
 import simpleadb
 
 def get_test_device_id():
@@ -70,6 +71,29 @@ class AdbServerTest(unittest.TestCase):
     device = simpleadb.AdbDevice(TEST_DEVICE_ID)
     state = device.get_state()
     self.assertEqual(state, 'device')
+
+  def test_available(self):
+    device = simpleadb.AdbDevice(TEST_DEVICE_ID)
+    self.assertTrue(device.is_available())
+
+  def test_no_available(self):
+    device = simpleadb.AdbDevice('dummy_id')
+    self.assertFalse(device.is_available())
+
+  def test_wait_for_device(self):
+    device = simpleadb.AdbDevice(TEST_DEVICE_ID)
+    res = device.wait_for_device()
+    self.assertEqual(0, res)
+
+  def test_wait_for_device_timeout(self):
+    device = simpleadb.AdbDevice(TEST_DEVICE_ID)
+    res = device.wait_for_device(timeout=1)
+    self.assertEqual(0, res)
+
+  def test_wait_for_device_failed(self):
+    with self.assertRaises(subprocess.TimeoutExpired):
+      device = simpleadb.AdbDevice('dummy-device')
+      device.wait_for_device(timeout=1)
 
   def test_available(self):
     device = simpleadb.AdbDevice(TEST_DEVICE_ID)
