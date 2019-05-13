@@ -40,6 +40,11 @@ class AdbServerTest(unittest.TestCase):
     test_device_id = device.get_id()
     self.assertEqual(test_device_id, TEST_DEVICE_ID)
 
+  def test_get_serialno(self):
+    device = simpleadb.AdbDevice(TEST_DEVICE_ID)
+    test_device_id = device.get_serialno()
+    self.assertEqual(test_device_id, TEST_DEVICE_ID)
+
   def test_tap(self):
     device = simpleadb.AdbDevice(TEST_DEVICE_ID)
     res = device.tap(1, 1)
