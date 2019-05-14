@@ -101,6 +101,11 @@ class AdbServerTest(unittest.TestCase):
   def test_no_available(self):
     device = simpleadb.AdbDevice('dummy_id')
     self.assertFalse(device.is_available())
+
+  def test_adb_shell(self):
+    device = simpleadb.AdbDevice(TEST_DEVICE_ID)
+    res = device.shell('input text 42')
+    self.assertEqual(0, res)
   
   def test_unroot(self):
     device = simpleadb.AdbDevice(TEST_DEVICE_ID)
