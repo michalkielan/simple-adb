@@ -35,6 +35,8 @@ env:
     - TEST_DEVICE_ID=emulator-5554
 
 before_script:
+  - pyenv install 3.5.0
+  - pyenv global 3.5.0
   - pylint simpleadb.py adbprocess.py
   - android list target
   - echo no | android create avd --force -n test -t android-24 --abi armeabi-v7a -c 100M
@@ -49,8 +51,7 @@ script:
   - find . | grep apk 
   - cd ..
   - cp AndroidDummyApp/app/build/outputs/apk/debug/app-debug.apk .
-  - python3 -m unittest discover .
-  - coverage run --source=simpleadb,adbprocess,adbprefixes test_simpleadb.py || true
+  - coverage run --source=simpleadb,adbprocess,adbprefixes test_simpleadb.py
 
 after_success:
   - coveralls
