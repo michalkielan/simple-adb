@@ -47,6 +47,11 @@ before_script:
   - adb shell getprop persist.sys.locale
   - adb shell stop
   - adb shell getprop persist.sys.locale
+  - adb shell getprop ro.build.version.release
+  - adb shell getprop persist.sys.root_access 
+  - adb root
+  - adb shell getprop persist.sys.root_access 
+  - adb shell getprop 
 
 script:
   - git clone https://github.com/michalkielan/AndroidDummyApp.git
