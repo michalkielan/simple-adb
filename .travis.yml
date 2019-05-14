@@ -45,8 +45,6 @@ before_script:
   - adb shell setprop persist.sys.locale DUMMY_LOCALE
   - sleep 2
   - adb shell getprop persist.sys.locale
-  - adb shell stop
-  - adb shell getprop persist.sys.locale
   - adb shell getprop ro.build.version.release
   - adb shell getprop persist.sys.root_access 
   - adb root
