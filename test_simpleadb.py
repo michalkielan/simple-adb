@@ -2,7 +2,6 @@
 import unittest
 import os
 import sys
-from pathlib import Path
 import subprocess
 import simpleadb
 
@@ -72,7 +71,7 @@ class AdbServerTest(unittest.TestCase):
     dest = '/sdcard/'
 
     device = simpleadb.AdbDevice(TEST_DEVICE_ID)
-    Path(filename).touch()
+    os.system('touch ' + filename)
     res = device.push(filename, dest)
     self.assertEqual(res, 0)
 
