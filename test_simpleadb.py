@@ -61,10 +61,13 @@ class AdbServerTest(unittest.TestCase):
     res = device.uninstall(DUMMY_PACKAGE_NAME)
     self.assertEqual(res, 0)
 
-  def test_setprop(self):
+  def test_prop(self):
+    prop = 'dummy_prop'
+    value = 'foobar'
     device = simpleadb.AdbDevice(TEST_DEVICE_ID)
-    res = device.setprop("dummy_prop", "true")
+    res = device.setprop(prop, value)
     self.assertEqual(res, 0)
+    self.assertEqual(value, device.getprop(prop))
 
   def test_get_state(self):
     device = simpleadb.AdbDevice(TEST_DEVICE_ID)
