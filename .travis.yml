@@ -44,7 +44,7 @@ before_script:
 
 script:
   - pyenv install 3.5.0
-  - pyenv global system 3.5.0
+  - pyenv global 3.5.0
   - python -V
   - pyenv local 3.5.0
   - python -V
