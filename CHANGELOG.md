@@ -1,0 +1,34 @@
+### Added
+
+- process call wrapper
+- adb device supported commands:
+	- get id 
+  - get state
+  - get serial number
+  - is available
+  - get devpath
+  - remount
+  - reboot
+  - root
+  - unroot
+  - usb
+  - install
+  - uninstall
+  - tap screen
+  - broadcast
+  - pm grant
+  - set prop
+  - get prop
+  - push
+  - pull
+  - connect
+  - disconnect
+  - wait for device
+  - shell
+- adb server supported commands:
+  - devices
+  - kill server
+  - tcpip
+- travis ci
+- adb emulator in travis
+- coverage

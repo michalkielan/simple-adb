@@ -1,6 +1,8 @@
+#!/bin/python3
 import unittest
 import os
 import sys
+import subprocess
 import simpleadb
 
 def get_test_device_id():
@@ -14,7 +16,7 @@ def clone_app():
   os.system('git clone ' + url)
   os.system('cd AndroidDummyApp')
   os.system('./gradlew build')
-  os,system('cd ..')
+  os.system('cd ..')
   os.system('cp AndroidDummyApp/app/build/outputs/apk/debug/app-debug.apk .')
 
 TEST_DEVICE_ID = get_test_device_id()
@@ -33,7 +35,6 @@ class AdbServerTest(unittest.TestCase):
     device = simpleadb.AdbDevice(TEST_DEVICE_ID)
     res = device.root()
     self.assertEqual(res, 0)
-    os.system('adb wait-for-device shell input keyevent 82')
 
   def test_get_id(self):
     device = simpleadb.AdbDevice(TEST_DEVICE_ID)
@@ -77,3 +78,36 @@ class AdbServerTest(unittest.TestCase):
   def test_no_available(self):
     device = simpleadb.AdbDevice('dummy_id')
     self.assertFalse(device.is_available())
+
+  def test_wait_for_device(self):
+    device = simpleadb.AdbDevice(TEST_DEVICE_ID)
+    res = device.wait_for_device()
+    self.assertEqual(0, res)
+
+  def test_wait_for_device_timeout(self):
+    device = simpleadb.AdbDevice(TEST_DEVICE_ID)
+    res = device.wait_for_device(timeout=1)
+    self.assertEqual(0, res)
+
+  def test_wait_for_device_failed(self):
+    with self.assertRaises(subprocess.TimeoutExpired):
+      device = simpleadb.AdbDevice('dummy-device')
+      device.wait_for_device(timeout=1)
+
+  def test_available(self):
+    device = simpleadb.AdbDevice(TEST_DEVICE_ID)
+    self.assertTrue(device.is_available())
+
+  def test_no_available(self):
+    device = simpleadb.AdbDevice('dummy_id')
+    self.assertFalse(device.is_available())
+
+  def test_adb_shell(self):
+    device = simpleadb.AdbDevice(TEST_DEVICE_ID)
+    res = device.shell('input text 42')
+    self.assertEqual(0, res)
+  
+  def test_unroot(self):
+    device = simpleadb.AdbDevice(TEST_DEVICE_ID)
+    res = device.unroot()
+    self.assertEqual(res, 0)
