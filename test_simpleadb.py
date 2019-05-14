@@ -66,6 +66,21 @@ class AdbServerTest(unittest.TestCase):
     res = device.setprop("dummy_prop", "true")
     self.assertEqual(res, 0)
 
+  def test_push_pull(self):
+    filename = 'dummy_file'
+    dest = '/sdcard/'
+
+    device = simpleadb.AdbDevice(TEST_DEVICE_ID)
+    os.system('touch ' + filename)
+    res = device.push(filename, dest)
+    self.assertEqual(res, 0)
+
+    os.remove(filename)
+    self.assertFalse(os.path.isfile(filename))
+    res = device.pull(dest + filename)
+    self.assertEqual(res, 0)
+    self.assertTrue(os.path.isfile(filename))
+
   def test_get_state(self):
     device = simpleadb.AdbDevice(TEST_DEVICE_ID)
     state = device.get_state()
@@ -106,7 +121,7 @@ class AdbServerTest(unittest.TestCase):
     device = simpleadb.AdbDevice(TEST_DEVICE_ID)
     res = device.shell('input text 42')
     self.assertEqual(0, res)
-  
+
   def test_unroot(self):
     device = simpleadb.AdbDevice(TEST_DEVICE_ID)
     res = device.unroot()
