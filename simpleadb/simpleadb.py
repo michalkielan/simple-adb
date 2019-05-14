@@ -105,46 +105,41 @@ class AdbDevice(object):
 
   def tap(self, x, y):
     cmd = ' '.join([
-        adbprefixes.get_shell(),
         adbprefixes.get_input_tap(),
         str(x),
         str(y),
     ])
-    return self.__check_call(cmd)
+    return self.shell(cmd)
 
   def broadcast(self, params):
     cmd = ' '.join([
-        adbprefixes.get_shell(),
         'am broadcast -a',
         params,
     ])
-    return self.__check_call(cmd)
+    return self.shell(cmd)
 
   def pm_grant(self, package, permission):
     cmd = ' '.join([
-        adbprefixes.get_shell(),
         adbprefixes.get_pm_grant(),
         package,
         permission,
     ])
-    return self.__check_call(cmd)
+    return self.shell(cmd)
 
   def setprop(self, prop, value):
     cmd = ' '.join([
-        adbprefixes.get_shell(),
         'setprop',
         prop,
         value
     ])
-    return self.__check_call(cmd)
+    return self.shell(cmd)
 
   def getprop(self, prop):
     cmd = ' '.join([
-        adbprefixes.get_shell(),
         'getprop',
         prop,
     ])
-    return self.__check_output(cmd)
+    return self.shell(cmd)
 
   #file transfer
   def push(self, source, dest):
