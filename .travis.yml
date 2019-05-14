@@ -49,6 +49,9 @@ script:
   - find . | grep apk 
   - cd ..
   - cp AndroidDummyApp/app/build/outputs/apk/debug/app-debug.apk .
+  - pyenv global system 3.5
+  - which python
+  - python --version
   - sudo apt-get install python3-pip
   - sudo pip3 install setuptools
   - sudo python3 setup.py install
