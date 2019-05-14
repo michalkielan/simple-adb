@@ -76,8 +76,10 @@ class AdbServerTest(unittest.TestCase):
     self.assertEqual(res, 0)
 
     os.remove(filename)
+    self.assertFalse(os.path.isfile(filename))
     res = device.pull(dest + filename)
     self.assertEqual(res, 0)
+    self.assertTrue(os.path.isfile(filename))
 
   def test_get_state(self):
     device = simpleadb.AdbDevice(TEST_DEVICE_ID)
