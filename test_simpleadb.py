@@ -2,6 +2,7 @@
 import unittest
 import os
 import sys
+from pathlib import Path
 import subprocess
 import simpleadb
 
@@ -66,6 +67,19 @@ class AdbServerTest(unittest.TestCase):
     res = device.setprop("dummy_prop", "true")
     self.assertEqual(res, 0)
 
+  def test_push_pull(self):
+    filename = 'dummy_file'
+    dest = '/sdcard/'
+
+    device = simpleadb.AdbDevice(TEST_DEVICE_ID)
+    Path(filename).touch()
+    res = device.push(filename, dest)
+    self.assertEqual(res, 0)
+
+    os.remove(filename)
+    res = device.pull(dest + filename)
+    self.assertEqual(res, 0)
+
   def test_get_state(self):
     device = simpleadb.AdbDevice(TEST_DEVICE_ID)
     state = device.get_state()
@@ -106,7 +120,7 @@ class AdbServerTest(unittest.TestCase):
     device = simpleadb.AdbDevice(TEST_DEVICE_ID)
     res = device.shell('input text 42')
     self.assertEqual(0, res)
-  
+
   def test_unroot(self):
     device = simpleadb.AdbDevice(TEST_DEVICE_ID)
     res = device.unroot()
