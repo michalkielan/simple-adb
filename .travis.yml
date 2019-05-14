@@ -4,11 +4,8 @@ sudo: required
 
 addons:
   apt:
-    sources:
-      - deadsnakes 
     packages:
       - python-logilab-common
-      - python3.5
 
 android:
   components:
