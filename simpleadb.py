@@ -29,15 +29,28 @@ class AdbDevice(object):
     return decoded.rstrip("\n\r")
 
   def get_id(self):
+    """Get target device id
+    
+      Returns:
+        Serial number
+    """
     return self.__id
 
   # scripting
   def get_state(self):
+    """Get state
+     
+     Returns:
+        State: offline | bootloader | device
+      Raises:
+        CalledProcessError: when failed
+    """
     cmd = adbprefixes.get_get_state()
     return self.__check_output(cmd)
 
   def get_serialno(self):
     """Get target device's serial number
+
       Returns:
         Serial number
       Raises:
@@ -48,6 +61,7 @@ class AdbDevice(object):
 
   def is_available(self):
     """ Check if device is available
+
       Returns:
         True if available False if not
       Raises:
@@ -65,6 +79,7 @@ class AdbDevice(object):
 
   def remount(self):
     """ Remout partition read-write
+
       Returns:
         0 if success
       Raises:
@@ -75,6 +90,7 @@ class AdbDevice(object):
 
   def reboot(self):
     """ Reboot the device
+
       Returns:
         0 if success
       Raises:
@@ -87,6 +103,7 @@ class AdbDevice(object):
       self,
       timeout_sec=get_adb_restart_timeout_sec()):
     """ Restart adb with root permission
+
       Returns:
         0 if success
       Raises:
@@ -102,6 +119,7 @@ class AdbDevice(object):
       self,
       timeout_sec=get_adb_restart_timeout_sec()):
     """ Restart adb without root permission
+
       Returns:
         0 if success
       Raises:
@@ -118,7 +136,10 @@ class AdbDevice(object):
     return self.__check_call(cmd)
 
   def install(self, apk):
-    """ Install package
+    """ Push package to the device and install
+
+      Args:
+        Package path
       Returns:
         0 if success
       Raises:
@@ -145,6 +166,15 @@ class AdbDevice(object):
 
   #shell
   def shell(self, args):
+    """Run remote shell command interface
+   
+      Args:
+        Command
+      Returns:
+        Serial number
+      Raises:
+        CalledProcessError: when failed
+    """
     cmd = ' '.join([
         adbprefixes.get_shell(),
         args,
@@ -184,6 +214,16 @@ class AdbDevice(object):
     return self.shell(cmd)
 
   def pm_grant(self, package, permission):
+    """Grant permission
+   
+      Args:
+        Package name
+        Android permission
+      Returns:
+        0 if success
+      Raises:
+        CalledProcessError: when failed
+    """
     cmd = ' '.join([
         adbprefixes.get_pm_grant(),
         package,
@@ -192,6 +232,16 @@ class AdbDevice(object):
     return self.shell(cmd)
 
   def setprop(self, prop, value):
+    """Set property
+   
+      Args:
+        Property name
+        Value
+      Returns:
+        0 if success
+      Raises:
+        CalledProcessError: when failed
+    """
     cmd = ' '.join([
         'setprop',
         prop,
