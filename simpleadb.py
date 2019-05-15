@@ -1,14 +1,26 @@
+""" Python wrapper for adb protocol """
 import adbprocess
 import adbprefixes
 
 def get_encoding_format():
+  """Return terminal encoding format
+
+    Returns:
+      Encoding format
+  """
   return 'utf-8'
 
 def get_adb_restart_timeout_sec():
+  """Adb waiting for server to start timeout
+
+    Returns:
+      Timeout in sec (default 5s)
+  """
   return 5
 
 # pylint: disable=too-many-public-methods
 class AdbDevice(object):
+  """Cmd interface for adb device"""
   def __init__(self, device_id):
     self.__id = device_id
 
@@ -379,6 +391,7 @@ class AdbDevice(object):
 
 
 class AdbServer(object):
+  """Cmd interface for adb server"""
   def __init__(self, port=None):
     self.start(port)
 
@@ -415,6 +428,15 @@ class AdbServer(object):
     return devices
 
   def start(self, port=None):
+    """ Ensure that there is a server running
+
+      Args:
+        Port (default: default adb server port)
+      Returns:
+        0 if success
+      Raises:
+        CalledProcessError: when failed
+    """
     port_arg = ''
     if port is not None:
       port_arg += ' '.join(['-P', str(port)])
@@ -437,6 +459,13 @@ class AdbServer(object):
     return self.__check_call(cmd)
 
   def usb(self):
+    """ Restart adb server listening on USB
+
+      Returns:
+        0 if success
+      Raises:
+        CalledProcessError: when failed
+    """
     cmd = adbprefixes.get_usb()
     return self.__check_call(cmd)
 
