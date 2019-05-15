@@ -4,6 +4,9 @@ import adbprefixes
 def get_encoding_format():
   return 'utf-8'
 
+def get_adb_restart_timeout_sec():
+  return 5
+
 # pylint: disable=too-many-public-methods
 class AdbDevice(object):
   def __init__(self, device_id):
@@ -22,7 +25,8 @@ class AdbDevice(object):
         args,
     ])
     output = adbprocess.check_output(cmd)
-    return output.decode(get_encoding_format())
+    decoded = output.decode(get_encoding_format())
+    return decoded.rstrip("\n\r")
 
   def get_id(self):
     return self.__id
@@ -79,7 +83,9 @@ class AdbDevice(object):
     cmd = adbprefixes.get_reboot()
     self.__check_call(cmd)
 
-  def root(self):
+  def root(
+      self,
+      timeout_sec=get_adb_restart_timeout_sec()):
     """ Restart adb with root permission
       Returns:
         0 if success
@@ -87,9 +93,14 @@ class AdbDevice(object):
         CalledProcessError: when failed
     """
     cmd = adbprefixes.get_root()
-    return self.__check_call(cmd)
+    res = self.__check_call(cmd)
+    if res == 0:
+      return self.wait_for_device(timeout=timeout_sec)
+    return res
 
-  def unroot(self):
+  def unroot(
+      self,
+      timeout_sec=get_adb_restart_timeout_sec()):
     """ Restart adb without root permission
       Returns:
         0 if success
@@ -97,7 +108,10 @@ class AdbDevice(object):
         CalledProcessError: when failed
     """
     cmd = adbprefixes.get_unroot()
-    return self.__check_call(cmd)
+    res = self.__check_call(cmd)
+    if res == 0:
+      return self.wait_for_device(timeout=timeout_sec)
+    return res
 
   def usb(self):
     cmd = adbprefixes.get_usb()
@@ -130,6 +144,13 @@ class AdbDevice(object):
     return self.__check_call(cmd)
 
   #shell
+  def shell(self, args):
+    cmd = ' '.join([
+        adbprefixes.get_shell(),
+        args,
+    ])
+    return self.__check_call(cmd)
+
   def tap(self, x, y):
     """ Tap
       Args:
@@ -141,12 +162,11 @@ class AdbDevice(object):
         CalledProcessError: when failed
     """
     cmd = ' '.join([
-        adbprefixes.get_shell(),
         adbprefixes.get_input_tap(),
         str(x),
         str(y),
     ])
-    return self.__check_call(cmd)
+    return self.shell(cmd)
 
   def broadcast(self, intent):
     """ Send broadcast
@@ -158,37 +178,33 @@ class AdbDevice(object):
         CalledProcessError: when failed
     """
     cmd = ' '.join([
-        adbprefixes.get_shell(),
         'am broadcast -a',
         params,
     ])
-    return self.__check_call(cmd)
+    return self.shell(cmd)
 
   def pm_grant(self, package, permission):
     cmd = ' '.join([
-        adbprefixes.get_shell(),
         adbprefixes.get_pm_grant(),
         package,
         permission,
     ])
-    return self.__check_call(cmd)
+    return self.shell(cmd)
 
   def setprop(self, prop, value):
     cmd = ' '.join([
-        adbprefixes.get_shell(),
         'setprop',
         prop,
         value
     ])
-    return self.__check_call(cmd)
+    return self.shell(cmd)
 
   def getprop(self, prop):
     cmd = ' '.join([
-        adbprefixes.get_shell(),
         'getprop',
         prop,
     ])
-    return self.__check_output(cmd)
+    return self.shell(cmd)
 
   #file transfer
   def push(self, source, dest):
@@ -223,6 +239,23 @@ class AdbDevice(object):
         str(port),
     ])
     return self.__check_call(cmd)
+
+  def wait_for_device(self, **options):
+    cmd = ' '.join([
+        adbprefixes.get_adb_prefix(),
+        '-s',
+        self.get_id(),
+        adbprefixes.get_wait_for_device(),
+    ])
+
+    timeout_sec = options.get("timeout")
+    if timeout_sec:
+      return adbprocess.subprocess.check_call(
+          cmd,
+          shell=True,
+          timeout=timeout_sec
+      )
+    return adbprocess.subprocess.check_call(cmd, shell=True)
 
 
 class AdbServer(object):

@@ -1,18 +1,28 @@
+#!/bin/python3
 import unittest
-import simpleadb
 import os
+import sys
+import subprocess
+import simpleadb
 
-TEST_DEVICE_ID = 'emulator-5554'
-DUMMY_APK_NAME = 'app-debug.apk'
-DUMMY_PACKAGE_NAME = 'com.dummy_app.dummy'
+def get_test_device_id():
+  try:
+    return os.getenv('TEST_DEVICE_ID')
+  except KeyError:
+    sys.exit('TEST_DEVICE_ID not found export device id')
 
 def clone_app():
   url = 'https://github.com/michalkielan/AndroidDummyApp.git'
   os.system('git clone ' + url)
   os.system('cd AndroidDummyApp')
   os.system('./gradlew build')
-  os,system('cd ..')
+  os.system('cd ..')
   os.system('cp AndroidDummyApp/app/build/outputs/apk/debug/app-debug.apk .')
+
+TEST_DEVICE_ID = get_test_device_id()
+DUMMY_APK_NAME = 'app-debug.apk'
+DUMMY_PACKAGE_NAME = 'com.dummy_app.dummy'
+
 
 class AdbServerTest(unittest.TestCase):
   def test_devices(self):
@@ -23,24 +33,58 @@ class AdbServerTest(unittest.TestCase):
 
   def test_root(self):
     device = simpleadb.AdbDevice(TEST_DEVICE_ID)
-    device.root()
-    os.system('adb wait-for-device shell input keyevent 82')
+    res = device.root()
+    self.assertEqual(res, 0)
+
+  def test_get_id(self):
+    device = simpleadb.AdbDevice(TEST_DEVICE_ID)
+    test_device_id = device.get_id()
+    self.assertEqual(test_device_id, TEST_DEVICE_ID)
+
+  def test_get_serialno(self):
+    device = simpleadb.AdbDevice(TEST_DEVICE_ID)
+    test_device_id = device.get_serialno()
+    self.assertEqual(test_device_id, TEST_DEVICE_ID)
 
   def test_tap(self):
     device = simpleadb.AdbDevice(TEST_DEVICE_ID)
-    device.tap(1, 1)
+    res = device.tap(1, 1)
+    self.assertEqual(res, 0)
 
   def test_install(self):
     device = simpleadb.AdbDevice(TEST_DEVICE_ID)
-    device.install(DUMMY_APK_NAME)
+    res = device.install(DUMMY_APK_NAME)
+    self.assertEqual(res, 0)
 
   def test_uninstall(self):
     device = simpleadb.AdbDevice(TEST_DEVICE_ID)
-    device.uninstall(DUMMY_PACKAGE_NAME)
+    res = device.uninstall(DUMMY_PACKAGE_NAME)
+    self.assertEqual(res, 0)
 
   def test_setprop(self):
     device = simpleadb.AdbDevice(TEST_DEVICE_ID)
-    device.setprop("dummy_prop", "true")
+    res = device.setprop("dummy_prop", "true")
+    self.assertEqual(res, 0)
+
+  def test_push_pull(self):
+    filename = 'dummy_file'
+    dest = '/sdcard/'
+
+    device = simpleadb.AdbDevice(TEST_DEVICE_ID)
+    os.system('touch ' + filename)
+    res = device.push(filename, dest)
+    self.assertEqual(res, 0)
+
+    os.remove(filename)
+    self.assertFalse(os.path.isfile(filename))
+    res = device.pull(dest + filename)
+    self.assertEqual(res, 0)
+    self.assertTrue(os.path.isfile(filename))
+
+  def test_get_state(self):
+    device = simpleadb.AdbDevice(TEST_DEVICE_ID)
+    state = device.get_state()
+    self.assertEqual(state, 'device')
 
   def test_available(self):
     device = simpleadb.AdbDevice(TEST_DEVICE_ID)
@@ -49,3 +93,36 @@ class AdbServerTest(unittest.TestCase):
   def test_no_available(self):
     device = simpleadb.AdbDevice('dummy_id')
     self.assertFalse(device.is_available())
+
+  def test_wait_for_device(self):
+    device = simpleadb.AdbDevice(TEST_DEVICE_ID)
+    res = device.wait_for_device()
+    self.assertEqual(0, res)
+
+  def test_wait_for_device_timeout(self):
+    device = simpleadb.AdbDevice(TEST_DEVICE_ID)
+    res = device.wait_for_device(timeout=1)
+    self.assertEqual(0, res)
+
+  def test_wait_for_device_failed(self):
+    with self.assertRaises(subprocess.TimeoutExpired):
+      device = simpleadb.AdbDevice('dummy-device')
+      device.wait_for_device(timeout=1)
+
+  def test_available(self):
+    device = simpleadb.AdbDevice(TEST_DEVICE_ID)
+    self.assertTrue(device.is_available())
+
+  def test_no_available(self):
+    device = simpleadb.AdbDevice('dummy_id')
+    self.assertFalse(device.is_available())
+
+  def test_adb_shell(self):
+    device = simpleadb.AdbDevice(TEST_DEVICE_ID)
+    res = device.shell('input text 42')
+    self.assertEqual(0, res)
+
+  def test_unroot(self):
+    device = simpleadb.AdbDevice(TEST_DEVICE_ID)
+    res = device.unroot()
+    self.assertEqual(res, 0)

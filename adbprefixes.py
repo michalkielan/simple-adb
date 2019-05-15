@@ -1,3 +1,18 @@
+def get_env_server_port():
+  return 'ANDROID_ADB_SERVER_PORT'
+
+def get_env_adb_trace():
+  return 'ADB_TRACE'
+
+def get_env_adb_vendor_keys():
+  return 'ADB_VENDOR_KEYS'
+
+def get_env_android_serial():
+  return 'ANDROID_SERIAL'
+
+def get_env_android_log_tags():
+  return 'ANDROID_LOG_TAGS'
+
 def get_adb_prefix():
   return 'adb'
 
@@ -30,9 +45,6 @@ def get_pull():
 
 def get_push():
   return 'push'
-
-def get_rm():
-  return 'rm -r'
 
 def get_uninstall():
   return 'uninstall'
@@ -72,9 +84,6 @@ def get_tcpip():
 
 def get_get_state():
   return 'get-state'
-
-def get_sync():
-  return 'sync'
 
 def get_version():
   return 'version'
