@@ -1,4 +1,3 @@
-import os
 import adbprocess
 import adbprefixes
 
@@ -191,7 +190,7 @@ class AdbDevice(object):
 
 
 class AdbServer(object):
-  def __init__(self, port = None):
+  def __init__(self, port=None):
     self.start(port)
 
   @staticmethod
@@ -221,7 +220,7 @@ class AdbServer(object):
 
   def start(self, port=None):
     port_arg = ''
-    if not (port is None):
+    if port is not None:
       port_arg += ' '.join(['-P', str(port)])
     cmd = ' '.join([
         port_arg,
