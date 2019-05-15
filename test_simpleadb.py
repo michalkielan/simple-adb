@@ -126,3 +126,10 @@ class AdbServerTest(unittest.TestCase):
     device = simpleadb.AdbDevice(TEST_DEVICE_ID)
     res = device.unroot()
     self.assertEqual(res, 0)
+
+  def test_restart_server(self):
+    adb = simpleadb.AdbServer('4242')
+    res = adb.kill()
+    self.assertEqual(res, 0)
+    res = adb.start('1234')
+    self.assertEqual(res, 0)
