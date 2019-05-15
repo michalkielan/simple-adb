@@ -30,7 +30,7 @@ class AdbDevice(object):
 
   def get_id(self):
     """Get target device id
-    
+
       Returns:
         Serial number
     """
@@ -39,7 +39,7 @@ class AdbDevice(object):
   # scripting
   def get_state(self):
     """Get state
-     
+
      Returns:
         State: offline | bootloader | device
       Raises:
@@ -74,6 +74,13 @@ class AdbDevice(object):
       return False
 
   def get_devpath(self):
+    """ Get device path
+
+      Returns:
+        Device path
+      Raises:
+        CalledProcessError: when failed
+    """
     cmd = adbprefixes.get_devpath()
     return self.__check_output(cmd)
 
@@ -104,10 +111,13 @@ class AdbDevice(object):
       timeout_sec=get_adb_restart_timeout_sec()):
     """ Restart adb with root permission
 
+      Args:
+        Timeout in sec (default 5s)
       Returns:
         0 if success
       Raises:
         CalledProcessError: when failed
+        TimeoutExpired: when timeout
     """
     cmd = adbprefixes.get_root()
     res = self.__check_call(cmd)
@@ -152,7 +162,10 @@ class AdbDevice(object):
     return self.__check_call(cmd)
 
   def uninstall(self, package):
-    """ Uninstall package 
+    """ Remove this app package from the device
+
+      Args:
+        Package name
       Returns:
         0 if success
       Raises:
@@ -167,7 +180,7 @@ class AdbDevice(object):
   #shell
   def shell(self, args):
     """Run remote shell command interface
-   
+
       Args:
         Command
       Returns:
@@ -182,7 +195,8 @@ class AdbDevice(object):
     return self.__check_call(cmd)
 
   def tap(self, x, y):
-    """ Tap
+    """ Tap screen
+
       Args:
         x: x position
         y: y position
@@ -200,8 +214,9 @@ class AdbDevice(object):
 
   def broadcast(self, intent):
     """ Send broadcast
+
       Args:
-        intent
+        Intent args
       Returns:
         0 if success
       Raises:
@@ -215,7 +230,7 @@ class AdbDevice(object):
 
   def pm_grant(self, package, permission):
     """Grant permission
-   
+
       Args:
         Package name
         Android permission
@@ -233,10 +248,10 @@ class AdbDevice(object):
 
   def setprop(self, prop, value):
     """Set property
-   
+
       Args:
         Property name
-        Value
+        Property Value
       Returns:
         0 if success
       Raises:
@@ -250,6 +265,15 @@ class AdbDevice(object):
     return self.shell(cmd)
 
   def getprop(self, prop):
+    """Get property
+
+      Args:
+        Property name
+      Returns:
+        Property value
+      Raises:
+        CalledProcessError: when failed
+    """
     cmd = ' '.join([
         'getprop',
         prop,
@@ -258,6 +282,16 @@ class AdbDevice(object):
 
   #file transfer
   def push(self, source, dest):
+    """Copy local files/dirs to device
+
+      Args:
+        Local path
+        Remote path
+      Returns:
+        0 if success
+      Raises:
+        CalledProcessError: when failed
+    """
     cmd = ' '.join([
         adbprefixes.get_push(),
         source,
@@ -266,6 +300,16 @@ class AdbDevice(object):
     return self.__check_call(cmd)
 
   def pull(self, source, dest='.'):
+    """Copy local files/dirs from device
+
+      Args:
+        Remote path
+        Local path
+      Returns:
+        0 if success
+      Raises:
+        CalledProcessError: when failed
+    """
     cmd = ' '.join([
         adbprefixes.get_pull(),
         source,
@@ -275,6 +319,16 @@ class AdbDevice(object):
 
   #networking
   def connect(self, ip, port=5555):
+    """Connect to a device via TCP/IP
+
+      Args:
+        Ip address
+        Port (default 5555)
+      Returns:
+        0 if success
+      Raises:
+        CalledProcessError: when failed
+    """
     cmd = ' '.join([
         adbprefixes.get_connect(),
         ip,
@@ -283,6 +337,16 @@ class AdbDevice(object):
     return self.__check_call(cmd)
 
   def disconnect(self, ip, port=5555):
+    """Disconnect from given TCP/IP device
+
+      Args:
+        ip: Ip address
+        port: Port (default 5555)
+      Returns:
+        0 if success
+      Raises:
+        CalledProcessError: when failed
+    """
     cmd = ' '.join([
         adbprefixes.get_disconnect(),
         ip,
@@ -291,6 +355,16 @@ class AdbDevice(object):
     return self.__check_call(cmd)
 
   def wait_for_device(self, **options):
+    """ Restart adb with root permission
+
+      Args:
+        **options: timeout (default inf)
+      Returns:
+        0 if success
+      Raises:
+        CalledProcessError: when failed
+        TimeoutExpired: when timeout
+    """
     cmd = ' '.join([
         adbprefixes.get_adb_prefix(),
         '-s',
@@ -323,6 +397,13 @@ class AdbServer(object):
 
   @staticmethod
   def devices():
+    """ List connected devices
+
+      Returns:
+        List of connected devices serial numbers
+      Raises:
+        CalledProcessError: when failed
+    """
     cmd = adbprefixes.get_devices()
     output = adbprocess.check_output(cmd)
     devices = []
@@ -338,10 +419,26 @@ class AdbServer(object):
     return devices
 
   def kill(self):
+    """ Kill the server if it is running
+
+      Returns:
+        0 if success
+      Raises:
+        CalledProcessError: when failed
+    """
     cmd = adbprefixes.get_kill_server()
     return self.__check_call(cmd)
 
   def tcpip(self, port):
+    """ Restart adb server listening on TCP on PORT
+
+      Args:
+        Port
+      Returns:
+        0 if success
+      Raises:
+        CalledProcessError: when failed
+    """
     cmd = ' '.join([
         adbprefixes.get_tcpip(),
         str(port)
