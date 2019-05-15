@@ -224,7 +224,7 @@ class AdbDevice(object):
     """
     cmd = ' '.join([
         'am broadcast -a',
-        params,
+        intent,
     ])
     return self.shell(cmd)
 
