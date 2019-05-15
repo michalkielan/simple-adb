@@ -77,10 +77,6 @@ class AdbDevice(object):
       return self.wait_for_device(timeout=timeout_sec)
     return res
 
-  def usb(self):
-    cmd = adbprefixes.get_usb()
-    return self.__check_call(cmd)
-
   def install(self, apk):
     cmd = ' '.join([
         adbprefixes.get_install(),
@@ -194,8 +190,8 @@ class AdbDevice(object):
 
 
 class AdbServer(object):
-  def __init__(self):
-    pass
+  def __init__(self, port=None):
+    self.start(port)
 
   @staticmethod
   def __check_call(args):
@@ -222,8 +218,23 @@ class AdbServer(object):
         devices.append(AdbDevice(device_id))
     return devices
 
+  def start(self, port=None):
+    port_arg = ''
+    if port is not None:
+      port_arg += ' '.join(['-P', str(port)])
+    cmd = ' '.join([
+        port_arg,
+        adbprefixes.get_start_server(),
+    ])
+    res = self.__check_call(cmd)
+    return res
+
   def kill(self):
     cmd = adbprefixes.get_kill_server()
+    return self.__check_call(cmd)
+
+  def usb(self):
+    cmd = adbprefixes.get_usb()
     return self.__check_call(cmd)
 
   def tcpip(self, port):
