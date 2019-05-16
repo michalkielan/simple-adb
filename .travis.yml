@@ -50,7 +50,7 @@ script:
   - cd ..
   - cp AndroidDummyApp/app/build/outputs/apk/debug/app-debug.apk .S
   - sudo python setup.py install
-  - pytest -v tests/test_simpleadb.py
+  - python -m unittest -v tests/test_simpleadb.py
 
 after_success:
   - coveralls
