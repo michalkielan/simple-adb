@@ -174,8 +174,8 @@ class AdbDevice(object):
     """
     try_su = 'su 0 id -u 2>/dev/null'
     cmd = ' '.join([
-        adbprefixes.get_shell()
-        try_su
+        adbprefixes.get_shell(),
+        try_su,
     ])
     res = self.__check_call(cmd)
     if res == 0:
