@@ -1,6 +1,6 @@
 """ Interface for adb process"""
 import subprocess
-import adbprefixes
+from . import adbprefixes
 
 def call(args):
   """ Call process

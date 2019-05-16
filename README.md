@@ -6,7 +6,7 @@
 
 ## Install
 
-~`python setup.py install`~ #TBD
+`$ python setup.py install`
 
 ## Usage
 
