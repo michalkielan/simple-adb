@@ -24,6 +24,12 @@ class AdbDevice(object):
   def __init__(self, device_id):
     self.__id = device_id
 
+  def __eq__(self, other):
+    return self.get_id() == other.get_id()
+
+  def __ne__(self, other):
+    return not self.__eq__(other)
+
   def __check_call(self, args):
     cmd = ' '.join([
         adbprefixes.get_set_device(self.get_id()),
