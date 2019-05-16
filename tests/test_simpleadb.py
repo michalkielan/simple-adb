@@ -38,6 +38,10 @@ class AdbServerTest(unittest.TestCase):
     self.assertEqual(dev1, dev2)
     self.assertNotEqual(dev1, dev3)
 
+  def test_str(self):
+    device = simpleadb.AdbDevice(TEST_DEVICE_ID)
+    self.assertEqual(TEST_DEVICE_ID, str(device))
+
   def test_root(self):
     device = simpleadb.AdbDevice(TEST_DEVICE_ID)
     res = device.root()
