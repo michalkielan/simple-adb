@@ -63,11 +63,8 @@ class AdbServerTest(unittest.TestCase):
     device = simpleadb.AdbDevice(TEST_DEVICE_ID)
     res = device.install(DUMMY_APK_NAME)
     self.assertEqual(res, 0)
-
-#  def test_uninstall(self):
-#    device = simpleadb.AdbDevice(TEST_DEVICE_ID)
-#    res = device.uninstall(DUMMY_PACKAGE_NAME)
-#    self.assertEqual(res, 0)
+    res = device.uninstall(DUMMY_PACKAGE_NAME)
+    self.assertEqual(res, 0)
 
   def test_setprop(self):
     device = simpleadb.AdbDevice(TEST_DEVICE_ID)
@@ -129,26 +126,6 @@ class AdbServerTest(unittest.TestCase):
     device = simpleadb.AdbDevice(TEST_DEVICE_ID)
     res = device.shell('input text 42')
     self.assertEqual(0, res)
-
-#  def test_adb_process_success(self):
-#    res = adbprocess.call('version')
-#    self.assertEqual(0, res)
-#    res = adbprocess.check_call('version')
-#    self.assertEqual(0, res)
-#    try:
-#      res = adbprocess.call('version')
-#      self.assertEqual(0, res)
-#    except subprocess.CalledProcessError:
-#      self.fail("CalledProcessError unexpectedly")
-#
-#  def test_adb_process_fail(self):
-#    rand_str = 'fdstfasdgfrjwlkfjfsd'
-#    res = adbprocess.call(rand_str)
-#    self.assertNotEqual(0, res)
-#    with self.assertRaises(subprocess.CalledProcessError):
-#      adbprocess.check_call(rand_str)
-#    with self.assertRaises(subprocess.CalledProcessError):
-#      adbprocess.check_output(rand_str)
 
   def test_unroot(self):
     device = simpleadb.AdbDevice(TEST_DEVICE_ID)
