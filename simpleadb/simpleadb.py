@@ -177,7 +177,7 @@ class AdbDevice(object):
         adbprefixes.get_shell(),
         try_su,
     ])
-    res = self.__check_call(cmd)
+    res = self.__call(cmd)
     if res == 0:
       return True
     return False
