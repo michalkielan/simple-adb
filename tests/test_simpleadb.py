@@ -64,10 +64,10 @@ class AdbServerTest(unittest.TestCase):
     res = device.install(DUMMY_APK_NAME)
     self.assertEqual(res, 0)
 
-  def test_uninstall(self):
-    device = simpleadb.AdbDevice(TEST_DEVICE_ID)
-    res = device.uninstall(DUMMY_PACKAGE_NAME)
-    self.assertEqual(res, 0)
+#  def test_uninstall(self):
+#    device = simpleadb.AdbDevice(TEST_DEVICE_ID)
+#    res = device.uninstall(DUMMY_PACKAGE_NAME)
+#    self.assertEqual(res, 0)
 
   def test_setprop(self):
     device = simpleadb.AdbDevice(TEST_DEVICE_ID)
