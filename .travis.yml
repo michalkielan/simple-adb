@@ -30,10 +30,11 @@ env:
   global:
     - ADB_INSTALL_TIMEOUT=8
     - TEST_DEVICE_ID=emulator-5554
+    - PYTHON_VERSION=3.5.0
 
 before_script:
-  - pyenv install 3.5.0
-  - pyenv global 3.5.0
+  - pyenv install $PYTHON_VERSION
+  - pyenv global $PYTHON_VERSION
   - pylint simpleadb/simpleadb.py simpleadb/adbprocess.py
   - android list target
   - echo no | android create avd --force -n test -t android-24 --abi armeabi-v7a -c 100M
