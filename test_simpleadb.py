@@ -32,6 +32,13 @@ class AdbServerTest(unittest.TestCase):
     emulator = devices[0]
     self.assertTrue(TEST_DEVICE_ID in emulator.get_id())
 
+  def test_device_eq(self):
+    dev1 = simpleadb.AdbDevice('1234')
+    dev2 = simpleadb.AdbDevice('1234')
+    dev3 = simpleadb.AdbDevice('42')
+    self.assertEqual(dev1, dev2)
+    self.assertNotEqual(dev1, dev3)
+
   def test_root(self):
     device = simpleadb.AdbDevice(TEST_DEVICE_ID)
     res = device.root()
