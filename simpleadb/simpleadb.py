@@ -166,7 +166,7 @@ class AdbDevice(object):
       return self.wait_for_device(timeout=timeout_sec)
     return res
 
-  def is_root(self)
+  def is_root(self):
     """ Check if device has root permissions (experimental)
 
       Returns:
