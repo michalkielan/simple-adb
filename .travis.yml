@@ -48,7 +48,7 @@ script:
   - find . | grep apk
   - cd ..
   - cp AndroidDummyApp/app/build/outputs/apk/debug/app-debug.apk .
-  - coverage run --source=simpleadb -m unittest discover tests
+  - pytest --cov=simpleadb
 
 after_success:
   - coveralls
