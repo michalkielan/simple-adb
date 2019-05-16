@@ -3,7 +3,7 @@ import unittest
 import os
 import sys
 import subprocess
-import adbprocess
+#import adbprocess
 import simpleadb
 
 def get_test_device_id():
@@ -123,25 +123,25 @@ class AdbServerTest(unittest.TestCase):
     res = device.shell('input text 42')
     self.assertEqual(0, res)
 
-  def test_adb_process_success(self):
-    res = adbprocess.call('version')
-    self.assertEqual(0, res)
-    res = adbprocess.check_call('version')
-    self.assertEqual(0, res)
-    try:
-      res = adbprocess.call('version')
-      self.assertEqual(0, res)
-    except subprocess.CalledProcessError:
-      self.fail("CalledProcessError unexpectedly")
-
-  def test_adb_process_fail(self):
-    rand_str = 'fdstfasdgfrjwlkfjfsd'
-    res = adbprocess.call(rand_str)
-    self.assertNotEqual(0, res)
-    with self.assertRaises(subprocess.CalledProcessError):
-      adbprocess.check_call(rand_str)
-    with self.assertRaises(subprocess.CalledProcessError):
-      adbprocess.check_output(rand_str)
+#  def test_adb_process_success(self):
+#    res = adbprocess.call('version')
+#    self.assertEqual(0, res)
+#    res = adbprocess.check_call('version')
+#    self.assertEqual(0, res)
+#    try:
+#      res = adbprocess.call('version')
+#      self.assertEqual(0, res)
+#    except subprocess.CalledProcessError:
+#      self.fail("CalledProcessError unexpectedly")
+#
+#  def test_adb_process_fail(self):
+#    rand_str = 'fdstfasdgfrjwlkfjfsd'
+#    res = adbprocess.call(rand_str)
+#    self.assertNotEqual(0, res)
+#    with self.assertRaises(subprocess.CalledProcessError):
+#      adbprocess.check_call(rand_str)
+#    with self.assertRaises(subprocess.CalledProcessError):
+#      adbprocess.check_output(rand_str)
 
   def test_unroot(self):
     device = simpleadb.AdbDevice(TEST_DEVICE_ID)

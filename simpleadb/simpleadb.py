@@ -1,6 +1,6 @@
 """ Python wrapper for adb protocol """
-import adbprocess
-import adbprefixes
+from . import adbprocess
+from . import adbprefixes
 
 def get_encoding_format():
   """Return terminal encoding format

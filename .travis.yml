@@ -45,10 +45,10 @@ script:
   - git clone https://github.com/michalkielan/AndroidDummyApp.git
   - cd AndroidDummyApp
   - ./gradlew build
-  - find . | grep apk 
+  - find . | grep apk
   - cd ..
   - cp AndroidDummyApp/app/build/outputs/apk/debug/app-debug.apk .
-  - coverage run --source=simpleadb,adbprocess,adbprefixes test_simpleadb.py
+  - coverage run --source=simpleadb -m unittest discover tests
 
 after_success:
   - coveralls
