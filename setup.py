@@ -15,6 +15,6 @@ setup(
   author_email='michalkielan@protonmail.com',
   url='https://github.com/michalkielan/simple-adb',
   license=license,
-  packages=find_packages(exclude=('tests', 'docs'),
+  packages=find_packages(exclude=('tests', 'docs')),
   test_suite='tests',
 )
