@@ -30,6 +30,13 @@ class AdbDevice(object):
   def __ne__(self, other):
     return not self.__eq__(other)
 
+  def __call(self, args):
+    cmd = ' '.join([
+        adbprefixes.get_set_device(self.get_id()),
+        args,
+    ])
+    return adbprocess.call(cmd)
+
   def __check_call(self, args):
     cmd = ' '.join([
         adbprefixes.get_set_device(self.get_id()),
@@ -127,7 +134,7 @@ class AdbDevice(object):
   def root(
       self,
       timeout_sec=get_adb_restart_timeout_sec()):
-    """ Restart adb with root permission
+    """ Restart adb with root permission if device has one
 
       Args:
         Timeout in sec (default 5s)
@@ -158,6 +165,22 @@ class AdbDevice(object):
     if res == 0:
       return self.wait_for_device(timeout=timeout_sec)
     return res
+
+  def is_root(self):
+    """ Check if device has root permissions (experimental)
+
+      Returns:
+        True if rooted False if not
+    """
+    try_su = 'su 0 id -u 2>/dev/null'
+    cmd = ' '.join([
+        adbprefixes.get_shell(),
+        try_su,
+    ])
+    res = self.__call(cmd)
+    if res == 0:
+      return True
+    return False
 
   def install(self, apk):
     """ Push package to the device and install

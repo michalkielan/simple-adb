@@ -11,6 +11,7 @@
   - reboot
   - root
   - unroot
+  - is root
   - usb
   - install
   - uninstall
