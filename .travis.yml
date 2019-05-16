@@ -25,7 +25,6 @@ android:
 
 install:
   - sudo pip install pylint coveralls
-  - sudo pip install pytest-cov
 
 env:
   global:

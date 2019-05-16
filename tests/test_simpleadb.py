@@ -3,7 +3,6 @@ import unittest
 import os
 import sys
 import subprocess
-#import adbprocess
 import simpleadb
 
 def get_test_device_id():
