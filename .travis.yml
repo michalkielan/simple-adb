@@ -49,7 +49,7 @@ script:
   - find . | grep apk
   - cd ..
   - cp AndroidDummyApp/app/build/outputs/apk/debug/app-debug.apk .
-  - pytest --coverage tests/test_simpleadb.py
+  - pytest tests/test_simpleadb.py
 
 after_success:
   - coveralls
