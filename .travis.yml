@@ -34,7 +34,7 @@ env:
 before_script:
   - pyenv install 3.5.0
   - pyenv global 3.5.0
-  - pylint simpleadb.py adbprocess.py
+  - pylint simpleadb/simpleadb.py simpleadb/adbprocess.py
   - android list target
   - echo no | android create avd --force -n test -t android-24 --abi armeabi-v7a -c 100M
   - emulator -avd test -no-skin -no-window &
