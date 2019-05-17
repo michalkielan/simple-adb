@@ -54,7 +54,7 @@ script:
     ##  - coverage run --source=simpleadb setup.py test
     #  - coverage run --source=simpleadb/simpleadb tests/test_simpleadb.py
     #  - coverage run --branch --source=simpleadb -m pytest tests/test_simpleadb.py
-    ##  - coverage report -m
+  - coverage report -m
     #  - coverage run --source=simpleadb setup.py test
     #- coveralls
 
