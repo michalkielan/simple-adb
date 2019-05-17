@@ -27,6 +27,9 @@ class AdbDevice(object):
   def __str__(self):
     return self.get_id()
 
+  def __repr__(self):
+    return self.__str__()
+
   def __eq__(self, other):
     return self.get_id() == other.get_id()
 
