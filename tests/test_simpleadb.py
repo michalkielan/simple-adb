@@ -11,23 +11,20 @@ def get_test_device_id():
   except KeyError:
     sys.exit('TEST_DEVICE_ID not found export device id')
 
-def clone_app():
-  url = 'https://github.com/michalkielan/AndroidDummyApp.git'
-  os.system('git clone ' + url)
-  os.system('cd AndroidDummyApp')
-  os.system('./gradlew build')
-  os.system('cd ..')
-  os.system('cp AndroidDummyApp/app/build/outputs/apk/debug/app-debug.apk .')
-
 TEST_DEVICE_ID = get_test_device_id()
 DUMMY_APK_NAME = 'app-debug.apk'
 DUMMY_PACKAGE_NAME = 'com.dummy_app.dummy'
 
 
 class AdbServerTest(unittest.TestCase):
+  def setUp(self):
+    self.__adb = simpleadb.AdbServer()
+
+  def tearDown(self):
+    pass
+
   def test_devices(self):
-    adb_server = simpleadb.AdbServer()
-    devices = adb_server.devices()
+    devices = self.__adb.devices()
     emulator = devices[0]
     self.assertTrue(TEST_DEVICE_ID in emulator.get_id())
 
@@ -55,22 +52,27 @@ class AdbServerTest(unittest.TestCase):
 
   def test_get_serialno(self):
     device = simpleadb.AdbDevice(TEST_DEVICE_ID)
+    device.root()
     test_device_id = device.get_serialno()
     self.assertEqual(test_device_id, TEST_DEVICE_ID)
 
   def test_tap(self):
     device = simpleadb.AdbDevice(TEST_DEVICE_ID)
+    device.root()
     res = device.tap(1, 1)
     self.assertEqual(res, 0)
 
   def test_install(self):
     device = simpleadb.AdbDevice(TEST_DEVICE_ID)
+    device.root()
+    device.remount()
     res = device.install(DUMMY_APK_NAME)
     self.assertEqual(res, 0)
     res = device.uninstall(DUMMY_PACKAGE_NAME)
     self.assertEqual(res, 0)
 
   def test_setprop(self):
+    device.root()
     device = simpleadb.AdbDevice(TEST_DEVICE_ID)
     res = device.setprop("dummy_prop", "true")
     self.assertEqual(res, 0)
@@ -80,6 +82,7 @@ class AdbServerTest(unittest.TestCase):
     dest = '/sdcard/'
 
     device = simpleadb.AdbDevice(TEST_DEVICE_ID)
+    device.root()
     os.system('touch ' + filename)
     res = device.push(filename, dest)
     self.assertEqual(res, 0)
@@ -92,11 +95,13 @@ class AdbServerTest(unittest.TestCase):
 
   def test_get_state(self):
     device = simpleadb.AdbDevice(TEST_DEVICE_ID)
+    device.root()
     state = device.get_state()
     self.assertEqual(state, 'device')
 
   def test_available(self):
     device = simpleadb.AdbDevice(TEST_DEVICE_ID)
+    device.root()
     self.assertTrue(device.is_available())
 
   def test_no_available(self):
@@ -105,11 +110,13 @@ class AdbServerTest(unittest.TestCase):
 
   def test_wait_for_device(self):
     device = simpleadb.AdbDevice(TEST_DEVICE_ID)
+    device.root()
     res = device.wait_for_device()
     self.assertEqual(0, res)
 
   def test_wait_for_device_timeout(self):
     device = simpleadb.AdbDevice(TEST_DEVICE_ID)
+    device.root()
     res = device.wait_for_device(timeout=1)
     self.assertEqual(0, res)
 
@@ -118,16 +125,9 @@ class AdbServerTest(unittest.TestCase):
       device = simpleadb.AdbDevice('dummy-device')
       device.wait_for_device(timeout=1)
 
-  def test_available(self):
-    device = simpleadb.AdbDevice(TEST_DEVICE_ID)
-    self.assertTrue(device.is_available())
-
-  def test_no_available(self):
-    device = simpleadb.AdbDevice('dummy_id')
-    self.assertFalse(device.is_available())
-
   def test_adb_shell(self):
     device = simpleadb.AdbDevice(TEST_DEVICE_ID)
+    device.root()
     res = device.shell('input text 42')
     self.assertEqual(0, res)
 
