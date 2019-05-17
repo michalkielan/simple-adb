@@ -44,32 +44,32 @@ class AdbServerTest(unittest.TestCase):
     res = device.root()
     self.assertEqual(res, 0)
     self.assertTrue(device.is_root())
+#
+#  def test_get_id(self):
+#    device = simpleadb.AdbDevice(TEST_DEVICE_ID)
+#    test_device_id = device.get_id()
+#    self.assertEqual(test_device_id, TEST_DEVICE_ID)
+#
+#  def test_get_serialno(self):
+#    device = simpleadb.AdbDevice(TEST_DEVICE_ID)
+#    device.root()
+#    test_device_id = device.get_serialno()
+#    self.assertEqual(test_device_id, TEST_DEVICE_ID)
+#
+#  def test_tap(self):
+#    device = simpleadb.AdbDevice(TEST_DEVICE_ID)
+#    device.root()
+#    res = device.tap(1, 1)
+#    self.assertEqual(res, 0)
 
-  def test_get_id(self):
-    device = simpleadb.AdbDevice(TEST_DEVICE_ID)
-    test_device_id = device.get_id()
-    self.assertEqual(test_device_id, TEST_DEVICE_ID)
-
-  def test_get_serialno(self):
-    device = simpleadb.AdbDevice(TEST_DEVICE_ID)
-    device.root()
-    test_device_id = device.get_serialno()
-    self.assertEqual(test_device_id, TEST_DEVICE_ID)
-
-  def test_tap(self):
-    device = simpleadb.AdbDevice(TEST_DEVICE_ID)
-    device.root()
-    res = device.tap(1, 1)
-    self.assertEqual(res, 0)
-
-  def test_install(self):
-    device = simpleadb.AdbDevice(TEST_DEVICE_ID)
-    device.root()
-    device.remount()
-    res = device.install(DUMMY_APK_NAME)
-    self.assertEqual(res, 0)
-    res = device.uninstall(DUMMY_PACKAGE_NAME)
-    self.assertEqual(res, 0)
+#  def test_install(self):
+#    device = simpleadb.AdbDevice(TEST_DEVICE_ID)
+#    device.root()
+#    device.remount()
+#    res = device.install(DUMMY_APK_NAME)
+#    self.assertEqual(res, 0)
+#    res = device.uninstall(DUMMY_PACKAGE_NAME)
+#    self.assertEqual(res, 0)
 
   def test_setprop(self):
     device.root()
@@ -137,9 +137,9 @@ class AdbServerTest(unittest.TestCase):
     self.assertEqual(res, 0)
     self.assertFalse(device.is_root())
 
-  def test_restart_server(self):
-    adb = simpleadb.AdbServer('4242')
-    res = adb.kill()
-    self.assertEqual(res, 0)
-    res = adb.start('1234')
-    self.assertEqual(res, 0)
+#  def test_restart_server(self):
+#    adb = simpleadb.AdbServer('4242')
+#    res = adb.kill()
+#    self.assertEqual(res, 0)
+#    res = adb.start('1234')
+#    self.assertEqual(res, 0)

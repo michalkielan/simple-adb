@@ -43,12 +43,12 @@ before_script:
   - adb shell input keyevent 82 &
 
 script:
-  - git clone https://github.com/michalkielan/AndroidDummyApp.git
-  - cd AndroidDummyApp
-  - ./gradlew build
-  - find . | grep apk
-  - cd ..
-  - cp AndroidDummyApp/app/build/outputs/apk/debug/app-debug.apk ./tests
+  #  - git clone https://github.com/michalkielan/AndroidDummyApp.git
+  #  - cd AndroidDummyApp
+  #  - ./gradlew build
+  #  - find . | grep apk
+  #  - cd ..
+  #  - cp AndroidDummyApp/app/build/outputs/apk/debug/app-debug.apk ./tests
   - python setup.py install
   - coverage run --source=simpleadb setup.py test
     #  - coverage run --source=simpleadb/simpleadb tests/test_simpleadb.py
