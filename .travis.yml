@@ -24,7 +24,7 @@ android:
    - 'android-sdk-license-.+'
 
 install:
-  - sudo pip install pylint coveralls
+  - sudo pip install pylint coveralls pytest
 
 env:
   global:
@@ -51,10 +51,10 @@ script:
   - cp AndroidDummyApp/app/build/outputs/apk/debug/app-debug.apk ./tests
   - sudo python setup.py install
     #  - coverage run --source=simpleadb/simpleadb tests/test_simpleadb.py
-    # - coverage run --branch --source=simpleadb -m pytest tests/test_simpleadb.py
-    #- coverage report -m
-  - coverage run --source=simpleadb setup.py test
-  - coveralls
+  - coverage run --branch --source=simpleadb -m pytest tests/test_simpleadb.py
+  - coverage report -m
+    #  - coverage run --source=simpleadb setup.py test
+    #- coveralls
 
 after_success:
   - coveralls
