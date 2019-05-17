@@ -1,4 +1,8 @@
 from setuptools import setup, find_packages
+import sys
+
+if sys.version_info < (3,5):
+  sys.exit('Error, python < 3.5 is not supported')
 
 with open('README.md') as f:
   readme = f.read()
