@@ -115,23 +115,12 @@ class AdbServerTest(unittest.TestCase):
     device = simpleadb.AdbDevice('dummy_id')
     self.assertFalse(device.is_available())
 
-#  def test_wait_for_device(self):
-#    device = simpleadb.AdbDevice(TEST_DEVICE_ID)
-#    device.root()
-#    res = device.wait_for_device()
-#    self.assertEqual(0, res)
-
   def test_wait_for_device_timeout(self):
     device = simpleadb.AdbDevice(TEST_DEVICE_ID)
     device.root()
     res = device.wait_for_device(timeout=1)
     self.assertEqual(0, res)
 
-#  def test_wait_for_device_failed(self):
-#    with self.assertRaises(subprocess.TimeoutExpired):
-#      device = simpleadb.AdbDevice('dummy-device')
-#      device.wait_for_device(timeout=1)
-#
   def test_adb_shell(self):
     device = simpleadb.AdbDevice(TEST_DEVICE_ID)
     device.root()
@@ -142,11 +131,3 @@ class AdbServerTest(unittest.TestCase):
     device = simpleadb.AdbDevice(TEST_DEVICE_ID)
     res = device.unroot()
     self.assertEqual(res, 0)
-#    self.assertFalse(device.is_root())
-
-#  def test_restart_server(self):
-#    adb = simpleadb.AdbServer('4242')
-#    res = adb.kill()
-#    self.assertEqual(res, 0)
-#    res = adb.start('1234')
-#    self.assertEqual(res, 0)
