@@ -48,6 +48,7 @@ script:
   - find . | grep apk
   - cd ..
   - cp AndroidDummyApp/app/build/outputs/apk/debug/app-debug.apk ./tests
+  - cp AndroidDummyApp/app/build/outputs/apk/debug/app-debug.apk .
   - python setup.py install
   - tox
   - coverage report -m
