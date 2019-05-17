@@ -16,7 +16,7 @@
 >>> devices = adb_server.devices()
 >>> emulator = devices[0]
 >>> emulator
-emulator-5554
+'emulator-5554'
 >>> emulator.root()
 restarting adbd as root
 0
