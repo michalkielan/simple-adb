@@ -30,6 +30,7 @@ env:
   global:
     - ADB_INSTALL_TIMEOUT=8
     - TEST_DEVICE_ID=emulator-5554
+    - TOXENV=py35
 
 before_script:
   - pyenv install 3.5.0
