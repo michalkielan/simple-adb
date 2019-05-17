@@ -24,7 +24,7 @@ android:
    - 'android-sdk-license-.+'
 
 install:
-  - sudo pip install pylint coveralls pytest tox-travis
+  - sudo pip install pylint python-coveralls pytest tox-travis
 
 env:
   global:

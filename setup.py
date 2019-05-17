@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 import sys
 
 if sys.version_info < (3,0):
-  sys.exit('Error, python < 3.0 is not supported')
+  print('Error, python < 3.0 is not supported')
 
 with open('README.md') as f:
   readme = f.read()
@@ -20,5 +20,6 @@ setup(
   url='https://github.com/michalkielan/simple-adb',
   license=license,
   packages=find_packages(exclude=('tests', 'docs')),
+  python_requires='>3.4.0',
   test_suite='tests',
 )
