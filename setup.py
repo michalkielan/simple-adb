@@ -4,11 +4,11 @@ import sys
 if sys.version_info < (3,0):
   print('Error, python < 3.0 is not supported')
 
-with open('README.md') as f:
-  readme = f.read()
-
-with open('LICENSE') as f:
-  license = f.read()
+#with open('README.md') as f:
+#  readme = f.read()
+#
+#with open('LICENSE') as f:
+#  license = f.read()
 
 setup(
   name='simpleadb',
