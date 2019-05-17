@@ -16,7 +16,6 @@ DUMMY_PACKAGE_NAME = 'com.dummy_app.dummy'
 class AdbServerTest(unittest.TestCase):
   def setUp(self):
     pass
-  #  self.__adb = simpleadb.AdbServer()
 
   def tearDown(self):
     pass
@@ -45,102 +44,102 @@ class AdbServerTest(unittest.TestCase):
     res = device.root()
     self.assertEqual(res, 0)
     self.assertTrue(device.is_root())
-#
-#  def test_get_id(self):
-#    device = simpleadb.AdbDevice(TEST_DEVICE_ID)
-#    test_device_id = device.get_id()
-#    self.assertEqual(test_device_id, TEST_DEVICE_ID)
-#
-#  def test_get_serialno(self):
-#    device = simpleadb.AdbDevice(TEST_DEVICE_ID)
-#    device.root()
-#    test_device_id = device.get_serialno()
-#    self.assertEqual(test_device_id, TEST_DEVICE_ID)
-#
-#  def test_tap(self):
-#    device = simpleadb.AdbDevice(TEST_DEVICE_ID)
-#    device.root()
-#    res = device.tap(1, 1)
-#    self.assertEqual(res, 0)
 
-#  def test_install(self):
-#    device = simpleadb.AdbDevice(TEST_DEVICE_ID)
-#    device.root()
-#    device.remount()
-#    res = device.install(DUMMY_APK_NAME)
-#    self.assertEqual(res, 0)
-#    res = device.uninstall(DUMMY_PACKAGE_NAME)
-#    self.assertEqual(res, 0)
+  def test_get_id(self):
+    device = simpleadb.AdbDevice(TEST_DEVICE_ID)
+    test_device_id = device.get_id()
+    self.assertEqual(test_device_id, TEST_DEVICE_ID)
 
-#  def test_setprop(self):
-#    device.root()
-#    device = simpleadb.AdbDevice(TEST_DEVICE_ID)
-#    res = device.setprop("dummy_prop", "true")
-#    self.assertEqual(res, 0)
-#
-#  def test_push_pull(self):
-#    filename = 'dummy_file'
-#    dest = '/sdcard/'
-#
-#    device = simpleadb.AdbDevice(TEST_DEVICE_ID)
-#    device.root()
-#    os.system('touch ' + filename)
-#    res = device.push(filename, dest)
-#    self.assertEqual(res, 0)
-#
-#    os.remove(filename)
-#    self.assertFalse(os.path.isfile(filename))
-#    res = device.pull(dest + filename)
-#    self.assertEqual(res, 0)
-#    self.assertTrue(os.path.isfile(filename))
-#
-#  def test_get_state(self):
-#    device = simpleadb.AdbDevice(TEST_DEVICE_ID)
-#    device.root()
-#    state = device.get_state()
-#    self.assertEqual(state, 'device')
-#
-#  def test_available(self):
-#    device = simpleadb.AdbDevice(TEST_DEVICE_ID)
-#    device.root()
-#    self.assertTrue(device.is_available())
-#
-#  def test_no_available(self):
-#    device = simpleadb.AdbDevice('dummy_id')
-#    self.assertFalse(device.is_available())
-#
-#  def test_wait_for_device(self):
-#    device = simpleadb.AdbDevice(TEST_DEVICE_ID)
-#    device.root()
-#    res = device.wait_for_device()
-#    self.assertEqual(0, res)
-#
-#  def test_wait_for_device_timeout(self):
-#    device = simpleadb.AdbDevice(TEST_DEVICE_ID)
-#    device.root()
-#    res = device.wait_for_device(timeout=1)
-#    self.assertEqual(0, res)
-#
-#  def test_wait_for_device_failed(self):
-#    with self.assertRaises(subprocess.TimeoutExpired):
-#      device = simpleadb.AdbDevice('dummy-device')
-#      device.wait_for_device(timeout=1)
-#
-#  def test_adb_shell(self):
-#    device = simpleadb.AdbDevice(TEST_DEVICE_ID)
-#    device.root()
-#    res = device.shell('input text 42')
-#    self.assertEqual(0, res)
-#
-#  def test_unroot(self):
-#    device = simpleadb.AdbDevice(TEST_DEVICE_ID)
-#    res = device.unroot()
-#    self.assertEqual(res, 0)
-#    self.assertFalse(device.is_root())
-#
-#  def test_restart_server(self):
-#    adb = simpleadb.AdbServer('4242')
-#    res = adb.kill()
-#    self.assertEqual(res, 0)
-#    res = adb.start('1234')
-#    self.assertEqual(res, 0)
+  def test_get_serialno(self):
+    device = simpleadb.AdbDevice(TEST_DEVICE_ID)
+    device.root()
+    test_device_id = device.get_serialno()
+    self.assertEqual(test_device_id, TEST_DEVICE_ID)
+
+  def test_tap(self):
+    device = simpleadb.AdbDevice(TEST_DEVICE_ID)
+    device.root()
+    res = device.tap(1, 1)
+    self.assertEqual(res, 0)
+
+  def test_install(self):
+    device = simpleadb.AdbDevice(TEST_DEVICE_ID)
+    device.root()
+    device.remount()
+    res = device.install(DUMMY_APK_NAME)
+    self.assertEqual(res, 0)
+    res = device.uninstall(DUMMY_PACKAGE_NAME)
+    self.assertEqual(res, 0)
+
+  def test_setprop(self):
+    device.root()
+    device = simpleadb.AdbDevice(TEST_DEVICE_ID)
+    res = device.setprop("dummy_prop", "true")
+    self.assertEqual(res, 0)
+
+  def test_push_pull(self):
+    filename = 'dummy_file'
+    dest = '/sdcard/'
+
+    device = simpleadb.AdbDevice(TEST_DEVICE_ID)
+    device.root()
+    os.system('touch ' + filename)
+    res = device.push(filename, dest)
+    self.assertEqual(res, 0)
+
+    os.remove(filename)
+    self.assertFalse(os.path.isfile(filename))
+    res = device.pull(dest + filename)
+    self.assertEqual(res, 0)
+    self.assertTrue(os.path.isfile(filename))
+
+  def test_get_state(self):
+    device = simpleadb.AdbDevice(TEST_DEVICE_ID)
+    device.root()
+    state = device.get_state()
+    self.assertEqual(state, 'device')
+
+  def test_available(self):
+    device = simpleadb.AdbDevice(TEST_DEVICE_ID)
+    device.root()
+    self.assertTrue(device.is_available())
+
+  def test_no_available(self):
+    device = simpleadb.AdbDevice('dummy_id')
+    self.assertFalse(device.is_available())
+
+  def test_wait_for_device(self):
+    device = simpleadb.AdbDevice(TEST_DEVICE_ID)
+    device.root()
+    res = device.wait_for_device()
+    self.assertEqual(0, res)
+
+  def test_wait_for_device_timeout(self):
+    device = simpleadb.AdbDevice(TEST_DEVICE_ID)
+    device.root()
+    res = device.wait_for_device(timeout=1)
+    self.assertEqual(0, res)
+
+  def test_wait_for_device_failed(self):
+    with self.assertRaises(subprocess.TimeoutExpired):
+      device = simpleadb.AdbDevice('dummy-device')
+      device.wait_for_device(timeout=1)
+
+  def test_adb_shell(self):
+    device = simpleadb.AdbDevice(TEST_DEVICE_ID)
+    device.root()
+    res = device.shell('input text 42')
+    self.assertEqual(0, res)
+
+  def test_unroot(self):
+    device = simpleadb.AdbDevice(TEST_DEVICE_ID)
+    res = device.unroot()
+    self.assertEqual(res, 0)
+    self.assertFalse(device.is_root())
+
+  def test_restart_server(self):
+    adb = simpleadb.AdbServer('4242')
+    res = adb.kill()
+    self.assertEqual(res, 0)
+    res = adb.start('1234')
+    self.assertEqual(res, 0)
