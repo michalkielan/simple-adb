@@ -6,10 +6,7 @@ import subprocess
 import simpleadb
 
 def get_test_device_id():
-  try:
-    return os.getenv('TEST_DEVICE_ID')
-  except KeyError:
-    sys.exit('TEST_DEVICE_ID not found export device id')
+  return 'emulator-5554'
 
 TEST_DEVICE_ID = get_test_device_id()
 DUMMY_APK_NAME = 'app-debug.apk'
