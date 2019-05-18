@@ -4,8 +4,13 @@ sudo: required
 
 matrix:
   include:
-   - env: ADB_INSTALL_TIMEOUT=8 TOXENV=py35 PYTHON_VERSION=3.5.0
-   - env: ADB_INSTALL_TIMEOUT=8 TOXENV=py36 PYTHON_VERSION=3.6.0
+   - env: PYTHON_VERSION=3.5.0 TOXENV=py35
+   - env: PYTHON_VERSION=3.6.0 TOXENV=py36
+   - env: PYTHON_VERSION=3.7.0 TOXENV=py37
+
+env:
+  global:
+    - ADB_INSTALL_TIMEOUT=8
 
 addons:
   apt:
@@ -30,10 +35,10 @@ android:
 
 install:
   - sudo pip install pylint python-coveralls pytest tox-travis
-    #####
+
 before_script:
   - pyenv install $PYTHON_VERSION
-  - pyenv global $PYTHON_VERSION 
+  - pyenv global $PYTHON_VERSION
   - pylint simpleadb/simpleadb.py simpleadb/adbprocess.py
   - android list target
   - echo no | android create avd --force -n test -t android-24 --abi armeabi-v7a -c 100M
