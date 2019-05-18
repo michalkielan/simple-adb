@@ -3,7 +3,7 @@ import unittest
 import simpleadb
 
 def get_test_device_id():
-  return os.environ['TEST_DEVICE_ID']:
+  return os.environ['TEST_DEVICE_ID']
 
 TEST_DEVICE_ID = get_test_device_id()
 
