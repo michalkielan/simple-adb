@@ -27,17 +27,18 @@ install:
   - sudo pip install pylint python-coveralls pytest tox-travis
 
 matrix:
-  env:
-    global:
-      - ADB_INSTALL_TIMEOUT=8
-      - TOXENV=py35
-      - PYTHON_VERSION=3.5.0
-
-  env:
-    global:
-      - ADB_INSTALL_TIMEOUT=8
-      - TOXENV=py36
-      - PYTHON_VERSION=3.6.0
+  - PYTHON_3_5_0=1
+    env:
+      global:
+        - ADB_INSTALL_TIMEOUT=8
+        - TOXENV=py35
+        - PYTHON_VERSION=3.5.0
+  - PYTHON_3_6_0=1
+    env:
+      global:
+        - ADB_INSTALL_TIMEOUT=8
+        - TOXENV=py36
+        - PYTHON_VERSION=3.6.0
 
 before_script:
   - pyenv install $PYTHON_VERSION
