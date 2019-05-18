@@ -12,8 +12,23 @@ TEST_DEVICE_ID = get_test_device_id()
 DUMMY_APK_NAME = 'app-debug.apk'
 DUMMY_PACKAGE_NAME = 'com.dummy_app.dummy'
 
-
 class AdbServerTest(unittest.TestCase):
+  def setUp(self):
+    pass
+
+  def tearDown(self):
+    pass
+
+  def test_devices(self):
+    adb = simpleadb.AdbServer()
+    devices = adb.devices()
+    if not devices:
+      self.fail('No adb devices found')
+    emulator = devices[0]
+    self.assertTrue(TEST_DEVICE_ID in emulator.get_id())
+
+
+class AdbDeviceTest(unittest.TestCase):
   def setUp(self):
     pass
 
