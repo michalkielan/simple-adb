@@ -5,8 +5,11 @@ sudo: required
 matrix:
   include:
    - env: PYTHON_VERSION=3.5.0 TOXENV=py35
+   - name: Python: 3.5.0
    - env: PYTHON_VERSION=3.6.0 TOXENV=py36
+   - name: Python: 3.6.0
    - env: PYTHON_VERSION=3.7.0 TOXENV=py37
+   - name: Python: 3.7.0
 
 env:
   global:
