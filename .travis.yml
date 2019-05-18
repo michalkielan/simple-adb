@@ -34,10 +34,7 @@ android:
 
 install:
   - sudo pip install --upgrade
-  - sudo pip install tox-travis
-  - sudo pip install pylint
-  - sudo pip install python-coveralls
-  - sudo pip install pytest 
+  - sudo pip install pylint python-coveralls pytest tox-travis
 
 before_script:
   - pyenv install $PYTHON_VERSION
