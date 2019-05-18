@@ -33,7 +33,11 @@ android:
    - 'android-sdk-license-.+'
 
 install:
-  - sudo pip install pylint python-coveralls pytest tox-travis
+  - sudo pip install --upgrade
+  - sudo pip install tox-travis
+  - sudo pip install pylint
+  - sudo pip install python-coveralls
+  - sudo pip install pytest 
 
 before_script:
   - pyenv install $PYTHON_VERSION
