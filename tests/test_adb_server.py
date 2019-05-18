@@ -3,9 +3,10 @@ import unittest
 import simpleadb
 
 def get_test_device_id():
-  return 'emulator-5554'
+  return os.environ['TEST_DEVICE_ID']:
 
 TEST_DEVICE_ID = get_test_device_id()
+
 
 class AdbServerTest(unittest.TestCase):
   def setUp(self):
@@ -14,7 +15,7 @@ class AdbServerTest(unittest.TestCase):
   def tearDown(self):
     pass
 
-  def test_devices(self):
+  def test_adb_devices(self):
     adb = simpleadb.AdbServer()
     devices = adb.devices()
     if not devices:
