@@ -26,14 +26,22 @@ android:
 install:
   - sudo pip install pylint python-coveralls pytest tox-travis
 
-env:
-  global:
-    - ADB_INSTALL_TIMEOUT=8
-    - TOXENV=py35
+matrix:
+  env:
+    global:
+      - ADB_INSTALL_TIMEOUT=8
+      - TOXENV=py35
+      - PYTHON_VERSION=3.5.0
+
+  env:
+    global:
+      - ADB_INSTALL_TIMEOUT=8
+      - TOXENV=py36
+      - PYTHON_VERSION=3.6.0
 
 before_script:
-  - pyenv install 3.5.0
-  - pyenv global 3.5.0
+  - pyenv install $PYTHON_VERSION
+  - pyenv global $PYTHON_VERSION 
   - pylint simpleadb/simpleadb.py simpleadb/adbprocess.py
   - android list target
   - echo no | android create avd --force -n test -t android-24 --abi armeabi-v7a -c 100M
