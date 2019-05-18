@@ -33,7 +33,7 @@ matrix:
         - ADB_INSTALL_TIMEOUT=8
         - TOXENV=py35
         - PYTHON_VERSION=3.5.0
-  - PYTHON_3_6_0=1
+  - PYTHON_3_6_0=2
     env:
       global:
         - ADB_INSTALL_TIMEOUT=8
