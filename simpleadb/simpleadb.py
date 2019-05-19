@@ -253,8 +253,7 @@ class AdbDevice(object):
         remote,
     ])
     return self.shell(cmd)
-
-
+  
   def tap(self, x, y):
     """ Tap screen
 
