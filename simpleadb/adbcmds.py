@@ -31,6 +31,7 @@ WAIT_FOR_DEVICE = 'wait-for-device'
 KILL_SERVER = 'kill-server'
 START_SERVER = 'start-server'
 TCPIP = 'tcpip'
+RM = 'rm'
 GET_STATE = 'get-state'
 VERSION = 'version'
 

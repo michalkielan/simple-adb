@@ -352,6 +352,7 @@ good-names=i,
            ex,
            Run,
            ip,
+           rm,
            _
 
 # Include a hint for the correct naming format with invalid-name.

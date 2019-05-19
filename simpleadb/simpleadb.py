@@ -237,6 +237,22 @@ class AdbDevice(object):
     ])
     return self.__check_call(cmd)
 
+  def rm(self, remote):
+    """Remove file in adb device
+
+      Args:
+        Remote path
+      Returns:
+        0 if success
+      Raises:
+        CalledProcessError: when failed
+    """
+    cmd = ' '.join([
+        adbcmds.RM,
+        remote,
+    ])
+    return self.shell(cmd)
+
   def tap(self, x, y):
     """ Tap screen
 
