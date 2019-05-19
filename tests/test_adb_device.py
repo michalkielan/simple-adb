@@ -1,7 +1,6 @@
 #!/bin/python3
 import unittest
 import os
-import sys
 import subprocess
 import simpleadb
 
