@@ -409,7 +409,7 @@ class AdbDevice(object):
         TimeoutExpired: when timeout
     """
     cmd = ' '.join([
-        adbcmds.ADB_PREFIX,
+        adbcmds.ADB,
         '-s',
         self.get_id(),
         adbcmds.WAIT_FOR_DEVICE,
