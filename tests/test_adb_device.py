@@ -1,12 +1,11 @@
 #!/bin/python3
 import unittest
 import os
-import sys
 import subprocess
 import simpleadb
 
 def get_test_device_id():
-  return 'emulator-5554'
+  return os.environ['TEST_DEVICE_ID']
 
 TEST_DEVICE_ID = get_test_device_id()
 DUMMY_APK_NAME = 'app-debug.apk'
