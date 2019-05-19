@@ -80,6 +80,15 @@ class AdbDeviceTest(unittest.TestCase):
     res = device.setprop("dummy_prop", "true")
     self.assertEqual(res, 0)
 
+  def test_verity(self):
+    device = simpleadb.AdbDevice(TEST_DEVICE_ID)
+    if not device.is_root():
+      device.root()
+    res = device.enable_verity(True)
+    self.assertEqual(res, 0)
+    res = device.enable_verity(False)
+    self.assertEqual(res, 0)
+
   def test_push_pull(self):
     filename = 'dummy_file'
     dest = '/sdcard/'

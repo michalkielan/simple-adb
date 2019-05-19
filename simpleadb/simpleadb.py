@@ -323,6 +323,22 @@ class AdbDevice(object):
     ])
     return self.shell(cmd)
 
+  def enable_verity(self, enabled):
+    """Enable/Disable verity
+
+      Args:
+        Enable: True - enable, False - disable
+      Returns:
+        0 if success
+      Raises:
+        CalledProcessError: when failed
+    """
+    cmd = (
+        adbcmds.ENABLE_VERITY if enabled
+        else adbcmds.DISABLE_VERITY
+    )
+    return self.__check_call(cmd)
+
   #file transfer
   def push(self, source, dest):
     """Copy local files/dirs to device

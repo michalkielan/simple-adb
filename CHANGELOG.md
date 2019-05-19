@@ -26,6 +26,8 @@
   - disconnect
   - wait for device
   - shell
+  - enable verity
+  - disable verity
 - adb server supported commands:
   - devices
   - kill server
