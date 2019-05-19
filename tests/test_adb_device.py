@@ -6,7 +6,7 @@ import subprocess
 import simpleadb
 
 def get_test_device_id():
-  return os.environ['TEST_DEVICE_ID']:
+  return 'emulator-5554'
 
 TEST_DEVICE_ID = get_test_device_id()
 DUMMY_APK_NAME = 'app-debug.apk'
