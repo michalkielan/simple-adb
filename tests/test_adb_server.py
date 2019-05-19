@@ -7,7 +7,6 @@ def get_test_device_id():
 
 TEST_DEVICE_ID = get_test_device_id()
 
-
 class AdbServerTest(unittest.TestCase):
   def setUp(self):
     pass
@@ -15,7 +14,7 @@ class AdbServerTest(unittest.TestCase):
   def tearDown(self):
     pass
 
-  def test_adb_devices(self):
+  def test_devices(self):
     adb = simpleadb.AdbServer()
     devices = adb.devices()
     if not devices:
