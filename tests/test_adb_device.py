@@ -117,7 +117,7 @@ class AdbDeviceTest(unittest.TestCase):
     filename = '/sdcard/no_existing_file'
     device = simpleadb.AdbDevice(TEST_DEVICE_ID)
     
-    with self.assertRaises(subproces.CalledProcessError):
+    with self.assertRaises(subprocess.CalledProcessError):
       res = device.rm(filename)
       self.assertNotEqual(res, 0)
 
