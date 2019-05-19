@@ -1,4 +1,5 @@
 """ Python wrapper for adb protocol """
+import time
 from . import adbprocess
 from . import adbcmds
 
@@ -252,7 +253,7 @@ class AdbDevice(object):
         remote,
     ])
     return self.shell(cmd)
-
+  
   def tap(self, x, y):
     """ Tap screen
 
@@ -272,26 +273,35 @@ class AdbDevice(object):
     return self.shell(cmd)
 
   def screencap(self, **options):
-    remote_default = '/sdcard'
-    local_default = '.'
+    """ Screencap
+
+      Args:
+        Options: remote: remote path
+        Options: local: local path
+      Returns:
+        0 if success
+      Raises:
+        CalledProcessError: when failed
+    """
+    remote_default = '/sdcard/screencap.png'
+    local_default = 'screencap'
+    local_default += time.strftime("%Y%m%d-%H%M%S")
+    local_default += '.png'
+
     remote_arg = options.get('remote')
     local_arg = options.get('local')
 
-    remote = remote_arg if remote_arg else remote_default 
-    local = local_arg if local_arg else local_default 
+    remote = remote_arg if remote_arg else remote_default
+    local = local_arg if local_arg else local_default
 
     cmd = ' '.join([
         adbcmds.SCREENCAP,
-        local
+        remote
     ])
     self.shell(cmd)
     self.pull(remote, local)
-    return self.rm(remote)
-
-  def screenrecord(self, **options):
-    remote_default = '/sdcard'
-    local_default = '.'
-    pass
+    self.rm(remote)
+    return 0
 
   def broadcast(self, intent):
     """ Send broadcast
