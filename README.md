@@ -5,8 +5,9 @@
 > Object oriented python wrapper for adb protocol
 
 ## Install
-
-`$ python setup.py install`
+```
+$ python setup.py install
+```
 
 ## Usage
 
