@@ -109,7 +109,7 @@ class AdbDeviceTest(unittest.TestCase):
     os.remove(filename)
     device.rm(dest + filename)
     
-    with self.assertRaises(subproces.CalledProcessError):
+    with self.assertRaises(subprocess.CalledProcessError):
       res = device.pull(dest + filename)
       self.assertNotEqual(res, 0)
 
