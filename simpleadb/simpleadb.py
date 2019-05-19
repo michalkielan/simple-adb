@@ -1,6 +1,6 @@
 """ Python wrapper for adb protocol """
 from . import adbprocess
-from . import adbprefixes
+from . import adbcmds
 
 def get_encoding_format():
   """Return terminal encoding format
@@ -38,21 +38,21 @@ class AdbDevice(object):
 
   def __call(self, args):
     cmd = ' '.join([
-        adbprefixes.get_set_device(self.get_id()),
+        adbcmds.get_set_device(self.get_id()),
         args,
     ])
     return adbprocess.call(cmd)
 
   def __check_call(self, args):
     cmd = ' '.join([
-        adbprefixes.get_set_device(self.get_id()),
+        adbcmds.get_set_device(self.get_id()),
         args,
     ])
     return adbprocess.check_call(cmd)
 
   def __check_output(self, args):
     cmd = ' '.join([
-        adbprefixes.get_set_device(self.get_id()),
+        adbcmds.get_set_device(self.get_id()),
         args,
     ])
     output = adbprocess.check_output(cmd)
@@ -76,7 +76,7 @@ class AdbDevice(object):
       Raises:
         CalledProcessError: when failed
     """
-    cmd = adbprefixes.get_get_state()
+    cmd = adbcmds.GET_STATE
     return self.__check_output(cmd)
 
   def get_serialno(self):
@@ -87,7 +87,7 @@ class AdbDevice(object):
       Raises:
         CalledProcessError: when failed
     """
-    cmd = adbprefixes.get_get_serialno()
+    cmd = adbcmds.GET_SERIALNO
     return self.__check_output(cmd)
 
   def is_available(self):
@@ -112,7 +112,7 @@ class AdbDevice(object):
       Raises:
         CalledProcessError: when failed
     """
-    cmd = adbprefixes.get_devpath()
+    cmd = adbcmds.DEVPATH
     return self.__check_output(cmd)
 
   def remount(self):
@@ -123,7 +123,7 @@ class AdbDevice(object):
       Raises:
         CalledProcessError: when failed
     """
-    cmd = adbprefixes.get_remount()
+    cmd = adbcmds.REMOUNT
     self.__check_call(cmd)
 
   def reboot(self):
@@ -134,7 +134,7 @@ class AdbDevice(object):
       Raises:
         CalledProcessError: when failed
     """
-    cmd = adbprefixes.get_reboot()
+    cmd = adbcmds.REBOOT
     self.__check_call(cmd)
 
   def root(
@@ -150,7 +150,7 @@ class AdbDevice(object):
         CalledProcessError: when failed
         TimeoutExpired: when timeout
     """
-    cmd = adbprefixes.get_root()
+    cmd = adbcmds.ROOT
     res = self.__check_call(cmd)
     if res == 0:
       return self.wait_for_device(timeout=timeout_sec)
@@ -166,7 +166,7 @@ class AdbDevice(object):
       Raises:
         CalledProcessError: when failed
     """
-    cmd = adbprefixes.get_unroot()
+    cmd = adbcmds.UNROOT
     res = self.__check_call(cmd)
     if res == 0:
       return self.wait_for_device(timeout=timeout_sec)
@@ -180,7 +180,7 @@ class AdbDevice(object):
     """
     try_su = 'su 0 id -u 2>/dev/null'
     cmd = ' '.join([
-        adbprefixes.get_shell(),
+        adbcmds.SHELL,
         try_su,
     ])
     res = self.__call(cmd)
@@ -199,7 +199,7 @@ class AdbDevice(object):
         CalledProcessError: when failed
     """
     cmd = ' '.join([
-        adbprefixes.get_install(),
+        adbcmds.INSTALL,
         apk,
     ])
     return self.__check_call(cmd)
@@ -215,7 +215,7 @@ class AdbDevice(object):
         CalledProcessError: when failed
     """
     cmd = ' '.join([
-        adbprefixes.get_uninstall(),
+        adbcmds.UNINSTALL,
         package,
     ])
     return self.__check_call(cmd)
@@ -232,7 +232,7 @@ class AdbDevice(object):
         CalledProcessError: when failed
     """
     cmd = ' '.join([
-        adbprefixes.get_shell(),
+        adbcmds.SHELL,
         args,
     ])
     return self.__check_call(cmd)
@@ -249,7 +249,7 @@ class AdbDevice(object):
         CalledProcessError: when failed
     """
     cmd = ' '.join([
-        adbprefixes.get_input_tap(),
+        adbcmds.INPUT_TAP,
         str(x),
         str(y),
     ])
@@ -283,7 +283,7 @@ class AdbDevice(object):
         CalledProcessError: when failed
     """
     cmd = ' '.join([
-        adbprefixes.get_pm_grant(),
+        adbcmds.PM_GRANT,
         package,
         permission,
     ])
@@ -336,7 +336,7 @@ class AdbDevice(object):
         CalledProcessError: when failed
     """
     cmd = ' '.join([
-        adbprefixes.get_push(),
+        adbcmds.PUSH,
         source,
         dest,
     ])
@@ -354,7 +354,7 @@ class AdbDevice(object):
         CalledProcessError: when failed
     """
     cmd = ' '.join([
-        adbprefixes.get_pull(),
+        adbcmds.PULL,
         source,
         dest,
     ])
@@ -373,7 +373,7 @@ class AdbDevice(object):
         CalledProcessError: when failed
     """
     cmd = ' '.join([
-        adbprefixes.get_connect(),
+        adbcmds.CONNECT,
         ip,
         str(port),
     ])
@@ -391,7 +391,7 @@ class AdbDevice(object):
         CalledProcessError: when failed
     """
     cmd = ' '.join([
-        adbprefixes.get_disconnect(),
+        adbcmds.DISCONNECT,
         ip,
         str(port),
     ])
@@ -409,10 +409,10 @@ class AdbDevice(object):
         TimeoutExpired: when timeout
     """
     cmd = ' '.join([
-        adbprefixes.get_adb_prefix(),
+        adbcmds.ADB,
         '-s',
         self.get_id(),
-        adbprefixes.get_wait_for_device(),
+        adbcmds.WAIT_FOR_DEVICE,
     ])
 
     timeout_sec = options.get("timeout")
@@ -448,7 +448,7 @@ class AdbServer(object):
       Raises:
         CalledProcessError: when failed
     """
-    cmd = adbprefixes.get_devices()
+    cmd = adbcmds.DEVICES
     output = adbprocess.check_output(cmd)
     devices = []
     devices_list = output.splitlines()
@@ -477,7 +477,7 @@ class AdbServer(object):
       port_arg += ' '.join(['-P', str(port)])
     cmd = ' '.join([
         port_arg,
-        adbprefixes.get_start_server(),
+        adbcmds.START_SERVER,
     ])
     res = self.__check_call(cmd)
     return res
@@ -490,7 +490,7 @@ class AdbServer(object):
       Raises:
         CalledProcessError: when failed
     """
-    cmd = adbprefixes.get_kill_server()
+    cmd = adbcmds.KILL_SERVER
     return self.__check_call(cmd)
 
   def usb(self):
@@ -501,7 +501,7 @@ class AdbServer(object):
       Raises:
         CalledProcessError: when failed
     """
-    cmd = adbprefixes.get_usb()
+    cmd = adbcmds.USB
     return self.__check_call(cmd)
 
   def tcpip(self, port):
@@ -515,7 +515,7 @@ class AdbServer(object):
         CalledProcessError: when failed
     """
     cmd = ' '.join([
-        adbprefixes.get_tcpip(),
+        adbcmds.TCPIP,
         str(port)
     ])
     return self.__check_call(cmd)
