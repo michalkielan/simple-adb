@@ -1,0 +1,36 @@
+""" List of strings with adb commands """
+
+ENV_SERVER_PORT = 'ANDROID_ADB_SERVER_PORT'
+ENV_ADB_TRACE = 'ADB_TRACE'
+ENV_ADB_VENDOR_KEYS = 'ADB_VENDOR_KEYS'
+ENV_ANDROID_SERIAL = 'ANDROID_SERIAL'
+ENV_ANDROID_LOG_TAGS = 'ANDROID_LOG_TAGS'
+
+ADB = 'adb'
+ROOT = 'root'
+UNROOT = 'unroot'
+REMOUNT = 'remount'
+REBOOT = 'reboot'
+INPUT_TAP = 'input tap'
+PM_GRANT = 'pm grant'
+USB = 'usb'
+SHELL = 'shell'
+PULL = 'pull'
+PUSH = 'push'
+UNINSTALL = 'uninstall'
+INSTALL = 'install'
+FORWARD = 'forward'
+DEVPATH = 'get-devpath'
+DEVICES = 'devices'
+GET_SERIALNO = 'get-serialno'
+DISCONNECT = 'disconnect'
+CONNECT = 'connect'
+WAIT_FOR_DEVICE = 'wait-for-device'
+KILL_SERVER = 'kill-server'
+START_SERVER = 'start-server'
+TCPIP = 'tcpip'
+GET_STATE = 'get-state'
+VERSION = 'version'
+
+def get_set_device(device_id):
+  return '-s ' + str(device_id)
