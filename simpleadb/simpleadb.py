@@ -238,7 +238,7 @@ class AdbDevice(object):
     ])
     return self.__check_call(cmd)
 
-  def rm(self, remote):
+  def rm(self, remote)
     """Remove file in adb device
 
       Args:
