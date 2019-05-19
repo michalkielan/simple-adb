@@ -1,8 +1,7 @@
 #!/bin/python3
 import unittest
 import os
-import sys
-import subprocess
+import imghdr
 import simpleadb
 
 def get_test_device_id():
@@ -63,6 +62,13 @@ class AdbDeviceTest(unittest.TestCase):
       device.root()
     res = device.tap(1, 1)
     self.assertEqual(res, 0)
+
+  def test_screencap(self):
+    filepath = './screenshot.png'
+    device = simpleadb.AdbDevice(TEST_DEVICE_ID)
+    res = device.screencap(local=filepath)
+    self.assertEqual(res, 0)
+    self.assertEqual(imghdr.what(filepath), 'png')
 
   def test_install(self):
     device = simpleadb.AdbDevice(TEST_DEVICE_ID)

@@ -285,7 +285,10 @@ class AdbDevice(object):
         CalledProcessError: when failed
     """
     remote_default = '/sdcard/screencap.png'
-    local_default = '.'
+    local_default = 'screencap'
+    local_default += time.strftime("%Y%m%d-%H%M%S")
+    local_default += '.png'
+
     remote_arg = options.get('remote')
     local_arg = options.get('local')
 
@@ -297,10 +300,7 @@ class AdbDevice(object):
         remote
     ])
     self.shell(cmd)
-    filename = 'screencap'
-    filename += time.strftime("%Y%m%d-%H%M%S")
-    filename += '.png'
-    self.pull(remote, filename)
+    self.pull(remote, local)
     self.rm(remote)
     return 0
 
