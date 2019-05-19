@@ -1,9 +1,10 @@
 #!/bin/python3
+import os
 import unittest
 import simpleadb
 
 def get_test_device_id():
-  return os.environ['TEST_DEVICE_ID']:
+  return os.environ['TEST_DEVICE_ID']
 
 TEST_DEVICE_ID = get_test_device_id()
 
@@ -22,5 +23,3 @@ class AdbServerTest(unittest.TestCase):
       self.fail('No adb devices found')
     emulator = devices[0]
     self.assertTrue(TEST_DEVICE_ID in emulator.get_id())
-
-
