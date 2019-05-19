@@ -82,8 +82,8 @@ class AdbDeviceTest(unittest.TestCase):
 
   def test_verity(self):
     device = simpleadb.AdbDevice(TEST_DEVICE_ID)
-    if not device.is_root():
-      device.root()
+    device.root()
+    device.remount()
     res = device.enable_verity(True)
     self.assertEqual(res, 0)
     res = device.enable_verity(False)
