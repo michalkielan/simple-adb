@@ -251,8 +251,7 @@ class AdbDevice(object):
         adbcmds.RM,
         remote,
     ])
-    return self.__check_call(cmd)
-
+    return self.shell(cmd)
 
   def tap(self, x, y):
     """ Tap screen

@@ -14,6 +14,7 @@ matrix:
 env:
   global:
     - ADB_INSTALL_TIMEOUT=8
+    - TEST_DEVICE_ID=emulator-5554
 
 addons:
   apt:
@@ -43,7 +44,7 @@ install:
 before_script:
   - pyenv install $PYTHON_VERSION
   - pyenv global $PYTHON_VERSION
-  - pylint simpleadb/simpleadb.py simpleadb/adbprocess.py
+  - pylint simpleadb
   - android list target
   - echo no | android create avd --force -n test -t android-24 --abi armeabi-v7a -c 100M
   - emulator -avd test -no-skin -no-window &
