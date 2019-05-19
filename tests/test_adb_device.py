@@ -97,6 +97,22 @@ class AdbDeviceTest(unittest.TestCase):
     self.assertEqual(res, 0)
     self.assertTrue(os.path.isfile(filename))
 
+  def test_remove(self):
+    filename = 'test_remove_dummy_file'
+    dest = '/sdcard/'
+
+    device = simpleadb.AdbDevice(TEST_DEVICE_ID)
+    os.system('touch ' + filename)
+    res = device.push(filename, dest)
+    self.assertEqual(res, 0)
+
+    os.remove(filename)
+    device.rm(dest + filename)
+    
+    with self.assertRaises(subproces.CalledProcessError):
+      res = device.pull(dest + filename)
+      self.assertNotEqual(res, 0)
+
   def test_get_state(self):
     device = simpleadb.AdbDevice(TEST_DEVICE_ID)
     if not device.is_root():

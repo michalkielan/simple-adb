@@ -26,6 +26,7 @@
   - disconnect
   - wait for device
   - shell
+  - rm
 - adb server supported commands:
   - devices
   - kill server
