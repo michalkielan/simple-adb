@@ -3,8 +3,9 @@ import subprocess
 from . import adbcmds
 
 class AdbProcess(object):
-  def __init__():
-      self.__adb_path = adbcmds.ADB
+"""Adb process caller"""
+  def __init__(self):
+    self.__adb_path = adbcmds.ADB
 
   def call(self, args):
     """ Call process
@@ -36,7 +37,7 @@ class AdbProcess(object):
     ])
     return subprocess.check_call(cmd, shell=True)
 
-  def check_output(self, args, adb):
+  def check_output(self, args):
     """ Call process
 
       Args:
