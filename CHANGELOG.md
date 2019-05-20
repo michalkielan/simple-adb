@@ -28,6 +28,7 @@
   - shell
   - enable verity
   - disable verity
+  - rm
 - adb server supported commands:
   - devices
   - kill server
