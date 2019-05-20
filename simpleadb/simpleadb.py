@@ -1,4 +1,5 @@
 """ Python wrapper for adb protocol """
+import time
 from . import adbprocess
 from . import adbcmds
 
@@ -270,6 +271,37 @@ class AdbDevice(object):
         str(y),
     ])
     return self.shell(cmd)
+
+  def screencap(self, **options):
+    """ Capture screenshot
+
+      Args:
+        Options: remote: remote path
+        Options: local: local path
+      Returns:
+        0 if success
+      Raises:
+        CalledProcessError: when failed
+    """
+    remote_default = '/sdcard/screencap.png'
+    local_default = 'screencap'
+    local_default += time.strftime("%Y%m%d-%H%M%S")
+    local_default += '.png'
+
+    remote_arg = options.get('remote')
+    local_arg = options.get('local')
+
+    remote = remote_arg if remote_arg else remote_default
+    local = local_arg if local_arg else local_default
+
+    cmd = ' '.join([
+        adbcmds.SCREENCAP,
+        remote
+    ])
+    self.shell(cmd)
+    self.pull(remote, local)
+    self.rm(remote)
+    return 0
 
   def broadcast(self, intent):
     """ Send broadcast

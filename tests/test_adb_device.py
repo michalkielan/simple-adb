@@ -62,6 +62,14 @@ class AdbDeviceTest(unittest.TestCase):
     res = device.tap(1, 1)
     self.assertEqual(res, 0)
 
+  def test_screencap(self):
+    filepath = './screenshot.png'
+    device = simpleadb.AdbDevice(TEST_DEVICE_ID)
+    res = device.screencap(local=filepath)
+    device.screencap()
+    self.assertEqual(res, 0)
+    self.assertTrue(os.path.isfile(filepath))
+
   def test_install(self):
     device = simpleadb.AdbDevice(TEST_DEVICE_ID)
     if not device.is_root():
@@ -124,7 +132,7 @@ class AdbDeviceTest(unittest.TestCase):
   def test_remove_failure(self):
     filename = '/sdcard/no_existing_file'
     device = simpleadb.AdbDevice(TEST_DEVICE_ID)
-    
+
     with self.assertRaises(subprocess.CalledProcessError):
       res = device.rm(filename)
       self.assertNotEqual(res, 0)

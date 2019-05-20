@@ -16,6 +16,7 @@
   - install
   - uninstall
   - tap screen
+  - screencap
   - broadcast
   - pm grant
   - set prop
