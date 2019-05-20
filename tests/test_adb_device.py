@@ -68,7 +68,6 @@ class AdbDeviceTest(unittest.TestCase):
     res = device.screencap(local=filepath)
     device.screencap()
     self.assertEqual(res, 0)
-    os.system('ls -l')
     self.assertTrue(os.path.isfile(filepath))
 
   def test_install(self):
