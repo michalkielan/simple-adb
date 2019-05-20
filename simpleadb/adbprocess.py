@@ -3,7 +3,7 @@ import subprocess
 from . import adbcmds
 
 class AdbProcess(object):
-"""Adb process caller"""
+  """Adb process caller"""
   def __init__(self):
     self.__adb_path = adbcmds.ADB
 
