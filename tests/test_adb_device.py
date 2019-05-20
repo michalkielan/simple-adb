@@ -1,7 +1,6 @@
 #!/bin/python3
 import unittest
 import os
-import imghdr
 import subprocess
 import simpleadb
 
@@ -71,7 +70,6 @@ class AdbDeviceTest(unittest.TestCase):
     self.assertEqual(res, 0)
     os.system('ls -l')
     self.assertTrue(os.path.isfile(filepath))
-    self.assertEqual(imghdr.what(filepath), 'png')
 
   def test_install(self):
     device = simpleadb.AdbDevice(TEST_DEVICE_ID)
