@@ -273,7 +273,7 @@ class AdbDevice(object):
     return self.shell(cmd)
 
   def screencap(self, **options):
-    """ Screencap
+    """ Capture screenshot
 
       Args:
         Options: remote: remote path
