@@ -68,6 +68,7 @@ class AdbDeviceTest(unittest.TestCase):
     device = simpleadb.AdbDevice(TEST_DEVICE_ID)
     res = device.screencap(local=filepath)
     self.assertEqual(res, 0)
+    os.system('ls -l')
     self.assertTrue(os.path.isfile(filepath))
     self.assertEqual(imghdr.what(filepath), 'png')
 
