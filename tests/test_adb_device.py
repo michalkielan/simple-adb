@@ -160,6 +160,26 @@ class AdbDeviceTest(unittest.TestCase):
     res = device.wait_for_device(timeout=1)
     self.assertEqual(0, res)
 
+  def test_adb_process_success(self):	
+    res = adbprocess.call('version')	
+    self.assertEqual(0, res)	
+    res = adbprocess.check_call('version')	
+    self.assertEqual(0, res)	
+    try:	
+      res = adbprocess.call('version')	
+      self.assertEqual(0, res)	
+    except subprocess.CalledProcessError:	
+      self.fail("CalledProcessError unexpectedly")	
+
+  def test_adb_process_fail(self):	
+    rand_str = 'fdstfasdgfrjwlkfjfsd'	
+    res = adbprocess.call(rand_str)	
+    self.assertNotEqual(0, res)	
+    with self.assertRaises(subprocess.CalledProcessError):	
+      adbprocess.check_call(rand_str)	
+    with self.assertRaises(subprocess.CalledProcessError):	
+      adbprocess.check_output(rand_str)
+
   def test_adb_shell(self):
     device = simpleadb.AdbDevice(TEST_DEVICE_ID)
     device.root()
