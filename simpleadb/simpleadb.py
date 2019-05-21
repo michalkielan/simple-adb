@@ -479,15 +479,7 @@ class AdbDevice(object):
         self.get_id(),
         adbcmds.WAIT_FOR_DEVICE,
     ])
-
-    timeout_sec = options.get("timeout")
-    if timeout_sec:
-      return adbprocess.subprocess.check_call(
-          cmd,
-          shell=True,
-          timeout=timeout_sec
-      )
-    return adbprocess.subprocess.check_call(cmd, shell=True)
+    return adbprocess.subprocess.check_call(cmd, shell=True, **options)
 
 
 class AdbServer(object):
