@@ -23,6 +23,7 @@ def get_adb_restart_timeout_sec():
 class AdbDevice(object):
   """Cmd interface for adb device"""
   def __init__(self, device_id):
+    self.__adbcaller = adbprocess.AdbProcess()
     self.__id = device_id
 
   def __str__(self):
@@ -42,21 +43,21 @@ class AdbDevice(object):
         adbcmds.get_set_device(self.get_id()),
         args,
     ])
-    return adbprocess.call(cmd)
+    return self.__adbcaller.call(cmd)
 
   def __check_call(self, args):
     cmd = ' '.join([
         adbcmds.get_set_device(self.get_id()),
         args,
     ])
-    return adbprocess.check_call(cmd)
+    return self.__adbcaller.check_call(cmd)
 
   def __check_output(self, args):
     cmd = ' '.join([
         adbcmds.get_set_device(self.get_id()),
         args,
     ])
-    output = adbprocess.check_output(cmd)
+    output = self.__adbcaller.check_output(cmd)
     decoded = output.decode(get_encoding_format())
     return decoded.rstrip("\n\r")
 
@@ -478,33 +479,23 @@ class AdbDevice(object):
         self.get_id(),
         adbcmds.WAIT_FOR_DEVICE,
     ])
-
-    timeout_sec = options.get("timeout")
-    if timeout_sec:
-      return adbprocess.subprocess.check_call(
-          cmd,
-          shell=True,
-          timeout=timeout_sec
-      )
-    return adbprocess.subprocess.check_call(cmd, shell=True)
+    return adbprocess.subprocess.check_call(cmd, shell=True, **options)
 
 
 class AdbServer(object):
   """Cmd interface for adb server"""
   def __init__(self, port=None):
+    self.__adbcaller = adbprocess.AdbProcess()
     self.start(port)
 
-  @staticmethod
-  def __check_call(args):
-    return adbprocess.check_call(args)
+  def __check_call(self, args):
+    return self.__adbcaller.check_call(args)
 
-  @staticmethod
-  def __check_output(args):
-    output = adbprocess.check_output(args)
+  def __check_output(self, args):
+    output = self.__adbcaller.check_output(args)
     return output.decode(get_encoding_format())
 
-  @staticmethod
-  def devices():
+  def devices(self):
     """ List connected devices
 
       Returns:
@@ -513,7 +504,7 @@ class AdbServer(object):
         CalledProcessError: when failed
     """
     cmd = adbcmds.DEVICES
-    output = adbprocess.check_output(cmd)
+    output = self.__adbcaller.check_output(cmd)
     devices = []
     devices_list = output.splitlines()
     devices_list.pop(0)
