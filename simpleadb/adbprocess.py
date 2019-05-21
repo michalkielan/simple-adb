@@ -19,7 +19,8 @@ class AdbProcess(object):
         self.__adb_path,
         args,
     ])
-    return subprocess.call(cmd, shell=True, **options)
+    options.setdefault('shell', True)
+    return subprocess.call(cmd, **options)
 
   def check_call(self, args, **options):
     """ Call process
@@ -35,7 +36,8 @@ class AdbProcess(object):
         self.__adb_path,
         args,
     ])
-    return subprocess.check_call(cmd, shell=True, **options)
+    options.setdefault('shell', True)
+    return subprocess.check_call(cmd, **options)
 
   def check_output(self, args, **options):
     """ Call process
@@ -51,4 +53,5 @@ class AdbProcess(object):
         self.__adb_path,
         args,
     ])
-    return subprocess.check_output(cmd, shell=True, **options)
+    options.setdefault('shell', True)
+    return subprocess.check_output(cmd, **options)
