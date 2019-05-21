@@ -149,6 +149,20 @@ class AdbDeviceTest(unittest.TestCase):
     if not device.is_root():
       device.root()
     self.assertTrue(device.is_available())
+  
+  def test_no_available(self):
+    device = simpleadb.AdbDevice('dummy_id')
+    self.assertFalse(device.is_available())
+
+  def test_wait_for_device(self):
+    device = simpleadb.AdbDevice(TEST_DEVICE_ID)
+    res = device.wait_for_device()
+    self.assertEqual(0, res)
+
+  def test_wait_for_device_failed(self):
+    with self.assertRaises(subprocess.TimeoutExpired):
+      device = simpleadb.AdbDevice('dummy-device')
+      device.wait_for_device(timeout=1)
 
   def test_no_available(self):
     device = simpleadb.AdbDevice('dummy_id')
@@ -159,26 +173,6 @@ class AdbDeviceTest(unittest.TestCase):
     device.root()
     res = device.wait_for_device(timeout=1)
     self.assertEqual(0, res)
-
-  def test_adb_process_success(self):	
-    res = adbprocess.call('version')	
-    self.assertEqual(0, res)	
-    res = adbprocess.check_call('version')	
-    self.assertEqual(0, res)	
-    try:	
-      res = adbprocess.call('version')	
-      self.assertEqual(0, res)	
-    except subprocess.CalledProcessError:	
-      self.fail("CalledProcessError unexpectedly")	
-
-  def test_adb_process_fail(self):	
-    rand_str = 'fdstfasdgfrjwlkfjfsd'	
-    res = adbprocess.call(rand_str)	
-    self.assertNotEqual(0, res)	
-    with self.assertRaises(subprocess.CalledProcessError):	
-      adbprocess.check_call(rand_str)	
-    with self.assertRaises(subprocess.CalledProcessError):	
-      adbprocess.check_output(rand_str)
 
   def test_adb_shell(self):
     device = simpleadb.AdbDevice(TEST_DEVICE_ID)
