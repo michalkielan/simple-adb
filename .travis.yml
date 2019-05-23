@@ -1,6 +1,7 @@
 language: android
 jdk: oraclejdk11
 sudo: required
+dist: trusty
 
 matrix:
   include:
@@ -45,6 +46,7 @@ before_script:
   - pyenv install $PYTHON_VERSION
   - pyenv global $PYTHON_VERSION
   - pylint simpleadb
+  - pylint --errors-only tests || true
   - android list target
   - echo no | android create avd --force -n test -t android-24 --abi armeabi-v7a -c 100M
   - emulator -avd test -no-skin -no-window &
