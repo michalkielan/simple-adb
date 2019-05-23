@@ -42,8 +42,8 @@ install:
   - sudo pip install pylint python-coveralls pytest tox-travis
 
 before_script:
-  - pyenv install $PYTHON_VERSION
-  - pyenv global $PYTHON_VERSION
+  #  - pyenv install $PYTHON_VERSION
+  #  - pyenv global $PYTHON_VERSION
   - pylint simpleadb
   - pylint --errors-only tests
   - android list target
