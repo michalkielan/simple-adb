@@ -21,6 +21,7 @@ addons:
   apt:
     packages:
       - python-logilab-common
+      - python3-pip
 
 android:
   components:
@@ -40,6 +41,7 @@ android:
 
 install:
   - sudo pip install --upgrade
+  - sudo pip3 install pylint
   - sudo pip install pylint python-coveralls pytest tox-travis
 
 before_script:
