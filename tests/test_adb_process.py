@@ -23,7 +23,7 @@ class AdbProcessTest(unittest.TestCase):
   def test_check_call_success(self):
     adb_process = adbprocess.AdbProcess()
     res = adb_process.check_call('devices')
-    self.assertNotEqual(res, 0)
+    self.assertEqual(res, 0)
 
   def test_check_call_failure(self):
     adb_process = adbprocess.AdbProcess()
@@ -32,8 +32,11 @@ class AdbProcessTest(unittest.TestCase):
 
   def test_check_output_success(self):
     adb_process = adbprocess.AdbProcess()
-    output = adb_process.check_output('devices')
-    self.assertIs(type(str), output)
+    try:
+      output = adb_process.check_output('devices')
+      self.assertNotNote(output, 0)
+    except subprocess.CalledProcessError:
+      self.fail('Failes, CalledProcessError raised')
 
   def test_check_output_failure(self):
     adb_process = adbprocess.AdbProcess()
