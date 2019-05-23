@@ -41,6 +41,7 @@ android:
 
 install:
   - sudo pip install --upgrade
+  - sudo pip3 install setuptools -U
   - sudo pip3 install pylint
   - sudo pip install pylint python-coveralls pytest tox-travis
 
