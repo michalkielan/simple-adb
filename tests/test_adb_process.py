@@ -36,7 +36,7 @@ class AdbProcessTest(unittest.TestCase):
       output = adb_process.check_output('devices')
       self.assertIsNotNone(output)
     except subprocess.CalledProcessError:
-      self.fail('Failes, CalledProcessError raised')
+      self.fail('Failed, CalledProcessError raised')
 
   def test_check_output_failure(self):
     adb_process = adbprocess.AdbProcess()
