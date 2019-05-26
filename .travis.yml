@@ -1,12 +1,18 @@
 sudo: required
 dist: trusty
 
+env:
+  global:
+    - ADB_INSTALL_TIMEOUT=8
+    - TEST_DEVICE_ID=emulator-5554
+
 matrix:
   include:
-    - name: "Lint (Python3)"
+    - name: "Pylint"
       language: python
       python:
         - "3.5"
+        - "3.6"
       install:
         - pip install pylint
       script:
@@ -16,7 +22,7 @@ matrix:
     - name: "Python 3.5, API 24"
       language: android
       jdk: oraclejdk11
-      env: PYTHON_VERSION=3.5.0 TOXENV=py35 ADB_INSTALL_TIMEOUT=8 TEST_DEVICE_ID=emulator-5554
+      env: PYTHON_VERSION=3.5.0 TOXENV=py35
       android:
         components:
          - build-tools-28.0.3
@@ -32,7 +38,6 @@ matrix:
         licenses:
           - 'android-sdk-license-.+'
       before_script:
-        - echo $PYTHON_VERSION
         - pyenv install $PYTHON_VERSION
         - pyenv global $PYTHON_VERSION
         - android list target
