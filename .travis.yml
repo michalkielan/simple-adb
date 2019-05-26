@@ -15,6 +15,7 @@ matrix:
         - "3.6"
       install:
         - pip install pylint
+#  - sudo pip install pylint python-coveralls pytest tox-travis
       script:
         - pylint simpleadb
         - pylint --errors-only tests
@@ -22,6 +23,8 @@ matrix:
     - name: "Python 3.5, API 24"
       language: android
       jdk: oraclejdk11
+      install:
+        - pip install pylint python-coveralls pytest tox-travis
       env: PYTHON_VERSION=3.5.0 TOXENV=py35
       android:
         components:
