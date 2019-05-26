@@ -19,12 +19,12 @@ matrix:
         - pylint --errors-only tests
 
     - name: "Python, API 24"
+      env: PYTHON_VERSION=3.5.0 TOXENV=py35
+      env: PYTHON_VERSION=3.6.0 TOXENV=py36
       language: android
       jdk: oraclejdk11
       install:
         - sudo pip install python-coveralls pytest tox-travis
-      env: PYTHON_VERSION=3.5.0 TOXENV=py35
-      env: PYTHON_VERSION=3.6.0 TOXENV=py36
       #      android:
       #        components:
       #         - build-tools
