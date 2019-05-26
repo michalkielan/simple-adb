@@ -8,14 +8,12 @@ env:
 
 matrix:
   include:
-    - name: "Pylint"
+    - name: "Pylint 3.6"
       language: python
       python:
-        - "3.5"
         - "3.6"
       install:
         - pip install pylint
-#  - sudo pip install pylint python-coveralls pytest tox-travis
       script:
         - pylint simpleadb
         - pylint --errors-only tests
@@ -25,22 +23,19 @@ matrix:
       jdk: oraclejdk11
       install:
         - sudo pip install --upgrade pip
-        - sudo pip install pylint python-coveralls pytest tox-travis
+        - sudo pip install python-coveralls pytest tox-travis
       env: PYTHON_VERSION=3.5.0 TOXENV=py35
       android:
         components:
          - build-tools
-           #     - build-tools-28.0.3
          - android-24
-           #         - android-28
-         - extra-google-google_play_services
-         - extra-google-m2repository
+           #    - extra-google-google_play_services
+           #       - extra-google-m2repository
          - extra-android-m2repository
          - sys-img-x86-android-24
-           #         - sys-img-x86-android-28
          - sys-img-armeabi-v7a-android-24
-        licenses:
-          - 'android-sdk-license-.+'
+           #        licenses:
+           #          - 'android-sdk-license-.+'
       before_script:
         - pyenv install $PYTHON_VERSION
         - pyenv global $PYTHON_VERSION
