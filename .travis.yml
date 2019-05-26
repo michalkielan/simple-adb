@@ -37,6 +37,7 @@ matrix:
         licenses:
           - 'android-sdk-license-.+'
       before_script:
+        - echo $PYTHON_VERSION
         - pyenv install $PYTHON_VERSION
         - pyenv global $PYTHON_VERSION
         - android list target
