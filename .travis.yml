@@ -22,7 +22,7 @@ matrix:
       language: android
       jdk: oraclejdk11
       install:
-        - sudo pip install --upgrade pip
+        - pip install --upgrade pip
         - sudo pip install python-coveralls pytest tox-travis
       env: PYTHON_VERSION=3.5.0 TOXENV=py35
       android:
