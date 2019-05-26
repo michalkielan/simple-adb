@@ -18,23 +18,20 @@ matrix:
         - pylint simpleadb
         - pylint --errors-only tests
 
-    - name: "Python 3.5, API 24"
+    - name: "Python, API 24"
       language: android
       jdk: oraclejdk11
       install:
         - sudo pip install python-coveralls pytest tox-travis
       env: PYTHON_VERSION=3.5.0 TOXENV=py35
+      env: PYTHON_VERSION=3.6.0 TOXENV=py36
       android:
         components:
          - build-tools
          - android-24
-           #    - extra-google-google_play_services
-           #       - extra-google-m2repository
          - extra-android-m2repository
          - sys-img-x86-android-24
          - sys-img-armeabi-v7a-android-24
-           #        licenses:
-           #          - 'android-sdk-license-.+'
       before_script:
         - pyenv install $PYTHON_VERSION
         - pyenv global $PYTHON_VERSION
