@@ -25,16 +25,16 @@ matrix:
       env: PYTHON_VERSION=3.5.0 TOXENV=py35
       android:
         components:
-         - build-tools-28.0.3
+         - build-tools
+           #     - build-tools-28.0.3
          - android-24
-         - android-28
+           #         - android-28
          - extra-google-google_play_services
          - extra-google-m2repository
          - extra-android-m2repository
          - sys-img-x86-android-24
-         - sys-img-x86-android-28
+           #         - sys-img-x86-android-28
          - sys-img-armeabi-v7a-android-24
-         - sys-img-armeabi-v7a-android-28
         licenses:
           - 'android-sdk-license-.+'
       before_script:
