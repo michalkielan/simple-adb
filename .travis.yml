@@ -16,12 +16,7 @@ matrix:
     - name: "Python 3.5, API 24"
       language: android
       jdk: oraclejdk11
-      env:
-        global:
-          - PYTHON_VERSION=3.5.0
-          - TOXENV=py35
-          - ADB_INSTALL_TIMEOUT=8
-          - TEST_DEVICE_ID=emulator-5554
+      env: PYTHON_VERSION=3.5.0 TOXENV=py35 ADB_INSTALL_TIMEOUT=8 TEST_DEVICE_ID=emulator-5554
       android:
         components:
          - build-tools-28.0.3
