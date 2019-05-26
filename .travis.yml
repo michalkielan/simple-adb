@@ -24,14 +24,18 @@ matrix:
           - TEST_DEVICE_ID=emulator-5554
         android:
           components:
+            - tools
+            - platform-tools
             - build-tools-28.0.3
             - android-24
+            - android-28
             - extra-google-google_play_services
             - extra-google-m2repository
             - extra-android-m2repository
             - sys-img-x86-android-24
+            - sys-img-x86-android-28
             - sys-img-armeabi-v7a-android-24
-         
+            - sys-img-armeabi-v7a-android-28
           before_script:
             - pyenv install $PYTHON_VERSION
             - pyenv global $PYTHON_VERSION
