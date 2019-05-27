@@ -164,10 +164,6 @@ class AdbDeviceTest(unittest.TestCase):
       device = simpleadb.AdbDevice('dummy-device')
       device.wait_for_device(timeout=1)
 
-  def test_no_available(self):
-    device = simpleadb.AdbDevice('dummy_id')
-    self.assertFalse(device.is_available())
-
   def test_wait_for_device_timeout(self):
     device = simpleadb.AdbDevice(TEST_DEVICE_ID)
     device.root()
