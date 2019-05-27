@@ -24,12 +24,16 @@ matrix:
       jdk: oraclejdk11
       install:
         - sudo pip install python-coveralls pytest tox-travis
-      env: PYTHON_VERSION=3.5.0 TOXENV=py35 ANDROID_API=android-24
+      env:
+        global:
+          - PYTHON_VERSION=3.5.0
+          - TOXENV=py35
+          - ANDROID_API=android-24
       android:
         components:
          - build-tools
-         - $ANDROID_API
          - extra-android-m2repository
+         - $ANDROID_API
          - sys-img-x86-$ANDROID_API
          - sys-img-armeabi-v7a-$ANDROID_API
       before_script:
@@ -48,8 +52,8 @@ matrix:
       android:
         components:
          - build-tools
-         - $ANDROID_API
          - extra-android-m2repository
+         - $ANDROID_API
          - sys-img-x86-$ANDROID_API
          - sys-img-armeabi-v7a-$ANDROID_API
       before_script:
@@ -68,8 +72,8 @@ matrix:
       android:
         components:
          - build-tools
-         - $ANDROID_API
          - extra-android-m2repository
+         - $ANDROID_API
          - sys-img-x86-$ANDROID_API
          - sys-img-armeabi-v7a-$ANDROID_API
       before_script:
