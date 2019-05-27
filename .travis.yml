@@ -23,7 +23,7 @@ matrix:
       language: android
       jdk: oraclejdk11
       install:
-        - sudo pip install -r .travis/test_requirements.txt
+        - sudo pip install -r python-coveralls pytest tox-travis
       env: PYTHON_VERSION=3.5.0 TOXENV=py35 ANDROID_API=android-24
       android:
         components:
@@ -33,9 +33,17 @@ matrix:
          - sys-img-x86-$ANDROID_API
          - sys-img-armeabi-v7a-$ANDROID_API
       before_script:
-        - sh .travis/setup.sh
+        - pyenv install $PYTHON_VERSION
+        - pyenv global $PYTHON_VERSION
+        - android list target
+        - echo no | android create avd --force -n test -t $ANDROID_API --abi armeabi-v7a -c 100M
+        - emulator -avd test -no-skin -no-window &
+        - android-wait-for-emulator
+        - adb shell input keyevent 82 &
       script:
-        - sh .travis/deploy.sh
+        - wget $APK_URL
+        - python setup.py install
+        - tox
       after_success:
         - coveralls
 
@@ -43,7 +51,7 @@ matrix:
       language: android
       jdk: oraclejdk11
       install:
-        - sudo pip install -r .travis/test_requirements.txt
+        - sudo pip install -r python-coveralls pytest tox-travis
       env:
         global: PYTHON_VERSION=3.6.0 TOXENV=py36 ANDROID_API=android-24
       android:
@@ -54,9 +62,17 @@ matrix:
          - sys-img-x86-$ANDROID_API
          - sys-img-armeabi-v7a-$ANDROID_API
       before_script:
-        - sh .travis/setup.sh
+        - pyenv install $PYTHON_VERSION
+        - pyenv global $PYTHON_VERSION
+        - android list target
+        - echo no | android create avd --force -n test -t $ANDROID_API --abi armeabi-v7a -c 100M
+        - emulator -avd test -no-skin -no-window &
+        - android-wait-for-emulator
+        - adb shell input keyevent 82 &
       script:
-        - sh .travis/deploy.sh
+        - wget $APK_URL
+        - python setup.py install
+        - tox
       after_success:
         - coveralls
 
@@ -64,7 +80,7 @@ matrix:
       language: android
       jdk: oraclejdk11
       install:
-        - sudo pip install -r .travis/test_requirements.txt
+        - sudo pip install -r python-coveralls pytest tox-travis
       env:
         global: PYTHON_VERSION=pypy3.5-5.8.0 TOXENV=pypy35 ANDROID_API=android-24
       android:
@@ -75,8 +91,16 @@ matrix:
          - sys-img-x86-$ANDROID_API
          - sys-img-armeabi-v7a-$ANDROID_API
       before_script:
-        - sh .travis/setup.sh
+        - pyenv install $PYTHON_VERSION
+        - pyenv global $PYTHON_VERSION
+        - android list target
+        - echo no | android create avd --force -n test -t $ANDROID_API --abi armeabi-v7a -c 100M
+        - emulator -avd test -no-skin -no-window &
+        - android-wait-for-emulator
+        - adb shell input keyevent 82 &
       script:
-        - sh .travis/deploy.sh
+        - wget $APK_URL
+        - python setup.py install
+        - tox
       after_success:
         - coveralls

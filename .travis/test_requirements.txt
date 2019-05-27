@@ -1,3 +1,0 @@
- python-coveralls
- pytest
- tox-travis
