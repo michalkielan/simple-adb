@@ -5,7 +5,6 @@ env:
   global:
     - ADB_INSTALL_TIMEOUT=8
     - TEST_DEVICE_ID=emulator-5554
-    - DUMMY_APK_URL=https://github.com/michalkielan/AndroidDummyApp/releases/download/0.0.1/app-debug.apk
 
 matrix:
   include:
@@ -41,11 +40,11 @@ matrix:
         - android-wait-for-emulator
         - adb shell input keyevent 82 &
       script:
-        - wget $DUMMY_APK_URL
+        - wget https://github.com/michalkielan/AndroidDummyApp/releases/download/0.0.1/app-debug.apk
         - python setup.py install
         - tox
        after_success:
-         - coveralls
+        - coveralls
                      
           #    - name: "Python 3.6, API 24"
           #      env: PYTHON_VERSION=3.6.0 TOXENV=py36 ANDROID_API=android-24
