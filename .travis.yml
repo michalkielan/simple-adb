@@ -19,18 +19,22 @@ matrix:
         - pylint --errors-only tests
 
     - name: "Python 3.5, API 24"
-      env: PYTHON_VERSION=3.5.0 TOXENV=py35 ANDROID_API=android-24
       language: android
       jdk: oraclejdk11
       install:
         - sudo pip install python-coveralls pytest tox-travis
+      env: PYTHON_VERSION=3.5.0 TOXENV=py35
       android:
         components:
          - build-tools
          - android-24
+           #    - extra-google-google_play_services
+           #       - extra-google-m2repository
          - extra-android-m2repository
          - sys-img-x86-android-24
          - sys-img-armeabi-v7a-android-24
+           #        licenses:
+           #          - 'android-sdk-license-.+'
       before_script:
         - pyenv install $PYTHON_VERSION
         - pyenv global $PYTHON_VERSION
@@ -43,7 +47,8 @@ matrix:
         - wget https://github.com/michalkielan/AndroidDummyApp/releases/download/0.0.1/app-debug.apk
         - python setup.py install
         - tox
-       after_success:
+        
+      after_success:
         - coveralls
                      
           #    - name: "Python 3.6, API 24"
