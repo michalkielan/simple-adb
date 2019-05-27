@@ -23,7 +23,7 @@ matrix:
       language: android
       jdk: oraclejdk11
       install:
-        - sudo pip install -r .travis/requirements.txt
+        - sudo pip install -r .travis/test_requirements.txt
       env: PYTHON_VERSION=3.5.0 TOXENV=py35 ANDROID_API=android-24
       android:
         components:
@@ -43,7 +43,7 @@ matrix:
       language: android
       jdk: oraclejdk11
       install:
-        - sudo pip install -r .travis/requirements.txt
+        - sudo pip install -r .travis/test_requirements.txt
       env:
         global: PYTHON_VERSION=3.6.0 TOXENV=py36 ANDROID_API=android-24
       android:
@@ -64,7 +64,7 @@ matrix:
       language: android
       jdk: oraclejdk11
       install:
-        - sudo pip install -r .travis/requirements.txt
+        - sudo pip install -r .travis/test_requirements.txt
       env:
         global: PYTHON_VERSION=pypy3.5-5.8.0 TOXENV=pypy35 ANDROID_API=android-24
       android:
