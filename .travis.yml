@@ -33,9 +33,9 @@ matrix:
          - sys-img-x86-$ANDROID_API
          - sys-img-armeabi-v7a-$ANDROID_API
       before_script:
-        - sh ./travis/setup.sh
+        - sh .travis/setup.sh
       script:
-        - sh ./travis/deploy.sh
+        - sh .travis/deploy.sh
       after_success:
         - coveralls
 
@@ -53,9 +53,9 @@ matrix:
          - sys-img-x86-$ANDROID_API
          - sys-img-armeabi-v7a-$ANDROID_API
       before_script:
-        - sh ./travis/setup.sh
+        - sh .travis/setup.sh
       script:
-        - sh ./travis/deploy.sh
+        - sh .travis/deploy.sh
       after_success:
         - coveralls
 
@@ -73,8 +73,8 @@ matrix:
          - sys-img-x86-$ANDROID_API
          - sys-img-armeabi-v7a-$ANDROID_API
       before_script:
-        - sh ./travis/setup.sh
+        - sh .travis/setup.sh
       script:
-        - sh ./travis/deploy.sh
+        - sh .travis/deploy.sh
       after_success:
         - coveralls
