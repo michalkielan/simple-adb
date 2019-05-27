@@ -5,6 +5,7 @@ env:
   global:
     - ADB_INSTALL_TIMEOUT=8
     - TEST_DEVICE_ID=emulator-5554
+    - APK_URL=https://github.com/michalkielan/AndroidDummyApp/releases/download/0.0.1/app-debug.apk
 
 matrix:
   include:
@@ -40,7 +41,7 @@ matrix:
         - android-wait-for-emulator
         - adb shell input keyevent 82 &
       script:
-        - wget https://github.com/michalkielan/AndroidDummyApp/releases/download/0.0.1/app-debug.apk
+        - wget $APK_URL
         - python setup.py install
         - tox
         
@@ -69,7 +70,7 @@ matrix:
         - android-wait-for-emulator
         - adb shell input keyevent 82 &
       script:
-        - wget https://github.com/michalkielan/AndroidDummyApp/releases/download/0.0.1/app-debug.apk
+        - wget $APK_URL
         - python setup.py install
         - tox
         
@@ -98,7 +99,7 @@ matrix:
         - android-wait-for-emulator
         - adb shell input keyevent 82 &
       script:
-        - wget https://github.com/michalkielan/AndroidDummyApp/releases/download/0.0.1/app-debug.apk
+        - wget $APK_URL
         - python setup.py install
         - tox
         
