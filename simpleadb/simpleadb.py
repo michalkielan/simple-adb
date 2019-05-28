@@ -22,8 +22,11 @@ def get_adb_restart_timeout_sec():
 # pylint: disable=too-many-public-methods
 class AdbDevice(object):
   """Cmd interface for adb device"""
-  def __init__(self, device_id):
-    self.__adbcaller = adbprocess.AdbProcess()
+  def __init__(self, device_id, **options):
+    options_path = options.path('path')
+    path = options_path if options_path else adbcmds.ADB
+
+    self.__adbcaller = adbprocess.AdbProcess(path)
     self.__id = device_id
 
   def __str__(self):
@@ -484,8 +487,11 @@ class AdbDevice(object):
 
 class AdbServer(object):
   """Cmd interface for adb server"""
-  def __init__(self, port=None):
-    self.__adbcaller = adbprocess.AdbProcess()
+  def __init__(self, port=None, **options):
+    options_path = options.path('path')
+    path = options_path if options_path else adbcmds.ADB
+
+    self.__adbcaller = adbprocess.AdbProcess(path)
     self.start(port)
 
   def __check_call(self, args):
