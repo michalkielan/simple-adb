@@ -8,7 +8,7 @@ def get_test_device_id():
   return os.environ['TEST_DEVICE_ID']
 
 def get_adb_path():
-  return subprocess.check_output(['which adb'], shell=True)
+  return '/usr/local/android-sdk/platform-tools/adb'
 
 TEST_DEVICE_ID = get_test_device_id()
 DUMMY_APK_NAME = 'app-debug.apk'
