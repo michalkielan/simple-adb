@@ -23,7 +23,7 @@ def get_adb_restart_timeout_sec():
 class AdbDevice(object):
   """Cmd interface for adb device"""
   def __init__(self, device_id, **options):
-    options_path = options.path('path')
+    options_path = options.get('path')
     path = options_path if options_path else adbcmds.ADB
 
     self.__adbcaller = adbprocess.AdbProcess(path)
@@ -488,7 +488,7 @@ class AdbDevice(object):
 class AdbServer(object):
   """Cmd interface for adb server"""
   def __init__(self, port=None, **options):
-    options_path = options.path('path')
+    options_path = options.get('path')
     path = options_path if options_path else adbcmds.ADB
 
     self.__adbcaller = adbprocess.AdbProcess(path)
