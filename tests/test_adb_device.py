@@ -167,7 +167,7 @@ class AdbDeviceTest(unittest.TestCase):
   def test_wait_for_device_timeout(self):
     device = simpleadb.AdbDevice(TEST_DEVICE_ID)
     device.root()
-    res = device.wait_for_device(timeout=1)
+    res = device.wait_for_device(timeout=5)
     self.assertEqual(0, res)
 
   def test_adb_shell(self):
