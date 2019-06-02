@@ -42,10 +42,18 @@ class AdbDeviceTest(unittest.TestCase):
 
   def test_custom_path(self):
     device = simpleadb.AdbDevice(
-      TEST_DEVICE_ID,	      
+      TEST_DEVICE_ID,
       path=get_adb_path()
     )
     self.assertTrue(device.is_available())
+
+  def test_custom_path_fail(self):
+    device = simpleadb.AdbDevice(
+      TEST_DEVICE_ID,
+      path='dummy/path'
+    )
+    with self.assertRaises(subprocess.CalledProcessError):
+      self.assertTrue(device.is_available())
 
   def test_aroot(self):
     device = simpleadb.AdbDevice(TEST_DEVICE_ID)
@@ -134,7 +142,7 @@ class AdbDeviceTest(unittest.TestCase):
 
     os.remove(filename)
     device.rm(dest + filename)
-    
+
     with self.assertRaises(subprocess.CalledProcessError):
       res = device.pull(dest + filename)
       self.assertNotEqual(res, 0)
@@ -159,7 +167,7 @@ class AdbDeviceTest(unittest.TestCase):
     if not device.is_root():
       device.root()
     self.assertTrue(device.is_available())
-  
+
   def test_no_available(self):
     device = simpleadb.AdbDevice('dummy_id')
     self.assertFalse(device.is_available())
