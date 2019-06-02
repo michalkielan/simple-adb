@@ -53,7 +53,7 @@ class AdbDeviceTest(unittest.TestCase):
       path='dummy/path'
     )
     with self.assertRaises(subprocess.CalledProcessError):
-      self.assertTrue(device.is_available())
+      device.get_serialno()
 
   def test_aroot(self):
     device = simpleadb.AdbDevice(TEST_DEVICE_ID)
