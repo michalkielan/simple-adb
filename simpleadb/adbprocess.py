@@ -3,7 +3,13 @@ import subprocess
 from . import adbcmds
 
 class AdbProcess(object):
-  """Adb process caller"""
+  """AdbProcess this class is used to call adb process
+
+    Args:
+      path (Optional[str]): adb path, default: 'adb'
+    Returns:
+      0 if success, otherwise error code
+  """
   def __init__(self, path=adbcmds.ADB):
     self.__adb_path = path
 
@@ -11,7 +17,10 @@ class AdbProcess(object):
     """ Call process
 
       Args:
-        Arguments
+        args (str): Arguments
+        **kwargs: Arbitrary keyword arguments
+      Keyword Args:
+        timeout (int): Timeout in sec
       Returns:
         0 if success, otherwise error code
     """
@@ -26,7 +35,10 @@ class AdbProcess(object):
     """ Call process
 
       Args:
-        Arguments
+        args (str): Arguments
+        **kwargs: Arbitrary keyword arguments
+      Keyword Args:
+        timeout (int): Timeout in sec
       Returns:
         0 if success
       Raises:
@@ -43,7 +55,10 @@ class AdbProcess(object):
     """ Call process
 
       Args:
-        Arguments
+        args (str): Arguments
+        **kwargs: Arbitrary keyword arguments
+      Keyword Args:
+        timeout (int): Timeout in sec
       Returns:
         0 if success
       Raises:

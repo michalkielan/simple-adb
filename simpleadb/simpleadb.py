@@ -21,7 +21,13 @@ def get_adb_restart_timeout_sec():
 
 # pylint: disable=too-many-public-methods
 class AdbDevice(object):
-  """Cmd interface for adb device"""
+  """Class for device specific adb commands
+
+    Args:
+      **kwargs: Arbitrary keyword arguments
+    Keyword Args:
+      path (str): adb path
+  """
   def __init__(self, device_id, **kwargs):
     options_path = kwargs.get('path')
     path = options_path if options_path else adbcmds.ADB
@@ -146,7 +152,7 @@ class AdbDevice(object):
     """ Restart adb with root permission if device has one
 
       Args:
-        Timeout in sec (default 5s)
+        timeout_sec (int): in sec (default 5s)
       Returns:
         0 if success
       Raises:
@@ -195,7 +201,7 @@ class AdbDevice(object):
     """ Push package to the device and install
 
       Args:
-        Package path
+        apk (str): Package path
       Returns:
         0 if success
       Raises:
@@ -211,7 +217,7 @@ class AdbDevice(object):
     """ Remove this app package from the device
 
       Args:
-        Package name
+        package (str): Package name
       Returns:
         0 if success
       Raises:
@@ -228,7 +234,7 @@ class AdbDevice(object):
     """Run remote shell command interface
 
       Args:
-        Command
+        args (str): Command
       Returns:
         Serial number
       Raises:
@@ -244,7 +250,7 @@ class AdbDevice(object):
     """Remove file in adb device
 
       Args:
-        Remote path
+        remote (str): Remote path
       Returns:
         0 if success
       Raises:
@@ -260,8 +266,8 @@ class AdbDevice(object):
     """ Tap screen
 
       Args:
-        x: x position
-        y: y position
+        x (int): x position
+        y (int): y position
       Returns:
         0 if success
       Raises:
@@ -278,8 +284,10 @@ class AdbDevice(object):
     """ Capture screenshot
 
       Args:
-        kwargs: remote: remote path
-        kwargs: local: local path
+        **kwargs: Arbitrary keyword arguments
+      Keyword Args:
+        remote (str): remote path
+        local (str): local path
       Returns:
         0 if success
       Raises:
@@ -309,7 +317,7 @@ class AdbDevice(object):
     """ Send broadcast
 
       Args:
-        Intent args
+        intent (str): Intent args
       Returns:
         0 if success
       Raises:
@@ -325,8 +333,8 @@ class AdbDevice(object):
     """Grant permission
 
       Args:
-        Package name
-        Android permission
+        package (str): Package name
+        permission (str): Android permission
       Returns:
         0 if success
       Raises:
@@ -343,8 +351,8 @@ class AdbDevice(object):
     """Set property
 
       Args:
-        Property name
-        Property Value
+        prop (str): Property name
+        value (str): Property Value
       Returns:
         0 if success
       Raises:
@@ -361,7 +369,7 @@ class AdbDevice(object):
     """Get property
 
       Args:
-        Property name
+        prop (str): Property name
       Returns:
         Property value
       Raises:
@@ -377,7 +385,7 @@ class AdbDevice(object):
     """Enable/Disable verity
 
       Args:
-        Enable: True - enable, False - disable
+        enabled (bool): Enable: True - enable, False - disable
       Returns:
         0 if success
       Raises:
@@ -394,8 +402,8 @@ class AdbDevice(object):
     """Copy local files/dirs to device
 
       Args:
-        Local path
-        Remote path
+        source (str): Local path
+        dest (str): Remote path
       Returns:
         0 if success
       Raises:
@@ -412,8 +420,8 @@ class AdbDevice(object):
     """Copy local files/dirs from device
 
       Args:
-        Remote path
-        Local path
+        source (str): Remote path
+        dest (Optional[str]): Local path default is '.'
       Returns:
         0 if success
       Raises:
@@ -431,8 +439,8 @@ class AdbDevice(object):
     """Connect to a device via TCP/IP
 
       Args:
-        Ip address
-        Port (default 5555)
+        ip (str): Ip address
+        port (Optional[str]): Port (default 5555)
       Returns:
         0 if success
       Raises:
@@ -448,9 +456,9 @@ class AdbDevice(object):
   def disconnect(self, ip, port=5555):
     """Disconnect from given TCP/IP device
 
-      Args:
-        ip: Ip address
-        port: Port (default 5555)
+      Args
+        ip (str): Ip address
+        port (Optional[str]): Port (default 5555)
       Returns:
         0 if success
       Raises:
@@ -467,7 +475,9 @@ class AdbDevice(object):
     """ Restart adb with root permission
 
       Args:
-        **kwargs: timeout (default inf)
+        **kwargs: Arbitrary keyword arguments
+      Keyword Args:
+        timeout (int): Timeout in sec (default inf)
       Returns:
         0 if success
       Raises:
@@ -484,7 +494,14 @@ class AdbDevice(object):
 
 
 class AdbServer(object):
-  """Cmd interface for adb server"""
+  """Class for server specific adb commands
+
+    Args:
+      port (Optional[int]): Port number
+      **kwargs: Arbitrary keyword arguments
+    Keyword Args:
+      path (str): adb path
+  """
   def __init__(self, port=None, **kwargs):
     options_path = kwargs.get('path')
     path = options_path if options_path else adbcmds.ADB
@@ -525,7 +542,7 @@ class AdbServer(object):
     """ Ensure that there is a server running
 
       Args:
-        Port (default: default adb server port)
+        port (Optional[int]): Port (default: default adb server port)
       Returns:
         0 if success
       Raises:
@@ -567,7 +584,7 @@ class AdbServer(object):
     """ Restart adb server listening on TCP on PORT
 
       Args:
-        Port
+        port (int): Port number
       Returns:
         0 if success
       Raises:
