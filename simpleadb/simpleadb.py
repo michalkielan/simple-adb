@@ -96,9 +96,7 @@ class AdbDevice(object):
     """ Check if device is available
 
       Returns:
-        True if available False if not
-      Raises:
-        CalledProcessError: when failed
+        True if available otherwise False
     """
     try:
       self.get_serialno()
