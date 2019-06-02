@@ -45,8 +45,7 @@ class AdbDeviceTest(unittest.TestCase):
       TEST_DEVICE_ID,	      
       path=get_adb_path()
     )
-    res = device.is_available()
-    self.assertEqual(res, 0)
+    self.assertTrue(device.is_available())
 
   def test_aroot(self):
     device = simpleadb.AdbDevice(TEST_DEVICE_ID)
