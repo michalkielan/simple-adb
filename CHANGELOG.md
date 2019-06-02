@@ -34,6 +34,7 @@
   - devices
   - kill server
   - tcpip
+- custom adb binary path
 - travis ci
 - adb emulator in travis
 - coverage
