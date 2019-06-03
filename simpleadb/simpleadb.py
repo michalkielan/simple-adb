@@ -22,8 +22,8 @@ def get_adb_restart_timeout_sec():
 # pylint: disable=too-many-public-methods
 class AdbDevice(object):
   """Cmd interface for adb device"""
-  def __init__(self, device_id, **options):
-    options_path = options.get('path')
+  def __init__(self, device_id, **kwargs):
+    options_path = kwargs.get('path')
     path = options_path if options_path else adbcmds.ADB
 
     self.__adbcaller = adbprocess.AdbProcess(path)
@@ -274,12 +274,12 @@ class AdbDevice(object):
     ])
     return self.shell(cmd)
 
-  def screencap(self, **options):
+  def screencap(self, **kwargs):
     """ Capture screenshot
 
       Args:
-        Options: remote: remote path
-        Options: local: local path
+        kwargs: remote: remote path
+        kwargs: local: local path
       Returns:
         0 if success
       Raises:
@@ -290,8 +290,8 @@ class AdbDevice(object):
     local_default += time.strftime("%Y%m%d-%H%M%S")
     local_default += '.png'
 
-    remote_arg = options.get('remote')
-    local_arg = options.get('local')
+    remote_arg = kwargs.get('remote')
+    local_arg = kwargs.get('local')
 
     remote = remote_arg if remote_arg else remote_default
     local = local_arg if local_arg else local_default
@@ -463,11 +463,11 @@ class AdbDevice(object):
     ])
     return self.__check_call(cmd)
 
-  def wait_for_device(self, **options):
+  def wait_for_device(self, **kwargs):
     """ Restart adb with root permission
 
       Args:
-        **options: timeout (default inf)
+        **kwargs: timeout (default inf)
       Returns:
         0 if success
       Raises:
@@ -480,13 +480,13 @@ class AdbDevice(object):
         self.get_id(),
         adbcmds.WAIT_FOR_DEVICE,
     ])
-    return adbprocess.subprocess.check_call(cmd, shell=True, **options)
+    return adbprocess.subprocess.check_call(cmd, shell=True, **kwargs)
 
 
 class AdbServer(object):
   """Cmd interface for adb server"""
-  def __init__(self, port=None, **options):
-    options_path = options.get('path')
+  def __init__(self, port=None, **kwargs):
+    options_path = kwargs.get('path')
     path = options_path if options_path else adbcmds.ADB
 
     self.__adbcaller = adbprocess.AdbProcess(path)
