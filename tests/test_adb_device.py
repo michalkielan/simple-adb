@@ -7,6 +7,9 @@ import simpleadb
 def get_test_device_id():
   return os.environ['TEST_DEVICE_ID']
 
+def get_adb_path():
+  return '/usr/local/android-sdk/platform-tools/adb'
+
 TEST_DEVICE_ID = get_test_device_id()
 DUMMY_APK_NAME = 'app-debug.apk'
 DUMMY_PACKAGE_NAME = 'com.dummy_app.dummy'
@@ -36,6 +39,21 @@ class AdbDeviceTest(unittest.TestCase):
   def test_str(self):
     device = simpleadb.AdbDevice(TEST_DEVICE_ID)
     self.assertEqual(TEST_DEVICE_ID, str(device))
+
+  def test_custom_path(self):
+    device = simpleadb.AdbDevice(
+      TEST_DEVICE_ID,
+      path=get_adb_path()
+    )
+    self.assertTrue(device.is_available())
+
+  def test_custom_path_fail(self):
+    device = simpleadb.AdbDevice(
+      TEST_DEVICE_ID,
+      path='dummy/path'
+    )
+    with self.assertRaises(subprocess.CalledProcessError):
+      device.get_serialno()
 
   def test_aroot(self):
     device = simpleadb.AdbDevice(TEST_DEVICE_ID)
@@ -124,7 +142,7 @@ class AdbDeviceTest(unittest.TestCase):
 
     os.remove(filename)
     device.rm(dest + filename)
-    
+
     with self.assertRaises(subprocess.CalledProcessError):
       res = device.pull(dest + filename)
       self.assertNotEqual(res, 0)
@@ -149,7 +167,7 @@ class AdbDeviceTest(unittest.TestCase):
     if not device.is_root():
       device.root()
     self.assertTrue(device.is_available())
-  
+
   def test_no_available(self):
     device = simpleadb.AdbDevice('dummy_id')
     self.assertFalse(device.is_available())

@@ -4,8 +4,8 @@ from . import adbcmds
 
 class AdbProcess(object):
   """Adb process caller"""
-  def __init__(self):
-    self.__adb_path = adbcmds.ADB
+  def __init__(self, path=adbcmds.ADB):
+    self.__adb_path = path
 
   def call(self, args, **options):
     """ Call process
