@@ -4,6 +4,7 @@
 ### Added
 - support for gihub workflows
 - spdx headers
+- sphinx documentation
 
 ### Changed
 - setup.py lint
