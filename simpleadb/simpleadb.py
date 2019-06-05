@@ -456,7 +456,7 @@ class AdbDevice(object):
   def disconnect(self, ip, port=5555):
     """Disconnect from given TCP/IP device
 
-      Args
+      Args:
         ip (str): Ip address
         port (Optional[str]): Port (default 5555)
       Returns:
