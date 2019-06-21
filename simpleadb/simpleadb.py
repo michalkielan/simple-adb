@@ -11,14 +11,6 @@ def get_encoding_format():
   """
   return 'utf-8'
 
-def get_adb_restart_timeout_sec():
-  """Adb waiting for server to start timeout
-
-    Returns:
-      Timeout in sec (default 5s)
-  """
-  return 5
-
 # pylint: disable=too-many-public-methods
 class AdbDevice(object):
   """Class for device specific adb commands
@@ -148,7 +140,7 @@ class AdbDevice(object):
 
   def root(
       self,
-      timeout_sec=get_adb_restart_timeout_sec()):
+      timeout_sec=None):
     """ Restart adb with root permission if device has one
 
       Args:
