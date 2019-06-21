@@ -159,7 +159,7 @@ class AdbDevice(object):
 
   def unroot(
       self,
-      timeout_sec=get_adb_restart_timeout_sec()):
+      timeout_sec=None):
     """ Restart adb without root permission
 
       Returns:
