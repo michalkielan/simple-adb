@@ -484,6 +484,29 @@ class AdbDevice(object):
     ])
     return adbprocess.subprocess.check_call(cmd, shell=True, **kwargs)
 
+  def dump_logcat(self, *buffers):
+    """ Dump logcat
+
+      Args:
+        *buffers: List of logcat buffers to dump
+      Returns:
+        Logcat output string
+      Raises:
+        CalledProcessError: when failed
+        TimeoutExpired: when timeout
+    """
+    cmd = ' '.join([
+        adbcmds.LOGCAT,
+    ])
+
+    if list(buffers):
+      cmd += ' -b '
+      cmd += ' '.join(' -b ' + buffers)
+
+    cmd += ' -d'
+    print(cmd)
+    return self.__check_output(cmd)
+
 
 class AdbServer(object):
   """Class for server specific adb commands
