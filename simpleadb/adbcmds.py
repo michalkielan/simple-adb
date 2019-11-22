@@ -37,6 +37,7 @@ TCPIP = 'tcpip'
 RM = 'rm'
 GET_STATE = 'get-state'
 VERSION = 'version'
+LOGCAT = 'logcat'
 
 def get_set_device(device_id):
   """ Set specific device to adb command

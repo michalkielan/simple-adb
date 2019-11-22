@@ -162,6 +162,24 @@ class AdbDeviceTest(unittest.TestCase):
     state = device.get_state()
     self.assertEqual(state, 'device')
 
+  def test_dump_logcat(self):
+    device = simpleadb.AdbDevice(TEST_DEVICE_ID)
+    log = device.dump_logcat()
+
+  def test_dump_logcat_buf(self):
+    device = simpleadb.AdbDevice(TEST_DEVICE_ID)
+    log = device.clear_logcat('main')
+
+  def test_clear_logcat(self):
+    device = simpleadb.AdbDevice(TEST_DEVICE_ID)
+    res = device.clear_logcat()
+    self.assertEqual(res, 0)
+
+  def test_clear_logcat_buf(self):
+    device = simpleadb.AdbDevice(TEST_DEVICE_ID)
+    res = device.clear_logcat('main')
+    self.assertEqual(res, 0)
+
   def test_available(self):
     device = simpleadb.AdbDevice(TEST_DEVICE_ID)
     if not device.is_root():
