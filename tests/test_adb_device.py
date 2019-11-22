@@ -172,7 +172,7 @@ class AdbDeviceTest(unittest.TestCase):
 
   def test_clear_logcat(self):
     device = simpleadb.AdbDevice(TEST_DEVICE_ID)
-    res = device.dump_logcat()
+    res = device.clear_logcat()
     self.assertEqual(res, 0)
 
   def test_clear_logcat_buf(self):
