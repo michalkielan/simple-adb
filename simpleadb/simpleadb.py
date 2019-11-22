@@ -499,13 +499,40 @@ class AdbDevice(object):
         adbcmds.LOGCAT,
     ])
 
-    if list(buffers):
-      cmd += ' -b '
-      cmd += ' '.join(' -b ' + buffers)
+    if buffers:
+      buffers_cmd = [' ']
+      for buf in buffers:
+        buffers_cmd.append('-b')
+        buffers_cmd.append(buf)
+      cmd += ' '.join(buffers_cmd)
 
     cmd += ' -d'
-    print(cmd)
     return self.__check_output(cmd)
+
+  def clear_logcat(self, *buffers):
+    """ Clear logcat
+
+      Args:
+        *buffers: List of logcat buffers to dump
+      Returns:
+        0 if success
+      Raises:
+        CalledProcessError: when failed
+        TimeoutExpired: when timeout
+    """
+    cmd = ' '.join([
+        adbcmds.LOGCAT,
+    ])
+
+    if buffers:
+      buffers_cmd = [' ']
+      for buf in buffers:
+        buffers_cmd.append('-b')
+        buffers_cmd.append(buf)
+      cmd += ' '.join(buffers_cmd)
+
+    cmd += ' -c'
+    return self.__check_call(cmd)
 
 
 class AdbServer(object):
