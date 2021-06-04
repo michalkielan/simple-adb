@@ -1,9 +1,9 @@
 """ Interface for adb process"""
 import subprocess
-from . import adbcmds
+from . import adbcmds # pylint: disable=relative-beyond-top-level
 
 
-class AdbProcess(object):
+class AdbProcess(object): # pylint: disable=useless-object-inheritance
     """AdbProcess this class is used to call adb process
 
       Args:
