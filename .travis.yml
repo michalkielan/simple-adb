@@ -60,7 +60,8 @@ matrix:
          - $ANDROID_API
          - sys-img-x86-$ANDROID_API
          - sys-img-armeabi-v7a-$ANDROID_API
-      before_script:
+      before_install:
+        #before_script:
         - pyenv install $PYTHON_VERSION
         - pyenv global $PYTHON_VERSION
         - android list target
