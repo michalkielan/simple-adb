@@ -47,34 +47,34 @@ matrix:
 #      after_success:
 #        - coveralls
 #
-     - name: "Python 3.9, API 24"
-       language: android
-       jdk: oraclejdk11
-       install:
-         - sudo pip install python-coveralls pytest tox-travis
-       env: PYTHON_VERSION=3.9.0 TOXENV=py36 ANDROID_API=android-24
-       android:
-         components:
-          - build-tools
-          - extra-android-m2repository
-          - $ANDROID_API
-          - sys-img-x86-$ANDROID_API
-          - sys-img-armeabi-v7a-$ANDROID_API
-       before_script:
-         - pyenv install $PYTHON_VERSION
-         - pyenv global $PYTHON_VERSION
-         - android list target
-         - echo no | android create avd --force -n test -t $ANDROID_API --abi armeabi-v7a -c 100M
-         - emulator -avd test -no-skin -no-window &
-         - android-wait-for-emulator
-         - adb shell input keyevent 82 &
-       script:
-         - wget $APK_URL
-         - python setup.py install
-         - tox
-       after_success:
-         - coveralls
- 
+    - name: "Python 3.9, API 24"
+      language: android
+      jdk: oraclejdk11
+      install:
+        - sudo pip install python-coveralls pytest tox-travis
+      env: PYTHON_VERSION=3.9.0 TOXENV=py36 ANDROID_API=android-24
+      android:
+        components:
+         - build-tools
+         - extra-android-m2repository
+         - $ANDROID_API
+         - sys-img-x86-$ANDROID_API
+         - sys-img-armeabi-v7a-$ANDROID_API
+      before_script:
+        - pyenv install $PYTHON_VERSION
+        - pyenv global $PYTHON_VERSION
+        - android list target
+        - echo no | android create avd --force -n test -t $ANDROID_API --abi armeabi-v7a -c 100M
+        - emulator -avd test -no-skin -no-window &
+        - android-wait-for-emulator
+        - adb shell input keyevent 82 &
+      script:
+        - wget $APK_URL
+        - python setup.py install
+        - tox
+      after_success:
+        - coveralls
+
 #    - name: "Pypy 3.5, API 24"
 #      language: android
 #      jdk: oraclejdk11
