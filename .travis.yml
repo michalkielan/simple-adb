@@ -52,7 +52,7 @@ matrix:
       jdk: oraclejdk11
       install:
         - pip install python-coveralls pytest tox-travis
-      env: PYTHON_VERSION=3.7.0 TOXENV=py36 ANDROID_API=android-24
+      env: PYTHON_VERSION=3.7-dev TOXENV=py36 ANDROID_API=android-24
       android:
         components:
          - build-tools
