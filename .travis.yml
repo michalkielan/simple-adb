@@ -47,12 +47,12 @@ matrix:
 #      after_success:
 #        - coveralls
 #
-    - name: "Python 3.9, API 24"
+    - name: "Python 3.6, API 24"
       language: android
       jdk: oraclejdk11
       install:
         - pip install python-coveralls pytest tox-travis
-      env: PYTHON_VERSION=3.9.0 TOXENV=py36 ANDROID_API=android-24
+      env: PYTHON_VERSION=3.6.0 TOXENV=py36 ANDROID_API=android-24
       android:
         components:
          - build-tools
