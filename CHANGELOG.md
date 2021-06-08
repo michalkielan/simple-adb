@@ -52,4 +52,3 @@
 - travis ci
 - adb emulator in travis
 - coverage
--
