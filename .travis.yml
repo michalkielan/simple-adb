@@ -16,7 +16,7 @@ matrix:
         - pip install pylint
       script:
         - pylint simpleadb
-        - pylint --errors-only tests
+        - pylint tests
 
     - name: "Python 3.6, API 24"
       language: android
