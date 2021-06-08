@@ -108,6 +108,16 @@ class AdbDeviceTest(unittest.TestCase):
         res = device.setprop("dummy_prop", "true")
         self.assertEqual(res, 0)
 
+    def test_getprop(self):
+        device = simpleadb.AdbDevice(TEST_DEVICE_ID)
+        prop_name = 'dummy_prop'
+        prop_val = 'true'
+        if not device.is_root():
+            device.root()
+        res = device.setprop(prop_name, prop_val)
+        self.assertEqual(res, 0)
+        self.assertEqual(prop_val, device.getprop(prop_name))
+
     def test_verity(self):
         device = simpleadb.AdbDevice(TEST_DEVICE_ID)
         device.root()
