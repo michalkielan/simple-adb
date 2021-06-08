@@ -1,6 +1,12 @@
 [Unreleased](https://github.com/michalkielan/simple-adb/compare/0.1.0...HEAD)
 -----------------------------------------------------------------------------
 
+### Added
+- docstring for pytest
+
+### Changed
+- pylint mode for tests in travis builds
+
 ### Fixed
 - travis builds
 - return correct string from getprop
