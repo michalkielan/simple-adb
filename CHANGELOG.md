@@ -1,13 +1,16 @@
-[Unreleased]
+[Unreleased](https://github.com/michalkielan/simple-adb/compare/0.1.0...HEAD)
+-----------------------------------------------------------------------------
 
 ### Fixed
 - travis builds
 - return correct string from getprop
+- changelog doc view
 
 ### Removed
 - coverage
 
-[0.1.0]
+0.1.0 - 2021-06-05
+------------------
 
 ### Added
 
