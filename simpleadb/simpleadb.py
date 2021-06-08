@@ -362,20 +362,21 @@ class AdbDevice(object): # pylint: disable=useless-object-inheritance
         return self.shell(cmd)
 
     def getprop(self, prop):
-        """Get property
+        """Get android system property value
 
           Args:
             prop (str): Property name
           Returns:
-            Property value
+            str: Property value
           Raises:
             CalledProcessError: when failed
         """
         cmd = ' '.join([
+            adbcmds.SHELL,
             adbcmds.GETPROP,
             prop,
         ])
-        return self.shell(cmd)
+        return self.__check_output(cmd)
 
     def enable_verity(self, enabled):
         """Enable/Disable verity
