@@ -1,6 +1,9 @@
 [Unreleased](https://github.com/michalkielan/simple-adb/compare/0.1.0...HEAD)
 -----------------------------------------------------------------------------
 
+[0.2.0](https://github.com/michalkielan/simple-adb/compare/0.1.0...0.2.0) - 2021-06-08
+--------------------------------------------------------------------------------------
+
 ### Added
 - docstring for pytest
 
