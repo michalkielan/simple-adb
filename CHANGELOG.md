@@ -1,3 +1,13 @@
+[Unreleased]
+
+### Fixed
+- travis builds
+
+### Removed
+- coverage
+
+[0.1.0]
+
 ### Added
 
 - process call wrapper
@@ -38,3 +48,4 @@
 - travis ci
 - adb emulator in travis
 - coverage
+-
