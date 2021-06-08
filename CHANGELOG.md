@@ -2,6 +2,7 @@
 
 ### Fixed
 - travis builds
+- return correct string from getprop
 
 ### Removed
 - coverage
