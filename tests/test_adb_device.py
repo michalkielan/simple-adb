@@ -97,6 +97,14 @@ class AdbDeviceTest(unittest.TestCase):# pylint: disable=too-many-public-methods
         res = device.tap(1, 1)
         self.assertEqual(res, 0)
 
+    def test_input_swipe(self):
+        """Check if input swipe is not failing"""
+        device = simpleadb.AdbDevice(TEST_DEVICE_ID)
+        if not device.is_root():
+            device.root()
+        res = device.swipe(1, 1, 2, 2)
+        self.assertEqual(res, 0)
+
     def test_screencap(self):
         """Check if screenshot file exists after screencap"""
         filepath = './screenshot.png'
