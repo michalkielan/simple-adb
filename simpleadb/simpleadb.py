@@ -276,6 +276,29 @@ class AdbDevice(object):  # pylint: disable=useless-object-inheritance
         ])
         return self.shell(cmd)
 
+    def swipe(self, x1, y1, x2, y2):
+        """ Swipe screen
+
+          Args:
+            x1 (int): start x position
+            y1 (int): start y position
+            x2 (int): end x position
+            y2 (int): end y position
+          Returns:
+            0 if success
+          Raises:
+            CalledProcessError: when failed
+        """
+        cmd = ' '.join([
+            adbcmds.SWIPE_TAP,
+            str(x1),
+            str(y1),
+            str(x2),
+            str(y2),
+        ])
+        return self.shell(cmd)
+
+
     def screencap(self, **kwargs):
         """ Capture screenshot
 

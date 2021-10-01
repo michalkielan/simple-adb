@@ -1,5 +1,7 @@
 [Unreleased](https://github.com/michalkielan/simple-adb/compare/0.2.0...HEAD)
 -----------------------------------------------------------------------------
+### Added
+- Swipe command
 
 ### Added
 - long description
