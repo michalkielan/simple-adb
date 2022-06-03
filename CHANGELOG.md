@@ -5,6 +5,7 @@
 --------------------------------------------------------------------------------------
 
 ### Added
+- long description
 - docstring for pytest
 - added flake8 to CI linter
 
