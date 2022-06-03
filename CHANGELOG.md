@@ -6,8 +6,10 @@
 
 ### Added
 - docstring for pytest
+- added flake8 to CI linter
 
 ### Changed
+- updated pylint version
 - pylint mode for tests in travis builds
 
 ### Fixed

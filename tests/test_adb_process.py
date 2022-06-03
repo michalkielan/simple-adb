@@ -1,12 +1,14 @@
+# pylint: disable=no-member
 """Unit tests for adb subprocess"""
 import unittest
 import subprocess
 import simpleadb
-import simpleadb.adbprocess as adbprocess
+from simpleadb import adbprocess
 
 
 class AdbProcessTest(unittest.TestCase):
     """Adb process unit tests"""
+
     def setUp(self):
         """Start adb server in each test"""
         self.__adb = simpleadb.AdbServer()

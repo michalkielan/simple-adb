@@ -1,7 +1,7 @@
 """ Python wrapper for adb protocol """
 import time
-from . import adbprocess # pylint: disable=relative-beyond-top-level
-from . import adbcmds #pylint: disable=relative-beyond-top-level
+from . import adbprocess  # pylint: disable=relative-beyond-top-level
+from . import adbcmds  # pylint: disable=relative-beyond-top-level
 
 
 def get_encoding_format():
@@ -15,7 +15,7 @@ def get_encoding_format():
 # pylint: disable=too-many-public-methods
 
 
-class AdbDevice(object): # pylint: disable=useless-object-inheritance
+class AdbDevice(object):  # pylint: disable=useless-object-inheritance
     """Class for device specific adb commands
 
       Args:
@@ -242,7 +242,7 @@ class AdbDevice(object): # pylint: disable=useless-object-inheritance
         ])
         return self.__check_call(cmd)
 
-    def rm(self, remote): # pylint: disable=invalid-name
+    def rm(self, remote):  # pylint: disable=invalid-name
         """Remove file in adb device
 
           Args:
@@ -258,7 +258,7 @@ class AdbDevice(object): # pylint: disable=useless-object-inheritance
         ])
         return self.shell(cmd)
 
-    def tap(self, x, y): # pylint: disable=invalid-name
+    def tap(self, x, y):  # pylint: disable=invalid-name
         """ Tap screen
 
           Args:
@@ -432,7 +432,7 @@ class AdbDevice(object): # pylint: disable=useless-object-inheritance
         return self.__check_call(cmd)
 
     # networking
-    def connect(self, ip, port=5555): # pylint: disable=invalid-name
+    def connect(self, ip, port=5555):  # pylint: disable=invalid-name
         """Connect to a device via TCP/IP
 
           Args:
@@ -450,7 +450,7 @@ class AdbDevice(object): # pylint: disable=useless-object-inheritance
         ])
         return self.__check_call(cmd)
 
-    def disconnect(self, ip, port=5555): # pylint: disable=invalid-name
+    def disconnect(self, ip, port=5555):  # pylint: disable=invalid-name
         """Disconnect from given TCP/IP device
 
           Args:
@@ -540,7 +540,7 @@ class AdbDevice(object): # pylint: disable=useless-object-inheritance
         return self.__check_call(cmd)
 
 
-class AdbServer(object): #pylint: disable=useless-object-inheritance
+class AdbServer(object):  # pylint: disable=useless-object-inheritance
     """Class for server specific adb commands
 
       Args:
@@ -560,7 +560,7 @@ class AdbServer(object): #pylint: disable=useless-object-inheritance
     def __check_call(self, args):
         return self.__adbcaller.check_call(args)
 
-    def __check_output(self, args):
+    def __check_output(self, args):  # pylint: disable=unused-private-member
         output = self.__adbcaller.check_output(args)
         return output.decode(get_encoding_format())
 
