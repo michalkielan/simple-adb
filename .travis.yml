@@ -13,16 +13,16 @@ matrix:
       python:
         - "3.6"
       install:
-        - pip install flake8
+        - pip install pylint flake8
       script:
+        - pylint simpleadb tests
         - flake8 simpleadb tests
 
     - name: "Python 3.6, API 24"
       language: android
       jdk: oraclejdk11
       install:
-        - pip install python-coveralls pytest
-        - pip install -U tox-travis
+        - pip install python-coveralls pytest tox-travis
       env: PYTHON_VERSION=3.6.0 TOXENV=py36 ANDROID_API=android-24
       android:
         components:
