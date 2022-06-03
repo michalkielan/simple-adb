@@ -1,4 +1,3 @@
 """ simpleadb init module """
-# noqa: F401
-from .simpleadb import AdbDevice
-from .simpleadb import AdbServer
+from .simpleadb import AdbDevice  # noqa: F401
+from .simpleadb import AdbServer  # noqa: F401
