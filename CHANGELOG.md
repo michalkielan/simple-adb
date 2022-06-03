@@ -1,12 +1,11 @@
 [Unreleased](https://github.com/michalkielan/simple-adb/compare/0.2.0...HEAD)
 -----------------------------------------------------------------------------
-### Added
-- Swipe command
 
 ### Added
 - long description
 - pypi link in readme
 - added flake8 to CI linter
+- Swipe command
 
 ### Changed
 - use py.test instead of tox in travis
