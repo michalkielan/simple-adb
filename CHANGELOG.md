@@ -5,6 +5,7 @@
 - long description
 - pypi link in readme
 - added flake8 to CI linter
+- Swipe command
 
 ### Changed
 - use py.test instead of tox in travis
