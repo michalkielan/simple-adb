@@ -1,4 +1,5 @@
 # simple adb
+[![PyPi version](https://badgen.net/pypi/v/pip/)](https://pypi.org/project/simpleadb)
 [![Travis CI](https://travis-ci.org/michalkielan/simple-adb.svg?branch=master)](https://travis-ci.org/michalkielan/simple-adb)
 [![Coverage Status](https://coveralls.io/repos/github/michalkielan/simple-adb/badge.svg?branch=master&service=github)](https://coveralls.io/github/michalkielan/simple-adb?branch=master)
 
