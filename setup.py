@@ -4,7 +4,7 @@ import sys
 
 setup(
   name='simpleadb',
-  version='0.2.0',
+  version='0.3.0',
   description='Python wrapper for adb protocol.',
   long_description=io.open('README.md', encoding='utf-8').read(),
   author='Michal Kielan',
