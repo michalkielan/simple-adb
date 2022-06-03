@@ -1,7 +1,7 @@
 [Unreleased](https://github.com/michalkielan/simple-adb/compare/0.3.1...HEAD)
 -----------------------------------------------------------------------------
 
-[0.3.0](https://github.com/michalkielan/simple-adb/compare/0.3.0...0.3.1) - 2022-06-03
+[0.3.1](https://github.com/michalkielan/simple-adb/compare/0.3.0...0.3.1) - 2022-06-03
 --------------------------------------------------------------------------------------
 
 ### Changed
