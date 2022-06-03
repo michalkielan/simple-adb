@@ -1,18 +1,26 @@
-[Unreleased](https://github.com/michalkielan/simple-adb/compare/0.1.0...HEAD)
+[Unreleased](https://github.com/michalkielan/simple-adb/compare/0.2.0...HEAD)
 -----------------------------------------------------------------------------
+
+### Added
+- long description
+- pypi link in readme
+- added flake8 to CI linter
+
+### Changed
+- use py.test instead of tox in travis
+- updated pylint version
+- remove some pylint warnings
+
+### Removed
+- tox-travis
 
 [0.2.0](https://github.com/michalkielan/simple-adb/compare/0.1.0...0.2.0) - 2021-06-08
 --------------------------------------------------------------------------------------
 
 ### Added
-- long description
 - docstring for pytest
-- added flake8 to CI linter
 
 ### Changed
-- use py.test instead of tox in travis
-- remove some pylint warnings
-- updated pylint version
 - pylint mode for tests in travis builds
 
 ### Fixed
@@ -22,7 +30,6 @@
 
 ### Removed
 - coverage
-- tox-travis
 
 0.1.0 - 2021-06-05
 ------------------
