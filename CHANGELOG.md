@@ -9,6 +9,7 @@
 - added flake8 to CI linter
 
 ### Changed
+- remove some pylint warnings
 - updated pylint version
 - pylint mode for tests in travis builds
 

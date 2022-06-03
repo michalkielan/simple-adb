@@ -258,12 +258,12 @@ class AdbDevice(object):  # pylint: disable=useless-object-inheritance
         ])
         return self.shell(cmd)
 
-    def tap(self, x, y):  # pylint: disable=invalid-name
+    def tap(self, pos_x, pos_y):
         """ Tap screen
 
           Args:
-            x (int): x position
-            y (int): y position
+            pos_x (int): x position
+            pos_y (int): y position
           Returns:
             0 if success
           Raises:
@@ -271,8 +271,8 @@ class AdbDevice(object):  # pylint: disable=useless-object-inheritance
         """
         cmd = ' '.join([
             adbcmds.INPUT_TAP,
-            str(x),
-            str(y),
+            str(pos_x),
+            str(pos_y),
         ])
         return self.shell(cmd)
 
@@ -432,11 +432,11 @@ class AdbDevice(object):  # pylint: disable=useless-object-inheritance
         return self.__check_call(cmd)
 
     # networking
-    def connect(self, ip, port=5555):  # pylint: disable=invalid-name
+    def connect(self, ip_addess, port=5555):
         """Connect to a device via TCP/IP
 
           Args:
-            ip (str): Ip address
+            ip_addess (str): Ip address
             port (Optional[str]): Port (default 5555)
           Returns:
             0 if success
@@ -445,16 +445,16 @@ class AdbDevice(object):  # pylint: disable=useless-object-inheritance
         """
         cmd = ' '.join([
             adbcmds.CONNECT,
-            ip,
+            ip_addess,
             str(port),
         ])
         return self.__check_call(cmd)
 
-    def disconnect(self, ip, port=5555):  # pylint: disable=invalid-name
+    def disconnect(self, ip_addess, port=5555):
         """Disconnect from given TCP/IP device
 
           Args:
-            ip (str): Ip address
+            ip_addess (str): Ip address
             port (Optional[str]): Port (default 5555)
           Returns:
             0 if success
@@ -463,7 +463,7 @@ class AdbDevice(object):  # pylint: disable=useless-object-inheritance
         """
         cmd = ' '.join([
             adbcmds.DISCONNECT,
-            ip,
+            ip_addess,
             str(port),
         ])
         return self.__check_call(cmd)
