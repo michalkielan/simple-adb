@@ -1,8 +1,9 @@
+# pylint: disable=no-member
 """Unit tests for adb subprocess"""
 import unittest
 import subprocess
 import simpleadb
-import simpleadb.adbprocess as adbprocess
+from simpleadb import adbprocess
 
 
 class AdbProcessTest(unittest.TestCase):

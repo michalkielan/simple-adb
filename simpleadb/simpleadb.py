@@ -560,7 +560,7 @@ class AdbServer(object):  # pylint: disable=useless-object-inheritance
     def __check_call(self, args):
         return self.__adbcaller.check_call(args)
 
-    def __check_output(self, args):
+    def __check_output(self, args):  # pylint: disable=unused-private-member
         output = self.__adbcaller.check_output(args)
         return output.decode(get_encoding_format())
 
