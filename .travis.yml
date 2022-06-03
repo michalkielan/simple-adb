@@ -43,6 +43,6 @@ matrix:
       script:
         - wget $APK_URL
         - python setup.py install
-        - py.test tests 
+        - py.test tests
       after_success:
         - coveralls
