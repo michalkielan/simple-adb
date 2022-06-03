@@ -205,13 +205,13 @@ class AdbDeviceTest(  # pylint: disable=too-many-public-methods
         """Test dump logcat"""
         device = simpleadb.AdbDevice(TEST_DEVICE_ID)
         log = device.dump_logcat()
-        assert log is not None
+        self.assertEqual(log, None)
 
     def test_dump_logcat_from_buffer(self):
         """Test dump logcat"""
         device = simpleadb.AdbDevice(TEST_DEVICE_ID)
         log = device.dump_logcat('main')
-        assert log is not None
+        self.assertEqual(log, None)
 
     def test_clear_logcat(self):
         """Test clear logcat"""
