@@ -10,6 +10,7 @@
 - added flake8 to CI linter
 
 ### Changed
+- use py.test instead of tox in travis
 - remove some pylint warnings
 - updated pylint version
 - pylint mode for tests in travis builds
@@ -21,6 +22,7 @@
 
 ### Removed
 - coverage
+- tox-travis
 
 0.1.0 - 2021-06-05
 ------------------
@@ -29,7 +31,7 @@
 
 - process call wrapper
 - adb device supported commands:
-	- get id 
+	- get id
   - get state
   - get serial number
   - is available
