@@ -19,7 +19,6 @@ matrix:
         - flake8 simpleadb tests
 
     - name: "Python 3.6, API 24"
-      allow_failures:
       language: android
       jdk: oraclejdk11
       install:
@@ -44,6 +43,7 @@ matrix:
       script:
         - wget $APK_URL
         - python setup.py install
-        - tox
+          #- tox
+        - py.test tests 
       after_success:
         - coveralls
