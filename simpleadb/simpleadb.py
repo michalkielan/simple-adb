@@ -298,7 +298,6 @@ class AdbDevice(object):  # pylint: disable=useless-object-inheritance
         ])
         return self.shell(cmd)
 
-
     def screencap(self, **kwargs):
         """ Capture screenshot
 
