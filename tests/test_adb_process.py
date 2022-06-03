@@ -7,6 +7,7 @@ import simpleadb.adbprocess as adbprocess
 
 class AdbProcessTest(unittest.TestCase):
     """Adb process unit tests"""
+
     def setUp(self):
         """Start adb server in each test"""
         self.__adb = simpleadb.AdbServer()

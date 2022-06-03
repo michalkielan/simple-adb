@@ -14,6 +14,7 @@ TEST_DEVICE_ID = get_test_device_id()
 
 class AdbServerTest(unittest.TestCase):
     """Adb server unit tests"""
+
     def setUp(self):
         """Setup test"""
 
