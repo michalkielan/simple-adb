@@ -20,8 +20,10 @@ DUMMY_APK_NAME = 'app-debug.apk'
 DUMMY_PACKAGE_NAME = 'com.dummy_app.dummy'
 
 
-class AdbDeviceTest(unittest.TestCase):# pylint: disable=too-many-public-methods
+class AdbDeviceTest(
+        unittest.TestCase):  # pylint: disable=too-many-public-methods
     """Adb device unit tests"""
+
     def setUp(self):
         """Start adb server in each test"""
         self.__adb = simpleadb.AdbServer()
@@ -198,15 +200,17 @@ class AdbDeviceTest(unittest.TestCase):# pylint: disable=too-many-public-methods
         state = device.get_state()
         self.assertEqual(state, 'device')
 
-    def test_dump_logcat(self): # pylint: disable=no-self-use
+    def test_dump_logcat(self):  # pylint: disable=no-self-use
         """Test dump logcat"""
         device = simpleadb.AdbDevice(TEST_DEVICE_ID)
-        log = device.dump_logcat() # pylint: disable=unused-variable
+        log = device.dump_logcat()  # pylint: disable=unused-variable
+        assert log is not None
 
-    def test_dump_logcat_from_buffer(self): # pylint: disable=no-self-use
+    def test_dump_logcat_from_buffer(self):  # pylint: disable=no-self-use
         """Test dump logcat"""
         device = simpleadb.AdbDevice(TEST_DEVICE_ID)
-        log = device.dump_logcat('main') # pylint: disable=unused-variable
+        log = device.dump_logcat('main')  # pylint: disable=unused-variable
+        assert log is not None
 
     def test_clear_logcat(self):
         """Test clear logcat"""
