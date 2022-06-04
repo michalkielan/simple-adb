@@ -5,7 +5,7 @@ jobs:
     strategy:
       matrix:
         api-level: [21]
-        python-version: ["3.6"]
+        python-version: ["3.6", "3.8"]
     steps:
       - name: checkout
         uses: actions/checkout@v3
@@ -20,10 +20,11 @@ jobs:
           emulator-options: -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none
           disable-animations: false
           script: |
-            echo "Generated AVD snapshot for caching."
+            echo "start job 1"
             adb --version
             adb devices
             python --version
+            python3 --version
 
       - name: run tests
         uses: reactivecircus/android-emulator-runner@v2
@@ -34,8 +35,9 @@ jobs:
           emulator-options: -no-snapshot-save -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none
           disable-animations: true
           script:
-            echo "Generated AVD snapshot for caching."
+            echo "start job 2"
             python --version
             adb --version
             adb devices
             python --version
+            python3 --version
