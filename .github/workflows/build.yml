@@ -46,6 +46,7 @@ jobs:
             adb wait-for-device shell 'while [[ -z $(getprop sys.boot_completed) ]]; do sleep 1; done; input keyevent 82'
             python --version
             adb devices
+            adb root
             #python setup.py install
             pytest tests
 
