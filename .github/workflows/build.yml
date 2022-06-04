@@ -8,7 +8,7 @@ env:
 
 jobs:
   test:
-    runs-on: ubuntu-latest
+    runs-on: macos-latest
     strategy:
       matrix:
         api-level: [29]
@@ -43,6 +43,7 @@ jobs:
           script: |
             echo "Wait for emulator to start..."
             adb wait-for-device shell 'while [[ -z $(getprop sys.boot_completed) ]]; do sleep 1; done; input keyevent 82'
+            adb devices
 
       - name: Run unit tests
         run: |
