@@ -48,7 +48,7 @@ jobs:
         run: |
           wget $APK_URL
           python setup.py install
-          adb devces
+          adb devices
           #pytest tests
 
 
