@@ -8,7 +8,7 @@ env:
 
 jobs:
   test:
-    runs-on: macos-latest
+    runs-on: ubuntu-latest
     strategy:
       matrix:
         api-level: [29]
@@ -48,6 +48,7 @@ jobs:
         run: |
           wget $APK_URL
           python setup.py install
-          pytest tests
+          adb devces
+          #pytest tests
 
 
