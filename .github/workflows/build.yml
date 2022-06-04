@@ -46,6 +46,6 @@ jobs:
         run: |
           wget $APK_URL
           python setup.py install
-          py.test tests
+          #pytest tests
 
 
