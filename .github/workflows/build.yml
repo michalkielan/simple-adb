@@ -44,12 +44,9 @@ jobs:
             echo "Wait for emulator to start..."
             adb wait-for-device shell 'while [[ -z $(getprop sys.boot_completed) ]]; do sleep 1; done; input keyevent 82'
             adb devices
-
-      - name: Run unit tests
-        run: |
-          wget $APK_URL
-          python setup.py install
-          adb devices
-          #pytest tests
+            python --version
+            wget $APK_URL
+            python setup.py install
+            adb devices
 
 
