@@ -1,3 +1,11 @@
+#
+# file test_adb_process.py
+#
+# SPDX-FileCopyrightText: (c) 2019 Michal Kielan
+#
+# SPDX-License-Identifier: GPL-3.0-only
+#
+
 # pylint: disable=no-member
 """Unit tests for adb subprocess"""
 import unittest

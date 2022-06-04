@@ -1,6 +1,9 @@
 [Unreleased](https://github.com/michalkielan/simple-adb/compare/0.3.1...HEAD)
 -----------------------------------------------------------------------------
 
+### Added
+- spdx headers
+
 ### Changed
 - setup.py lint
 

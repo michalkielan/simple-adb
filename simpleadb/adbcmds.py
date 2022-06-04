@@ -1,3 +1,11 @@
+#
+# file adbcmds.py
+#
+# SPDX-FileCopyrightText: (c) 2019 Michal Kielan
+#
+# SPDX-License-Identifier: GPL-3.0-only
+#
+
 """ List of strings with adb commands """
 
 ENV_SERVER_PORT = 'ANDROID_ADB_SERVER_PORT'

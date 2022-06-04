@@ -1,3 +1,11 @@
+#
+# file adbprocess.py
+#
+# SPDX-FileCopyrightText: (c) 2019 Michal Kielan
+#
+# SPDX-License-Identifier: GPL-3.0-only
+#
+
 """ Interface for adb process"""
 import subprocess
 from . import adbcmds  # pylint: disable=relative-beyond-top-level
