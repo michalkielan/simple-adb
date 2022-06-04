@@ -33,7 +33,7 @@ jobs:
           pylint simpleadb tests
           flake8 simpleadb tests
 
-      - name: Create AVD
+      - name: Run tests on emulator
         uses: reactivecircus/android-emulator-runner@v2
         with:
           api-level: ${{ matrix.api-level }}
@@ -41,13 +41,8 @@ jobs:
           emulator-options: -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none
           disable-animations: false
           script: |
-            echo "Wait for emulator to start..."
             wget $APK_URL
             adb wait-for-device shell 'while [[ -z $(getprop sys.boot_completed) ]]; do sleep 1; done; input keyevent 82'
-            python --version
-            adb devices
-            adb root
-            #python setup.py install
             pytest tests
 
 
