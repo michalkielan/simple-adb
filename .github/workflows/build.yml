@@ -3,9 +3,8 @@ jobs:
   test:
     runs-on: macos-latest
     strategy:
-      matrix: |
+      matrix:
         api-level: [21]
-        python-version: ["3.6"]
     steps:
       - name: checkout
         uses: actions/checkout@v3
@@ -24,9 +23,8 @@ jobs:
 
       - name: run tests
         uses: reactivecircus/android-emulator-runner@v2
-        with: |
+        with:
           api-level: ${{ matrix.api-level }}
-          python-version: ${{ matrix.python-version }}
 
           force-avd-creation: false
           emulator-options: -no-snapshot-save -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none
