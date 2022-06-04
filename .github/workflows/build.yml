@@ -42,10 +42,10 @@ jobs:
           disable-animations: false
           script: |
             echo "Wait for emulator to start..."
-            adb wait-for-device shell 'while [[ -z $(getprop sys.boot_completed) ]]; do sleep 1; done; input keyevent 82'
-            adb devices
-            python --version
             wget $APK_URL
+            adb wait-for-device shell 'while [[ -z $(getprop sys.boot_completed) ]]; do sleep 1; done; input keyevent 82'
+            python --version
+            adb devices
             #python setup.py install
             pytest tests
 
