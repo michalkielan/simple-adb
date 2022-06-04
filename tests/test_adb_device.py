@@ -11,8 +11,8 @@
 import unittest
 import os
 import subprocess
-import simpleadb
 import pytest
+import simpleadb
 
 
 def get_test_device_id():
