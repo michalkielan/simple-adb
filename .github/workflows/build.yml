@@ -46,7 +46,7 @@ jobs:
             adb devices
             python --version
             wget $APK_URL
-            python setup.py install
-            adb devices
+            #python setup.py install
+            pytest tests
 
 
