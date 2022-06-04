@@ -25,6 +25,7 @@ def get_adb_path():
 
 
 def android_wait_for_emulator():
+    """Wait for android emulator"""
     os.system(
         "adb wait-for-device shell \'while [[ -z $(getprop sys.boot_completed)\
         ]]; do sleep 1; done; input keyevent 82\'")
