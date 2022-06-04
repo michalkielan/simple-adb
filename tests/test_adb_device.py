@@ -24,6 +24,12 @@ def get_adb_path():
     return '/usr/local/android-sdk/platform-tools/adb'
 
 
+def android_wait_for_emulator():
+    os.system(
+        "adb wait-for-device shell \'while [[ -z $(getprop sys.boot_completed)\
+        ]]; do sleep 1; done; input keyevent 82\'")
+
+
 TEST_DEVICE_ID = get_test_device_id()
 DUMMY_APK_NAME = 'app-debug.apk'
 DUMMY_PACKAGE_NAME = 'com.dummy_app.dummy'
@@ -36,6 +42,7 @@ class AdbDeviceTest(  # pylint: disable=too-many-public-methods
     def setUp(self):
         """Start adb server in each test"""
         self.__adb = simpleadb.AdbServer()
+        android_wait_for_emulator()
 
     def tearDown(self):
         """Kill adb server in each test"""
