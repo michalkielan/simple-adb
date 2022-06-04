@@ -41,8 +41,8 @@ jobs:
           emulator-options: -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none
           disable-animations: false
           script: |
-            echo "Generated AVD"
-            android-wait-for-emulator
+            echo "Wait for emulator to start..."
+            adb wait-for-device shell 'while [[ -z $(getprop sys.boot_completed) ]]; do sleep 1; done; input keyevent 82'
 
       - name: Run unit tests
         run: |
