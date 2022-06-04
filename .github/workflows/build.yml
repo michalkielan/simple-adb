@@ -12,9 +12,8 @@ jobs:
 
       - name: create AVD and generate snapshot for caching
         if: steps.avd-cache.outputs.cache-hit != 'true'
-        uses: |
-          reactivecircus/android-emulator-runner@v2
-          actions/setup-python@v3
+        uses: reactivecircus/android-emulator-runner@v2
+        uses: actions/setup-python@v3
         with:
           api-level: ${{ matrix.api-level }}
           python-version: ${{ matrix.python-version }}
@@ -30,6 +29,7 @@ jobs:
 
       - name: run tests
         uses: reactivecircus/android-emulator-runner@v2
+        uses: actions/setup-python@v3
         with:
           api-level: ${{ matrix.api-level }}
           python-version: ${{ matrix.python-version }}
