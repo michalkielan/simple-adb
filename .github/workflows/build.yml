@@ -10,10 +10,15 @@ jobs:
       - name: checkout
         uses: actions/checkout@v3
 
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v3
+        with:
+          python-version: ${{ matrix.python-version }}
+
+
       - name: create AVD and generate snapshot for caching
         if: steps.avd-cache.outputs.cache-hit != 'true'
         uses: reactivecircus/android-emulator-runner@v2
-        uses: actions/setup-python@v3
         with:
           api-level: ${{ matrix.api-level }}
           python-version: ${{ matrix.python-version }}
@@ -29,10 +34,8 @@ jobs:
 
       - name: run tests
         uses: reactivecircus/android-emulator-runner@v2
-        uses: actions/setup-python@v3
         with:
           api-level: ${{ matrix.api-level }}
-          python-version: ${{ matrix.python-version }}
           force-avd-creation: false
           emulator-options: -no-snapshot-save -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none
           disable-animations: true
@@ -43,3 +46,9 @@ jobs:
             adb devices
             python --version
             python3 --version
+
+      - name: Testyyy
+        run: |
+          python --version
+          adb devices
+ 
