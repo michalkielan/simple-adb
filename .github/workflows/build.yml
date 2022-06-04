@@ -1,13 +1,20 @@
 on: [push]
+
+env:
+  ADB_INSTALL_TIMEOUT: 8
+  TEST_DEVICE_ID: emulator-5554
+  APK_URL: https://github.com/michalkielan/AndroidDummyApp/releases/download/0.0.1/app-debug.apk
+
+
 jobs:
   test:
     runs-on: macos-latest
     strategy:
       matrix:
         api-level: [21]
-        python-version: ["3.6", "3.8"]
+        python-version: ["3.6"]
     steps:
-      - name: checkout
+      - name: Checkout
         uses: actions/checkout@v3
 
       - name: Set up Python ${{ matrix.python-version }}
@@ -15,40 +22,29 @@ jobs:
         with:
           python-version: ${{ matrix.python-version }}
 
+      - name: Install python dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install flake8 pytest
+          if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
 
-      - name: create AVD and generate snapshot for caching
-        if: steps.avd-cache.outputs.cache-hit != 'true'
+      - name: Python lint
+        run: |
+          pylint simpleadb tests
+          flake8 simpleadb tests
+
+      - name: Create AVD
         uses: reactivecircus/android-emulator-runner@v2
         with:
           api-level: ${{ matrix.api-level }}
-          python-version: ${{ matrix.python-version }}
           force-avd-creation: false
           emulator-options: -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none
           disable-animations: false
-          script: |
-            echo "start job 1"
-            adb --version
-            adb devices
-            python --version
-            python3 --version
 
-      - name: run tests
-        uses: reactivecircus/android-emulator-runner@v2
-        with:
-          api-level: ${{ matrix.api-level }}
-          force-avd-creation: false
-          emulator-options: -no-snapshot-save -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none
-          disable-animations: true
-          script:
-            echo "start job 2"
-            python --version
-            adb --version
-            adb devices
-            python --version
-            python3 --version
-
-      - name: Testyyy
+      - name: Run unit tests
         run: |
-          python --version
-          adb devices
- 
+          wget $APK_URL
+          python setup.py install
+          py.test tests
+
+
