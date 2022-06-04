@@ -43,6 +43,6 @@ jobs:
           script: |
             wget $APK_URL
             adb wait-for-device shell 'while [[ -z $(getprop sys.boot_completed) ]]; do sleep 1; done; input keyevent 82'
-            pytest tests
+            pytest -o log_cli=true tests
 
 
