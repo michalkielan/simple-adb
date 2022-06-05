@@ -25,11 +25,18 @@ def get_adb_path():
     return '/usr/local/android-sdk/platform-tools/adb'
 
 
+def is_github_workflows_env():
+    """Return True if github workflows environment"""
+    return os.environ.get('ENVIRONMENT', '') == 'GITHUB_WORKFLOWS'
+
+
 def android_wait_for_emulator():
     """Wait for android emulator"""
-    os.system(
-        "adb wait-for-device shell \'while [[ -z $(getprop sys.boot_completed)\
-        ]]; do sleep 1; done; input keyevent 82\'")
+    if is_github_workflows_env():
+        os.system(
+            "adb wait-for-device shell \'while [[ -z $(getprop \
+            sys.boot_completed)]]; do sleep 1; done; input keyevent 82\'"
+        )
 
 
 TEST_DEVICE_ID = get_test_device_id()
@@ -72,7 +79,7 @@ class AdbDeviceTest(  # pylint: disable=too-many-public-methods
         self.assertEqual(TEST_DEVICE_ID, str(device))
 
     @pytest.mark.skipif(
-        os.environ.get('ENVIRONMENT', '') == 'GITHUB_WORKFLOWS',
+        is_github_workflows_env(),
         reason="Failing on emulator")
     def test_custom_adb_path(self):
         """Test custom adb binary path"""
@@ -168,7 +175,7 @@ class AdbDeviceTest(  # pylint: disable=too-many-public-methods
         self.assertEqual(prop_val, device.getprop(prop_name))
 
     @pytest.mark.skipif(
-        os.environ.get('ENVIRONMENT', '') == 'GITHUB_WORKFLOWS',
+        is_github_workflows_env(),
         reason="Failing on emulator")
     def test_verity(self):
         """Check if verity command is not failing"""
@@ -257,7 +264,7 @@ class AdbDeviceTest(  # pylint: disable=too-many-public-methods
         self.assertEqual(res, 0)
 
     @pytest.mark.skipif(
-        os.environ.get('ENVIRONMENT', '') == 'GITHUB_WORKFLOWS',
+        is_github_workflows_env(),
         reason="Failing on emulator")
     def test_device_is_available(self):
         """Test if device is available"""
