@@ -167,13 +167,19 @@ class AdbDeviceTest(  # pylint: disable=too-many-public-methods
 
     def test_verity(self):
         """Check if verity command is not failing"""
-        device = simpleadb.AdbDevice(TEST_DEVICE_ID)
-        device.root()
-        device.remount()
-        res = device.enable_verity(True)
-        self.assertEqual(res, 0)
-        res = device.enable_verity(False)
-        self.assertEqual(res, 0)
+        try:
+            device = simpleadb.AdbDevice(TEST_DEVICE_ID)
+            device.root()
+            device.remount()
+            res = device.enable_verity(True)
+            self.assertEqual(res, 0)
+            res = device.enable_verity(False)
+            self.assertEqual(res, 0)
+        except subprocess.CalledProcessError as exc:
+            print("Return code : ", exc.returncode)
+            print("Output      : ", exc.output)
+            print("Std output  : ", exc.stdout)
+            print("Std error   : ", exc.stderr)
 
     def test_push_pull(self):
         """Verify if file exists after push/pull command"""
