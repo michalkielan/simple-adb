@@ -71,9 +71,8 @@ class AdbDevice(object):  # pylint: disable=useless-object-inheritance
             args,
         ])
         output = self.__adbcaller.check_output(cmd)
-        #decoded = output.decode(get_encoding_format())
-        #return decoded.rstrip("\n\r")
-        return output
+        decoded = output.decode(get_encoding_format())
+        return decoded.rstrip("\n\r")
 
     def get_id(self):
         """Get target device id
@@ -593,8 +592,7 @@ class AdbServer(object):  # pylint: disable=useless-object-inheritance
 
     def __check_output(self, args):  # pylint: disable=unused-private-member
         output = self.__adbcaller.check_output(args)
-        return output
-        #return output.decode(get_encoding_format())
+        return output.decode(get_encoding_format())
 
     def devices(self):
         """ List connected devices
@@ -612,9 +610,9 @@ class AdbServer(object):  # pylint: disable=useless-object-inheritance
         for line in devices_list:
             device = line.strip().split()
             if device:
-                device_id = device[0]#.decode(
-                    #get_encoding_format()
-                #)
+                device_id = device[0].decode(
+                    get_encoding_format()
+                )
                 devices.append(AdbDevice(device_id))
         return devices
 
