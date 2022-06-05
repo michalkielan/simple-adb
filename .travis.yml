@@ -24,7 +24,7 @@ matrix:
       install:
         - pip install pylint flake8
       script:
-        #- pylint simpleadb tests
+        - pylint simpleadb tests
         - flake8 simpleadb tests
 
     - name: "Python 3.6, API 24"

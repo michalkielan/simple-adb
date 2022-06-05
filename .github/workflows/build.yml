@@ -31,7 +31,7 @@ jobs:
 
       - name: Python lint
         run: |
-          pylint simpleadb tests
+          #pylint simpleadb tests
           flake8 simpleadb tests
 
       - name: Run tests on emulator
