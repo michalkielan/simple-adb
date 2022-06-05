@@ -180,6 +180,7 @@ class AdbDeviceTest(  # pylint: disable=too-many-public-methods
             print("Output      : ", exc.output)
             print("Std output  : ", exc.stdout)
             print("Std error   : ", exc.stderr)
+            self.assertTrue(False)
 
     def test_push_pull(self):
         """Verify if file exists after push/pull command"""
