@@ -13,7 +13,7 @@ import os
 import subprocess
 import pytest
 import simpleadb
-import utils
+from . import utils
 
 TEST_DEVICE_ID = utils.get_test_device_id()
 DUMMY_APK_NAME = 'app-debug.apk'

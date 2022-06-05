@@ -10,7 +10,7 @@
 """Unit tests for adb commands"""
 import unittest
 import simpleadb
-from utils import android_wait_for_emulator, get_test_device_id
+from .utils import android_wait_for_emulator, get_test_device_id
 
 
 class AdbServerTest(unittest.TestCase):
