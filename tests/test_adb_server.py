@@ -18,6 +18,20 @@ def get_test_device_id():
     return os.environ['TEST_DEVICE_ID']
 
 
+def is_github_workflows_env():
+    """Return True if github workflows environment"""
+    return os.environ.get('ENVIRONMENT', '') == 'GITHUB_WORKFLOWS'
+
+
+def android_wait_for_emulator():
+    """Wait for android emulator"""
+    if is_github_workflows_env():
+        os.system(
+            "adb wait-for-device shell \'while [[ -z $(getprop \
+            sys.boot_completed)]]; do sleep 1; done; input keyevent 82\'"
+        )
+
+
 TEST_DEVICE_ID = get_test_device_id()
 
 
@@ -33,6 +47,7 @@ class AdbServerTest(unittest.TestCase):
     def test_adb_devices(self):
         """Check if adb server is running correctly"""
         adb = simpleadb.AdbServer()
+        android_wait_for_emulator()
         devices = adb.devices()
         if not devices:
             self.fail('No adb devices found')

@@ -10,6 +10,7 @@ dist: xenial
 
 env:
   global:
+    - ENVIRONMENT=TRAVIS
     - ADB_INSTALL_TIMEOUT=8
     - TEST_DEVICE_ID=emulator-5554
     - APK_URL=https://github.com/michalkielan/AndroidDummyApp/releases/download/0.0.1/app-debug.apk
