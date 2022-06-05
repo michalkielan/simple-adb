@@ -47,6 +47,7 @@ class AdbServerTest(unittest.TestCase):
     def test_adb_devices(self):
         """Check if adb server is running correctly"""
         adb = simpleadb.AdbServer()
+        android_wait_for_emulator()
         devices = adb.devices()
         if not devices:
             self.fail('No adb devices found')
