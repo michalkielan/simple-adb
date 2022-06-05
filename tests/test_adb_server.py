@@ -18,6 +18,20 @@ def get_test_device_id():
     return os.environ['TEST_DEVICE_ID']
 
 
+def is_github_workflows_env():
+    """Return True if github workflows environment"""
+    return os.environ.get('ENVIRONMENT', '') == 'GITHUB_WORKFLOWS'
+
+
+def android_wait_for_emulator():
+    """Wait for android emulator"""
+    if is_github_workflows_env():
+        os.system(
+            "adb wait-for-device shell \'while [[ -z $(getprop \
+            sys.boot_completed)]]; do sleep 1; done; input keyevent 82\'"
+        )
+
+
 TEST_DEVICE_ID = get_test_device_id()
 
 
