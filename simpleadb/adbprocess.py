@@ -80,5 +80,8 @@ class AdbProcess(object):  # pylint: disable=useless-object-inheritance
         ])
         kwargs.setdefault('shell', True)
         return subprocess.check_output(
-            cmd, stderr=subprocess.STDOUT, shell=True, timeout=3,
-            universal_newlines=True)
+            cmd,
+            stderr=subprocess.STDOUT,
+            shell=True,
+            timeout=3
+        )
