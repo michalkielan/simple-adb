@@ -8,31 +8,9 @@
 
 # pylint: disable=no-member
 """Unit tests for adb commands"""
-import os
 import unittest
 import simpleadb
-
-
-def get_test_device_id():
-    """Get test device serial number"""
-    return os.environ['TEST_DEVICE_ID']
-
-
-def is_github_workflows_env():
-    """Return True if github workflows environment"""
-    return os.environ.get('ENVIRONMENT', '') == 'GITHUB_WORKFLOWS'
-
-
-def android_wait_for_emulator():
-    """Wait for android emulator"""
-    if is_github_workflows_env():
-        os.system(
-            "adb wait-for-device shell \'while [[ -z $(getprop \
-            sys.boot_completed)]]; do sleep 1; done; input keyevent 82\'"
-        )
-
-
-TEST_DEVICE_ID = get_test_device_id()
+from .utils import android_wait_for_emulator, get_test_device_id
 
 
 class AdbServerTest(unittest.TestCase):
@@ -52,4 +30,4 @@ class AdbServerTest(unittest.TestCase):
         if not devices:
             self.fail('No adb devices found')
         emulator = devices[0]
-        self.assertTrue(TEST_DEVICE_ID in emulator.get_id())
+        self.assertTrue(get_test_device_id() in emulator.get_id())
