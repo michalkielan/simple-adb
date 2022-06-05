@@ -1,6 +1,7 @@
 on: [push]
 
 env:
+  ENVIRONMENT: GITHUB_WORKFLOWS
   ADB_INSTALL_TIMEOUT: 8
   TEST_DEVICE_ID: emulator-5554
   APK_URL: https://github.com/michalkielan/AndroidDummyApp/releases/download/0.0.1/app-debug.apk
@@ -28,10 +29,10 @@ jobs:
           pip install flake8 pytest pylint
           if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
 
-          #- name: Python lint
-          #  run: |
-          #    pylint simpleadb tests
-          #    flake8 simpleadb tests
+      - name: Python lint
+        run: |
+          pylint simpleadb tests
+          flake8 simpleadb tests
 
       - name: Run tests on emulator
         uses: reactivecircus/android-emulator-runner@v2

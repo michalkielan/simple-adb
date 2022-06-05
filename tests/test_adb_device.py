@@ -71,7 +71,9 @@ class AdbDeviceTest(  # pylint: disable=too-many-public-methods
         device = simpleadb.AdbDevice(TEST_DEVICE_ID)
         self.assertEqual(TEST_DEVICE_ID, str(device))
 
-    @pytest.mark.skip(reason="Failing on emulator")
+    @pytest.mark.skipif(
+        os.environ.get('ENVIRONMENT', '') == 'GITHUB_WORKFLOWS',
+        reason="Failing on emulator")
     def test_custom_adb_path(self):
         """Test custom adb binary path"""
         device = simpleadb.AdbDevice(
@@ -165,22 +167,18 @@ class AdbDeviceTest(  # pylint: disable=too-many-public-methods
         self.assertEqual(res, 0)
         self.assertEqual(prop_val, device.getprop(prop_name))
 
+    @pytest.mark.skipif(
+        os.environ.get('ENVIRONMENT', '') == 'GITHUB_WORKFLOWS',
+        reason="Failing on emulator")
     def test_verity(self):
         """Check if verity command is not failing"""
-        try:
-            device = simpleadb.AdbDevice(TEST_DEVICE_ID)
-            device.root()
-            device.remount()
-            res = device.enable_verity(True)
-            self.assertEqual(res, 0)
-            res = device.enable_verity(False)
-            self.assertEqual(res, 0)
-        except subprocess.CalledProcessError as exc:
-            print("Return code : ", exc.returncode)
-            print("Output      : ", exc.output)
-            print("Std output  : ", exc.stdout)
-            print("Std error   : ", exc.stderr)
-            self.assertTrue(False)
+        device = simpleadb.AdbDevice(TEST_DEVICE_ID)
+        device.root()
+        device.remount()
+        res = device.enable_verity(True)
+        self.assertEqual(res, 0)
+        res = device.enable_verity(False)
+        self.assertEqual(res, 0)
 
     def test_push_pull(self):
         """Verify if file exists after push/pull command"""
@@ -258,7 +256,9 @@ class AdbDeviceTest(  # pylint: disable=too-many-public-methods
         res = device.clear_logcat('main')
         self.assertEqual(res, 0)
 
-    @pytest.mark.skip(reason="Failing on emulator")
+    @pytest.mark.skipif(
+        os.environ.get('ENVIRONMENT', '') == 'GITHUB_WORKFLOWS',
+        reason="Failing on emulator")
     def test_device_is_available(self):
         """Test if device is available"""
         device = simpleadb.AdbDevice(TEST_DEVICE_ID)
