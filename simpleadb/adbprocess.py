@@ -83,5 +83,6 @@ class AdbProcess(object):  # pylint: disable=useless-object-inheritance
             cmd,
             stderr=subprocess.STDOUT,
             shell=True,
-            timeout=3
+            timeout=3,
+            universal_newlines=True
         )

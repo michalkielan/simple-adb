@@ -28,10 +28,10 @@ jobs:
           pip install flake8 pytest pylint
           if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
 
-      - name: Python lint
-        run: |
-          #pylint simpleadb tests
-          flake8 simpleadb tests
+          #- name: Python lint
+          #  run: |
+          #    pylint simpleadb tests
+          #    flake8 simpleadb tests
 
       - name: Run tests on emulator
         uses: reactivecircus/android-emulator-runner@v2
