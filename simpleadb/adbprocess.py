@@ -82,11 +82,3 @@ class AdbProcess(object):  # pylint: disable=useless-object-inheritance
         return subprocess.check_output(
             cmd, stderr=subprocess.STDOUT, shell=True, timeout=3,
             universal_newlines=True)
-
-
-# except subprocess.CalledProcessError as exc:
-#            print("Return code : ", exc.returncode)
-#            print("Output      : ", exc.output)
-#            print("Std output  : ", exc.stdout)
-#            print("Std error   : ", exc.stderr)
-#            return None
