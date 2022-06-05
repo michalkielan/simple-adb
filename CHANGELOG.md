@@ -2,6 +2,7 @@
 -----------------------------------------------------------------------------
 
 ### Added
+- support for gihub workflows
 - spdx headers
 
 ### Changed
