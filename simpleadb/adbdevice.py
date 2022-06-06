@@ -6,21 +6,13 @@
 # SPDX-License-Identifier: GPL-3.0-only
 #
 
+# pylint: disable=too-many-public-methods
+
 """ Python wrapper for adb protocol """
 import time
-from . import adbprocess
 from . import adbcmds
-
-
-def get_encoding_format():
-    """Return terminal encoding format
-
-      Returns:
-        Encoding format
-    """
-    return 'utf-8'
-
-# pylint: disable=too-many-public-methods
+from . import adbdeviceprocess
+from . import adbprocess
 
 
 class AdbDevice():
@@ -34,10 +26,12 @@ class AdbDevice():
 
     def __init__(self, device_id, **kwargs):
         options_path = kwargs.get('path')
-        path = options_path if options_path else adbcmds.ADB
 
-        self.__adbcaller = adbprocess.AdbProcess(path)
         self.__id = device_id
+        self.__adb_device_process = adbdeviceprocess.AdbDeviceProcess(
+            self.__id,
+            options_path if options_path else adbcmds.ADB
+        )
 
     def __str__(self):
         return self.get_id()
@@ -50,29 +44,6 @@ class AdbDevice():
 
     def __ne__(self, other):
         return not self.__eq__(other)
-
-    def __call(self, args):
-        cmd = ' '.join([
-            adbcmds.get_set_device(self.get_id()),
-            args,
-        ])
-        return self.__adbcaller.call(cmd)
-
-    def __check_call(self, args):
-        cmd = ' '.join([
-            adbcmds.get_set_device(self.get_id()),
-            args,
-        ])
-        return self.__adbcaller.check_call(cmd)
-
-    def __check_output(self, args):
-        cmd = ' '.join([
-            adbcmds.get_set_device(self.get_id()),
-            args,
-        ])
-        output = self.__adbcaller.check_output(cmd)
-        decoded = output.decode(get_encoding_format())
-        return decoded.rstrip("\n\r")
 
     def get_id(self):
         """Get target device id
@@ -92,7 +63,7 @@ class AdbDevice():
             CalledProcessError: when failed
         """
         cmd = adbcmds.GET_STATE
-        return self.__check_output(cmd)
+        return self.__adb_device_process.check_output(cmd)
 
     def get_serialno(self):
         """Get target device's serial number
@@ -103,7 +74,7 @@ class AdbDevice():
             CalledProcessError: when failed
         """
         cmd = adbcmds.GET_SERIALNO
-        return self.__check_output(cmd)
+        return self.__adb_device_process.check_output(cmd)
 
     def is_available(self):
         """ Check if device is available
@@ -126,7 +97,7 @@ class AdbDevice():
             CalledProcessError: when failed
         """
         cmd = adbcmds.DEVPATH
-        return self.__check_output(cmd)
+        return self.__adb_device_process.check_output(cmd)
 
     def remount(self):
         """ Remout partition read-write
@@ -137,7 +108,7 @@ class AdbDevice():
             CalledProcessError: when failed
         """
         cmd = adbcmds.REMOUNT
-        self.__check_call(cmd)
+        self.__adb_device_process.check_call(cmd)
 
     def reboot(self):
         """ Reboot the device
@@ -148,7 +119,7 @@ class AdbDevice():
             CalledProcessError: when failed
         """
         cmd = adbcmds.REBOOT
-        self.__check_call(cmd)
+        self.__adb_device_process.check_call(cmd)
 
     def root(
             self,
@@ -164,7 +135,7 @@ class AdbDevice():
             TimeoutExpired: when timeout
         """
         cmd = adbcmds.ROOT
-        res = self.__check_call(cmd)
+        res = self.__adb_device_process.check_call(cmd)
         if res == 0:
             return self.wait_for_device(timeout=timeout_sec)
         return res
@@ -180,7 +151,7 @@ class AdbDevice():
             CalledProcessError: when failed
         """
         cmd = adbcmds.UNROOT
-        res = self.__check_call(cmd)
+        res = self.__adb_device_process.check_call(cmd)
         if res == 0:
             return self.wait_for_device(timeout=timeout_sec)
         return res
@@ -196,7 +167,7 @@ class AdbDevice():
             adbcmds.SHELL,
             try_su,
         ])
-        res = self.__call(cmd)
+        res = self.__adb_device_process.call(cmd)
         if res == 0:
             return True
         return False
@@ -215,7 +186,7 @@ class AdbDevice():
             adbcmds.INSTALL,
             apk,
         ])
-        return self.__check_call(cmd)
+        return self.__adb_device_process.check_call(cmd)
 
     def uninstall(self, package):
         """ Remove this app package from the device
@@ -231,7 +202,7 @@ class AdbDevice():
             adbcmds.UNINSTALL,
             package,
         ])
-        return self.__check_call(cmd)
+        return self.__adb_device_process.check_call(cmd)
 
     # shell
     def shell(self, args):
@@ -248,7 +219,7 @@ class AdbDevice():
             adbcmds.SHELL,
             args,
         ])
-        return self.__check_call(cmd)
+        return self.__adb_device_process.check_call(cmd)
 
     def rm(self, remote):  # pylint: disable=invalid-name
         """Remove file in adb device
@@ -406,7 +377,7 @@ class AdbDevice():
             adbcmds.GETPROP,
             prop,
         ])
-        return self.__check_output(cmd)
+        return self.__adb_device_process.check_output(cmd)
 
     def enable_verity(self, enabled):
         """Enable/Disable verity
@@ -422,7 +393,7 @@ class AdbDevice():
             adbcmds.ENABLE_VERITY if enabled
             else adbcmds.DISABLE_VERITY
         )
-        return self.__check_call(cmd)
+        return self.__adb_device_process.check_call(cmd)
 
     # file transfer
     def push(self, source, dest):
@@ -441,7 +412,7 @@ class AdbDevice():
             source,
             dest,
         ])
-        return self.__check_call(cmd)
+        return self.__adb_device_process.check_call(cmd)
 
     def pull(self, source, dest='.'):
         """Copy local files/dirs from device
@@ -459,7 +430,7 @@ class AdbDevice():
             source,
             dest,
         ])
-        return self.__check_call(cmd)
+        return self.__adb_device_process.check_call(cmd)
 
     # networking
     def connect(self, address, port=5555):
@@ -478,7 +449,7 @@ class AdbDevice():
             address,
             str(port),
         ])
-        return self.__check_call(cmd)
+        return self.__adb_device_process.check_call(cmd)
 
     def disconnect(self, address, port=5555):
         """Disconnect from given TCP/IP device
@@ -496,7 +467,7 @@ class AdbDevice():
             address,
             str(port),
         ])
-        return self.__check_call(cmd)
+        return self.__adb_device_process.check_call(cmd)
 
     def wait_for_device(self, **kwargs):
         """ Restart adb with root permission
@@ -542,7 +513,7 @@ class AdbDevice():
             cmd += ' '.join(buffers_cmd)
 
         cmd += ' -d'
-        return self.__check_output(cmd)
+        return self.__adb_device_process.check_output(cmd)
 
     def clear_logcat(self, *buffers):
         """ Clear logcat
@@ -567,4 +538,4 @@ class AdbDevice():
             cmd += ' '.join(buffers_cmd)
 
         cmd += ' -c'
-        return self.__check_call(cmd)
+        return self.__adb_device_process.check_call(cmd)
