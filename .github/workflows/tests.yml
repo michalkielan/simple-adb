@@ -36,7 +36,7 @@ jobs:
       - name: Install python dependencies
         run: |
           python -m pip install --upgrade pip
-          pip install pytest
+          pip install pytest coverage
           if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
 
       - name: Run tests on emulator
@@ -49,4 +49,4 @@ jobs:
           script: |
             wget $APK_URL
             adb wait-for-device shell 'while [[ -z $(getprop sys.boot_completed) ]]; do sleep 1; done; input keyevent 82'
-            pytest tests
+            coverage run -m pytest tests
