@@ -9,6 +9,7 @@
 ### Changed
 - setup.py lint
 - general modules refactor
+- fixed TCP/IP object creation
 - fix tests:
   - fix wrong custom adb path
 

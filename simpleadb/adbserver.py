@@ -33,9 +33,8 @@ class AdbServer():
 
     def __init__(self, port=None, **kwargs):
         options_path = kwargs.get('path')
-        path = options_path if options_path else adbcmds.ADB
-
-        self.__adbcaller = adbprocess.AdbProcess(path)
+        adb_path = options_path if options_path else adbcmds.ADB
+        self.__adbcaller = adbprocess.AdbProcess(adb_path)
         self.start(port)
 
     def __check_call(self, args):
@@ -62,6 +61,44 @@ class AdbServer():
                 )
                 devices.append(adbdevice.AdbDevice(device_id))
         return devices
+
+    def connect(self, address, port=5555):
+        """Connect a device via TCP/IP
+
+          Args:
+            address (str): Host address
+            port (Optional[str|int]): Port (default 5555)
+          Returns:
+            0 if success
+          Raises:
+            CalledProcessError: when failed
+        """
+        cmd = ' '.join([
+            adbcmds.CONNECT,
+            address,
+            str(port),
+        ])
+        res = self.__check_call(cmd)
+        return res
+
+    def disconnect(self, address, port=5555):
+        """Disconnect from given TCP/IP device
+
+          Args:
+            address (str): Host address
+            port (Optional[str]): Port (default 5555)
+          Returns:
+            0 if success
+          Raises:
+            CalledProcessError: when failed
+        """
+        cmd = ' '.join([
+            adbcmds.DISCONNECT,
+            address,
+            str(port),
+        ])
+        res = self.__check_call(cmd)
+        return res
 
     def start(self, port=None):
         """ Ensure that there is a server running
