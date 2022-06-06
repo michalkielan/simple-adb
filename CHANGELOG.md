@@ -10,9 +10,11 @@
 ### Changed
 - setup.py lint
 - general modules refactor
-- fixed TCP/IP object creation
 - fix tests:
   - fix wrong custom adb path
+- fixed TCP/IP object creation
+- use default decoding when using subprocess.check_output
+
 
 [0.3.1](https://github.com/michalkielan/simple-adb/compare/0.3.0...0.3.1) - 2022-06-03
 --------------------------------------------------------------------------------------

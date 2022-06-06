@@ -12,15 +12,6 @@ from . import adbcmds
 from . import adbdevice
 
 
-def get_encoding_format():
-    """Return terminal encoding format
-
-      Returns:
-        Encoding format
-    """
-    return 'utf-8'
-
-
 class AdbServer():
     """Class for server specific adb commands
 
@@ -34,11 +25,11 @@ class AdbServer():
     def __init__(self, port=None, **kwargs):
         options_path = kwargs.get('path')
         adb_path = options_path if options_path else adbcmds.ADB
-        self.__adbcaller = adbprocess.AdbProcess(adb_path)
+        self.__adb_process = adbprocess.AdbProcess(adb_path)
         self.start(port)
 
     def __check_call(self, args):
-        return self.__adbcaller.check_call(args)
+        return self.__adb_process.check_call(args)
 
     def devices(self):
         """ List connected devices
@@ -49,16 +40,14 @@ class AdbServer():
             CalledProcessError: when failed
         """
         cmd = adbcmds.DEVICES
-        output = self.__adbcaller.check_output(cmd)
+        output = self.__adb_process.check_output(cmd)
         devices = []
         devices_list = output.splitlines()
         devices_list.pop(0)
         for line in devices_list:
             device = line.strip().split()
             if device:
-                device_id = device[0].decode(
-                    get_encoding_format()
-                )
+                device_id = device[0]
                 devices.append(adbdevice.AdbDevice(device_id))
         return devices
 

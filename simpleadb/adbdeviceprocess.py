@@ -11,15 +11,6 @@ from . import adbprocess
 from . import adbcmds
 
 
-def get_encoding_format():
-    """Return terminal encoding format
-
-      Returns:
-        Encoding format
-    """
-    return 'utf-8'
-
-
 class AdbDeviceProcess():
     """Wrapper for adbprocess for specific device
 
@@ -85,6 +76,4 @@ class AdbDeviceProcess():
             adbcmds.get_set_device(self.__id),
             args,
         ])
-        output = self.__adb_process.check_output(cmd)
-        decoded = output.decode(get_encoding_format())
-        return decoded.rstrip("\n\r")
+        return self.__adb_process.check_output(cmd).rstrip('\n\r')

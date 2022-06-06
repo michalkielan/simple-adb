@@ -79,4 +79,5 @@ class AdbProcess():
             args,
         ])
         kwargs.setdefault('shell', True)
+        kwargs.setdefault('universal_newlines', True)
         return subprocess.check_output(cmd, **kwargs)
