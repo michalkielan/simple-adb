@@ -67,7 +67,6 @@ class AdbDevice():
         """
         return self.__id
 
-    # scripting
     def get_state(self):
         """Get state
 
@@ -78,6 +77,23 @@ class AdbDevice():
         """
         cmd = adbcmds.GET_STATE
         return self.__adb_device_process.check_output(cmd)
+
+    def get_app_pid(self, package_name):
+        """Get app pid
+
+          Args:
+            package_name (str): Package name
+         Returns:
+            App PID
+          Raises:
+            CalledProcessError: when failed
+        """
+        cmd = ' '.join([
+            adbcmds.SHELL,
+            'pidof',
+            package_name
+        ])
+        return int(self.__adb_device_process.check_output(cmd))
 
     def get_serialno(self):
         """Get target device's serial number
@@ -218,7 +234,6 @@ class AdbDevice():
         ])
         return self.__adb_device_process.check_call(cmd)
 
-    # shell
     def shell(self, args):
         """Run remote shell command interface
 
@@ -409,7 +424,6 @@ class AdbDevice():
         )
         return self.__adb_device_process.check_call(cmd)
 
-    # file transfer
     def push(self, source, dest):
         """Copy local files/dirs to device
 

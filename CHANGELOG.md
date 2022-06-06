@@ -5,6 +5,7 @@
 - support for gihub workflows
 - spdx headers
 - sphinx documentation
+- get app pid method
 
 ### Changed
 - setup.py lint
