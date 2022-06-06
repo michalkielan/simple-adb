@@ -13,24 +13,38 @@ import time
 from . import adbcmds
 from . import adbdeviceprocess
 from . import adbprocess
+from .utils import is_valid_ip
 
 
 class AdbDevice():
     """Class for device specific adb commands
 
-      Args:
-        **kwargs: Arbitrary keyword arguments
-      Keyword Args:
-        path (str): adb path
+       Args:
+         device_id (str): Device ID or Host address
+         port (Optional[str|int]): Port (default 5555)
+         **kwargs: Arbitrary keyword arguments
+       Keyword Args:
+         path (str): adb path
     """
 
-    def __init__(self, device_id, **kwargs):
+    def __init__(self, device_id, port=None, **kwargs):
         options_path = kwargs.get('path')
-
-        self.__id = device_id
+        self.__adb_path = options_path if options_path else adbcmds.ADB
+        if (port is not None or device_id ==
+                'localhost' or is_valid_ip(device_id)):
+            self.__id = (
+                device_id + ":" + str(port) if port is not None else device_id)
+            cmd = ' '.join([
+                self.__adb_path,
+                adbcmds.CONNECT,
+                self.__id
+            ])
+            adbprocess.subprocess.check_call(cmd, shell=True, **kwargs)
+        else:
+            self.__id = device_id
         self.__adb_device_process = adbdeviceprocess.AdbDeviceProcess(
             self.__id,
-            options_path if options_path else adbcmds.ADB
+            self.__adb_path
         )
 
     def __str__(self):
@@ -432,43 +446,6 @@ class AdbDevice():
         ])
         return self.__adb_device_process.check_call(cmd)
 
-    # networking
-    def connect(self, address, port=5555):
-        """Connect to a device via TCP/IP
-
-          Args:
-            address (str): Host address
-            port (Optional[str|int]): Port (default 5555)
-          Returns:
-            0 if success
-          Raises:
-            CalledProcessError: when failed
-        """
-        cmd = ' '.join([
-            adbcmds.CONNECT,
-            address,
-            str(port),
-        ])
-        return self.__adb_device_process.check_call(cmd)
-
-    def disconnect(self, address, port=5555):
-        """Disconnect from given TCP/IP device
-
-          Args:
-            address (str): Host address
-            port (Optional[str]): Port (default 5555)
-          Returns:
-            0 if success
-          Raises:
-            CalledProcessError: when failed
-        """
-        cmd = ' '.join([
-            adbcmds.DISCONNECT,
-            address,
-            str(port),
-        ])
-        return self.__adb_device_process.check_call(cmd)
-
     def wait_for_device(self, **kwargs):
         """ Restart adb with root permission
 
@@ -483,7 +460,7 @@ class AdbDevice():
             TimeoutExpired: when timeout
         """
         cmd = ' '.join([
-            adbcmds.ADB,
+            self.__adb_path,
             '-s',
             self.get_id(),
             adbcmds.WAIT_FOR_DEVICE,
