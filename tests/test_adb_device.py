@@ -54,9 +54,6 @@ class AdbDeviceTest(  # pylint: disable=too-many-public-methods
         device = simpleadb.AdbDevice(TEST_DEVICE_ID)
         self.assertEqual(TEST_DEVICE_ID, str(device))
 
-    @pytest.mark.skipif(
-        utils.is_github_workflows_env(),
-        reason="Failing on emulator")
     def test_custom_adb_path(self):
         """Test custom adb binary path"""
         device = simpleadb.AdbDevice(

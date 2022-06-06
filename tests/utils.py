@@ -8,6 +8,7 @@
 
 """Utils for tests"""
 import os
+import shutil
 
 
 def get_test_device_id():
@@ -17,7 +18,7 @@ def get_test_device_id():
 
 def get_adb_path():
     """Get adb binary path"""
-    return '/usr/local/android-sdk/platform-tools/adb'
+    return shutil.which('adb')
 
 
 def is_github_workflows_env():
