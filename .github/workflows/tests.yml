@@ -14,7 +14,6 @@ env:
   ENVIRONMENT: GITHUB_WORKFLOWS
   ADB_INSTALL_TIMEOUT: 8
   TEST_DEVICE_ID: emulator-5554
-  APK_URL: https://github.com/michalkielan/AndroidDummyApp/releases/download/0.0.1/app-debug.apk
 
 
 jobs:
@@ -36,7 +35,7 @@ jobs:
       - name: Install python dependencies
         run: |
           python -m pip install --upgrade pip
-          pip install pytest coverage
+          pip install pytest coverage wget
           if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
 
       - name: Run tests on emulator
@@ -47,6 +46,5 @@ jobs:
           emulator-options: -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none
           disable-animations: true
           script: |
-            wget $APK_URL
             adb wait-for-device shell 'while [[ -z $(getprop sys.boot_completed) ]]; do sleep 1; done; input keyevent 82'
             coverage run -m pytest tests

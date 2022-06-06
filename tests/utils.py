@@ -9,6 +9,14 @@
 """Utils for tests"""
 import os
 import shutil
+import time
+import wget
+
+DUMMY_APK_VERSION = '0.0.1'
+DUMMY_APK_NAME = 'app-debug.apk'
+DUMMY_APK_URL = (
+    f'https://github.com/michalkielan/AndroidDummyApp/releases/download/{DUMMY_APK_VERSION}/{DUMMY_APK_NAME}')
+DUMMY_PACKAGE_NAME = 'com.dummy_app.dummy'
 
 
 def get_test_device_id():
@@ -33,3 +41,11 @@ def android_wait_for_emulator():
             "adb wait-for-device shell \'while [[ -z $(getprop \
             sys.boot_completed)]]; do sleep 1; done; input keyevent 82\'"
         )
+
+
+def download_resources():
+    """Download resources for tests"""
+    if not os.path.exists(DUMMY_APK_NAME):
+        wget.download(DUMMY_APK_URL, DUMMY_APK_NAME)
+    while not os.path.exists(DUMMY_APK_NAME):
+        time.sleep(1)

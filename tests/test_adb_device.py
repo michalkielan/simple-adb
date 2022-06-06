@@ -16,13 +16,16 @@ import simpleadb
 from . import utils
 
 TEST_DEVICE_ID = utils.get_test_device_id()
-DUMMY_APK_NAME = 'app-debug.apk'
-DUMMY_PACKAGE_NAME = 'com.dummy_app.dummy'
 
 
 class AdbDeviceTest(  # pylint: disable=too-many-public-methods
         unittest.TestCase):
     """Adb device unit tests"""
+
+    @classmethod
+    def setUpClass(cls):
+        """Download resources at the beginning of the tests"""
+        utils.download_resources()
 
     def setUp(self):
         """Start adb server in each test"""
@@ -123,9 +126,9 @@ class AdbDeviceTest(  # pylint: disable=too-many-public-methods
         if not device.is_root():
             device.root()
         device.remount()
-        res = device.install(DUMMY_APK_NAME)
+        res = device.install(utils.DUMMY_APK_NAME)
         self.assertEqual(res, 0)
-        res = device.uninstall(DUMMY_PACKAGE_NAME)
+        res = device.uninstall(utils.DUMMY_PACKAGE_NAME)
         self.assertEqual(res, 0)
 
     def test_setprop(self):
