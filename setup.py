@@ -11,7 +11,7 @@ from setuptools import setup, find_packages
 
 setup(
     name='simpleadb',
-    version='0.3.1',
+    version='0.3.2',
     description='Python wrapper for adb protocol.',
     long_description=io.open('README.rst', encoding='utf-8').read(),
     author='Michal Kielan',
