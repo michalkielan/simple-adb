@@ -8,7 +8,17 @@
 
 """ Python wrapper for adb protocol """
 from . import adbprocess
-from . import adbcmds
+
+
+def set_device(device_id):
+    """ Set specific device to adb command
+
+      Args:
+        Device id
+      Returns:
+        String to set device id in adb command
+    """
+    return '-s ' + str(device_id)
 
 
 class AdbDeviceProcess():
@@ -35,7 +45,7 @@ class AdbDeviceProcess():
             0 if success, otherwise error code
         """
         cmd = ' '.join([
-            adbcmds.get_set_device(self.__id),
+            set_device(self.__id),
             args,
         ])
         return self.__adb_process.call(cmd)
@@ -54,7 +64,7 @@ class AdbDeviceProcess():
             CalledProcessError: when failed
         """
         cmd = ' '.join([
-            adbcmds.get_set_device(self.__id),
+            set_device(self.__id),
             args,
         ])
         return self.__adb_process.check_call(cmd)
@@ -73,7 +83,7 @@ class AdbDeviceProcess():
             CalledProcessError: when failed
         """
         cmd = ' '.join([
-            adbcmds.get_set_device(self.__id),
+            set_device(self.__id),
             args,
         ])
         return self.__adb_process.check_output(cmd).rstrip('\n\r')
