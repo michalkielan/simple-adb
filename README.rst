@@ -1,7 +1,7 @@
 simple adb
 ==========
 
-|PyPi version| |Build| |Tests| |Coverage Status|
+|PyPi version| |Build| |Tests| |Codecov|
 
    Object oriented python wrapper for adb protocol.
 
@@ -39,5 +39,6 @@ License
    :target: https://github.com/michalkielan/simple-adb/actions/workflows/build.yml?query=branch%3Amaster
 .. |Tests| image:: https://github.com/michalkielan/simple-adb/actions/workflows/tests.yml/badge.svg?branch=master
    :target: https://github.com/michalkielan/simple-adb/actions/workflows/tests.yml?query=branch%3Amaster
-.. |Coverage Status| image:: https://coveralls.io/repos/github/michalkielan/simple-adb/badge.svg?branch=master&service=github
-   :target: https://coveralls.io/github/michalkielan/simple-adb?branch=master
+.. |Codecov| image:: https://codecov.io/gh/michalkielan/simple-adb/branch/master/graph/badge.svg
+   :target: https://codecov.io/gh/michalkielan/simple-adb
+
