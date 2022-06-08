@@ -74,12 +74,21 @@ class AdbDeviceTest(  # pylint: disable=too-many-public-methods
         with self.assertRaises(subprocess.CalledProcessError):
             device.get_serialno()
 
-    def test_adb_root(self):
+    @pytest.mark.skipif(
+        utils.is_github_workflows_env(),
+        reason='is_root() is "experimental" feature, may fail on emulator')
+    def test_is_root_true(self):
         """Check if device is rooted after adb root command"""
         device = simpleadb.AdbDevice(TEST_DEVICE_ID)
         res = device.root(timeout_sec=10)
         self.assertEqual(res, 0)
         self.assertTrue(device.is_root())
+
+    def test_adb_root(self):
+        """Check adb root command not failing"""
+        device = simpleadb.AdbDevice(TEST_DEVICE_ID)
+        res = device.root()
+        self.assertEqual(res, 0)
 
     def test_get_id(self):
         """Check if get_id is equal to test device id"""
@@ -152,7 +161,7 @@ class AdbDeviceTest(  # pylint: disable=too-many-public-methods
 
     @pytest.mark.skipif(
         utils.is_github_workflows_env(),
-        reason="Failing on emulator")
+        reason='Failing on emulator')
     def test_verity(self):
         """Check if verity command is not failing"""
         device = simpleadb.AdbDevice(TEST_DEVICE_ID)
@@ -241,7 +250,7 @@ class AdbDeviceTest(  # pylint: disable=too-many-public-methods
 
     @pytest.mark.skipif(
         utils.is_github_workflows_env(),
-        reason="Failing on emulator")
+        reason='Failing on emulator')
     def test_device_is_available(self):
         """Test if device is available"""
         device = simpleadb.AdbDevice(TEST_DEVICE_ID)
