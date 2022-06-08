@@ -77,7 +77,7 @@ class AdbDeviceTest(  # pylint: disable=too-many-public-methods
     def test_adb_root(self):
         """Check if device is rooted after adb root command"""
         device = simpleadb.AdbDevice(TEST_DEVICE_ID)
-        res = device.root()
+        res = device.root(timeout_sec=10)
         self.assertEqual(res, 0)
         self.assertTrue(device.is_root())
 
