@@ -1,6 +1,15 @@
 [Unreleased](https://github.com/michalkielan/simple-adb/compare/0.3.2...HEAD)
 -----------------------------------------------------------------------------
 
+### Added
+- minor refactor
+- add cache for AVD VM
+
+### Changed
+- generating description in setup.py due to fd leak
+- api version 27 in CI
+
+### Changed
 [0.3.2](https://github.com/michalkielan/simple-adb/compare/0.3.1...0.3.2) - 2022-06-07
 --------------------------------------------------------------------------------------
 
