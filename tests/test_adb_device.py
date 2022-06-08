@@ -41,8 +41,8 @@ class AdbDeviceTest(  # pylint: disable=too-many-public-methods
         devices = self.__adb.devices()
         if not devices:
             self.fail('No adb devices found')
-        emulator = devices[0]
-        self.assertTrue(TEST_DEVICE_ID in emulator.get_id())
+        test_device = simpleadb.AdbDevice(TEST_DEVICE_ID)
+        self.assertTrue(test_device in devices)
 
     def test_device_eq_to_device_string(self):
         """Test equal operator for adb device object"""
