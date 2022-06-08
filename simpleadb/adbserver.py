@@ -12,7 +12,7 @@ from . import adbcmds
 from . import adbdevice
 
 
-class AdbServer():
+class AdbServer:
     """Class for server specific adb commands
 
       Args:

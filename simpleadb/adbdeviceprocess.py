@@ -21,7 +21,7 @@ def set_device(device_id):
     return '-s ' + str(device_id)
 
 
-class AdbDeviceProcess():
+class AdbDeviceProcess:
     """Wrapper for adbprocess for specific device
 
       Args:

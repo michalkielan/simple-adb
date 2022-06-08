@@ -16,7 +16,7 @@ from . import adbprocess
 from .utils import is_valid_ip
 
 
-class AdbDevice():
+class AdbDevice:
     """Class for device specific adb commands
 
        Args:

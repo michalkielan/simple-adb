@@ -11,7 +11,7 @@ import subprocess
 from . import adbcmds
 
 
-class AdbProcess():
+class AdbProcess:
     """AdbProcess this class is used to call adb process
 
       Args:
