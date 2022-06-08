@@ -7,6 +7,7 @@
 #
 
 """ Python wrapper for adb protocol """
+from typing import List, Optional, Union
 from . import adbprocess
 from . import adbcmds
 from . import adbdevice
@@ -22,16 +23,16 @@ class AdbServer:
         path (str): adb path
     """
 
-    def __init__(self, port=None, **kwargs):
+    def __init__(self, port: Optional[int] = None, **kwargs):
         options_path = kwargs.get('path')
         adb_path = options_path if options_path else adbcmds.ADB
         self.__adb_process = adbprocess.AdbProcess(adb_path)
         self.start(port)
 
-    def __check_call(self, args):
+    def __check_call(self, args: str) -> int:
         return self.__adb_process.check_call(args)
 
-    def devices(self):
+    def devices(self) -> List[str]:
         """ List connected devices
 
           Returns:
@@ -51,12 +52,12 @@ class AdbServer:
                 devices.append(adbdevice.AdbDevice(device_id))
         return devices
 
-    def connect(self, address, port=5555):
+    def connect(self, address, port: Optional[Union[int, str]] = 5555):
         """Connect a device via TCP/IP
 
           Args:
             address (str): Host address
-            port (Optional[str|int]): Port (default 5555)
+            port (Optional[Union[int,str]]): Port (default 5555)
           Returns:
             0 if success
           Raises:
@@ -70,12 +71,13 @@ class AdbServer:
         res = self.__check_call(cmd)
         return res
 
-    def disconnect(self, address, port=5555):
+    def disconnect(
+            self, address, port: Optional[Union[int, str]] = None) -> int:
         """Disconnect from given TCP/IP device
 
           Args:
             address (str): Host address
-            port (Optional[str]): Port (default 5555)
+            port (Optional[Union[int,str]]): Port
           Returns:
             0 if success
           Raises:
@@ -89,11 +91,11 @@ class AdbServer:
         res = self.__check_call(cmd)
         return res
 
-    def start(self, port=None):
+    def start(self, port: Optional[Union[int, str]] = None) -> int:
         """ Ensure that there is a server running
 
           Args:
-            port (Optional[int]): Port (default: default adb server port)
+            port (Optional[Union[int, str]]) Port (default: adb server port)
           Returns:
             0 if success
           Raises:
@@ -109,7 +111,7 @@ class AdbServer:
         res = self.__check_call(cmd)
         return res
 
-    def kill(self):
+    def kill(self) -> int:
         """ Kill the server if it is running
 
           Returns:
@@ -120,7 +122,7 @@ class AdbServer:
         cmd = adbcmds.KILL_SERVER
         return self.__check_call(cmd)
 
-    def usb(self):
+    def usb(self) -> int:
         """ Restart adb server listening on USB
 
           Returns:
@@ -131,11 +133,11 @@ class AdbServer:
         cmd = adbcmds.USB
         return self.__check_call(cmd)
 
-    def tcpip(self, port):
+    def tcpip(self, port: Union[int, str]) -> int:
         """ Restart adb server listening on TCP on PORT
 
           Args:
-            port (int): Port number
+            port (Union[int, str]): Port number
           Returns:
             0 if success
           Raises:
