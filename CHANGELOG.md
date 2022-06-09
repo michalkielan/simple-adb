@@ -4,6 +4,7 @@
 ### Added
 - minor refactor
 - add cache for AVD VM
+- add return error to adb root
 
 ### Changed
 - generating description in setup.py due to fd leak

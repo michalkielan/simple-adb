@@ -166,10 +166,10 @@ class AdbDevice:
             TimeoutExpired: when timeout
         """
         cmd = adbcmds.ROOT
-        res = self.__adb_device_process.check_call(cmd)
-        if res == 0:
-            return self.wait_for_device(timeout=timeout_sec)
-        return res
+        output = self.__adb_device_process.check_output(cmd)
+        if 'cannot' in output:
+            return -1
+        return self.wait_for_device(timeout=timeout_sec)
 
     def unroot(
             self,
