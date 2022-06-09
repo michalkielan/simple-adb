@@ -139,7 +139,10 @@ class AdbDevice:
             CalledProcessError: when failed
         """
         cmd = adbcmds.REMOUNT
-        self.__adb_device_process.check_call(cmd)
+        output = self.__adb_device_process.check_output(cmd)
+        if 'remount failed' in output.lower():
+            return -1
+        return 0
 
     def reboot(self) -> int:
         """ Reboot the device
@@ -167,7 +170,7 @@ class AdbDevice:
         """
         cmd = adbcmds.ROOT
         output = self.__adb_device_process.check_output(cmd)
-        if 'cannot' in output:
+        if 'cannot' in output.lower():
             return -1
         return self.wait_for_device(timeout=timeout_sec)
 
