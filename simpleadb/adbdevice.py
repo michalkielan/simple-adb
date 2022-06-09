@@ -10,6 +10,7 @@
 
 """ Python wrapper for adb protocol """
 import time
+from typing import Optional
 from . import adbcmds
 from . import adbdeviceprocess
 from . import adbprocess
@@ -27,7 +28,7 @@ class AdbDevice:
          path (str): adb path
     """
 
-    def __init__(self, device_id, port=None, **kwargs):
+    def __init__(self, device_id, port: Optional[int] = None, **kwargs):
         options_path = kwargs.get('path')
         self.__adb_path = options_path if options_path else adbcmds.ADB
         if (port is not None or device_id ==
@@ -59,7 +60,7 @@ class AdbDevice:
     def __ne__(self, other):
         return not self.__eq__(other)
 
-    def get_id(self):
+    def get_id(self) -> str:
         """Get target device id
 
           Returns:
@@ -67,7 +68,7 @@ class AdbDevice:
         """
         return self.__id
 
-    def get_state(self):
+    def get_state(self) -> str:
         """Get state
 
          Returns:
@@ -78,7 +79,7 @@ class AdbDevice:
         cmd = adbcmds.GET_STATE
         return self.__adb_device_process.check_output(cmd)
 
-    def get_app_pid(self, package_name):
+    def get_app_pid(self, package_name: str) -> int:
         """Get app pid
 
           Args:
@@ -95,7 +96,7 @@ class AdbDevice:
         ])
         return int(self.__adb_device_process.check_output(cmd))
 
-    def get_serialno(self):
+    def get_serialno(self) -> str:
         """Get target device's serial number
 
           Returns:
@@ -106,7 +107,7 @@ class AdbDevice:
         cmd = adbcmds.GET_SERIALNO
         return self.__adb_device_process.check_output(cmd)
 
-    def is_available(self):
+    def is_available(self) -> bool:
         """ Check if device is available
 
           Returns:
@@ -118,7 +119,7 @@ class AdbDevice:
         except adbprocess.subprocess.CalledProcessError:
             return False
 
-    def get_devpath(self):
+    def get_devpath(self) -> str:
         """ Get device path
 
           Returns:
@@ -129,7 +130,7 @@ class AdbDevice:
         cmd = adbcmds.DEVPATH
         return self.__adb_device_process.check_output(cmd)
 
-    def remount(self):
+    def remount(self) -> int:
         """ Remout partition read-write
 
           Returns:
@@ -140,7 +141,7 @@ class AdbDevice:
         cmd = adbcmds.REMOUNT
         self.__adb_device_process.check_call(cmd)
 
-    def reboot(self):
+    def reboot(self) -> int:
         """ Reboot the device
 
           Returns:
@@ -153,7 +154,7 @@ class AdbDevice:
 
     def root(
             self,
-            timeout_sec=None):
+            timeout_sec: Optional[int] = None) -> int:
         """ Restart adb with root permission if device has one
 
           Args:
@@ -172,7 +173,7 @@ class AdbDevice:
 
     def unroot(
             self,
-            timeout_sec=None):
+            timeout_sec: Optional[int] = None) -> int:
         """ Restart adb without root permission
 
           Returns:
@@ -186,7 +187,7 @@ class AdbDevice:
             return self.wait_for_device(timeout=timeout_sec)
         return res
 
-    def is_root(self):
+    def is_root(self) -> bool:
         """ Check if device has root permissions (experimental)
 
           Returns:
@@ -202,7 +203,7 @@ class AdbDevice:
             return True
         return False
 
-    def install(self, apk):
+    def install(self, apk: str) -> int:
         """ Push package to the device and install
 
           Args:
@@ -218,7 +219,7 @@ class AdbDevice:
         ])
         return self.__adb_device_process.check_call(cmd)
 
-    def uninstall(self, package):
+    def uninstall(self, package: str) -> int:
         """ Remove this app package from the device
 
           Args:
@@ -234,7 +235,7 @@ class AdbDevice:
         ])
         return self.__adb_device_process.check_call(cmd)
 
-    def shell(self, args):
+    def shell(self, args: str) -> str:
         """Run remote shell command interface
 
           Args:
@@ -250,7 +251,7 @@ class AdbDevice:
         ])
         return self.__adb_device_process.check_call(cmd)
 
-    def rm(self, remote):  # pylint: disable=invalid-name
+    def rm(self, remote: str) -> int:  # pylint: disable=invalid-name
         """Remove file in adb device
 
           Args:
@@ -266,7 +267,7 @@ class AdbDevice:
         ])
         return self.shell(cmd)
 
-    def tap(self, pos_x, pos_y):
+    def tap(self, pos_x: int, pos_y: int) -> int:
         """ Tap screen
 
           Args:
@@ -284,7 +285,7 @@ class AdbDevice:
         ])
         return self.shell(cmd)
 
-    def swipe(self, pos_x1, pos_y1, pos_x2, pos_y2):
+    def swipe(self, pos_x1: int, pos_y1: int, pos_x2: int, pos_y2: int) -> int:
         """ Swipe screen
 
           Args:
@@ -306,7 +307,7 @@ class AdbDevice:
         ])
         return self.shell(cmd)
 
-    def screencap(self, **kwargs):
+    def screencap(self, **kwargs) -> int:
         """ Capture screenshot
 
           Args:
@@ -339,7 +340,7 @@ class AdbDevice:
         self.rm(remote)
         return 0
 
-    def broadcast(self, intent):
+    def broadcast(self, intent: str) -> int:
         """ Send broadcast
 
           Args:
@@ -355,7 +356,7 @@ class AdbDevice:
         ])
         return self.shell(cmd)
 
-    def pm_grant(self, package, permission):
+    def pm_grant(self, package: str, permission: str) -> str:
         """Grant permission
 
           Args:
@@ -373,7 +374,7 @@ class AdbDevice:
         ])
         return self.shell(cmd)
 
-    def setprop(self, prop, value):
+    def setprop(self, prop: str, value: str) -> int:
         """Set property
 
           Args:
@@ -391,7 +392,7 @@ class AdbDevice:
         ])
         return self.shell(cmd)
 
-    def getprop(self, prop):
+    def getprop(self, prop: str) -> str:
         """Get android system property value
 
           Args:
@@ -408,7 +409,7 @@ class AdbDevice:
         ])
         return self.__adb_device_process.check_output(cmd)
 
-    def enable_verity(self, enabled):
+    def enable_verity(self, enabled: bool) -> int:
         """Enable/Disable verity
 
           Args:
@@ -424,7 +425,7 @@ class AdbDevice:
         )
         return self.__adb_device_process.check_call(cmd)
 
-    def push(self, source, dest):
+    def push(self, source: str, dest: str) -> int:
         """Copy local files/dirs to device
 
           Args:
@@ -442,12 +443,12 @@ class AdbDevice:
         ])
         return self.__adb_device_process.check_call(cmd)
 
-    def pull(self, source, dest='.'):
+    def pull(self, source: str, dest: Optional[str] = '.') -> int:
         """Copy local files/dirs from device
 
           Args:
             source (str): Remote path
-            dest (Optional[str|int]): Local path default is '.'
+            dest (Optional[str]): Local path default is '.'
           Returns:
             0 if success
           Raises:
@@ -460,7 +461,7 @@ class AdbDevice:
         ])
         return self.__adb_device_process.check_call(cmd)
 
-    def wait_for_device(self, **kwargs):
+    def wait_for_device(self, **kwargs) -> int:
         """ Restart adb with root permission
 
           Args:
@@ -481,7 +482,7 @@ class AdbDevice:
         ])
         return adbprocess.subprocess.check_call(cmd, shell=True, **kwargs)
 
-    def dump_logcat(self, *buffers):
+    def dump_logcat(self, *buffers: str) -> str:
         """ Dump logcat
 
           Args:
@@ -506,7 +507,7 @@ class AdbDevice:
         cmd += ' -d'
         return self.__adb_device_process.check_output(cmd)
 
-    def clear_logcat(self, *buffers):
+    def clear_logcat(self, *buffers: str) -> str:
         """ Clear logcat
 
           Args:

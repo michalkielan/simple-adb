@@ -14,11 +14,13 @@ IP_ADDRESS_REGEX = (
 )
 
 
-def is_valid_ip(address):
+def is_valid_ip(address: str) -> bool:
     """Check for valid ip address using regex
 
        Args:
          address (str): Ip address
+       Returns:
+         True if address is ip, False otherwise
     """
     try:
         ip_valid = re.match(IP_ADDRESS_REGEX, address)

@@ -8,6 +8,7 @@
 
 """ Interface for adb process"""
 import subprocess
+from typing import Optional
 from . import adbcmds
 
 
@@ -20,7 +21,7 @@ class AdbProcess:
         0 if success, otherwise error code
     """
 
-    def __init__(self, path=adbcmds.ADB):
+    def __init__(self, path: Optional[str] = adbcmds.ADB):
         self.__adb_path = path
 
     def call(self, args, **kwargs):
@@ -41,7 +42,7 @@ class AdbProcess:
         kwargs.setdefault('shell', True)
         return subprocess.call(cmd, **kwargs)
 
-    def check_call(self, args, **kwargs):
+    def check_call(self, args: str, **kwargs) -> int:
         """ Call process
 
           Args:
@@ -61,7 +62,7 @@ class AdbProcess:
         kwargs.setdefault('shell', True)
         return subprocess.check_call(cmd, **kwargs)
 
-    def check_output(self, args, **kwargs):
+    def check_output(self, args: str, **kwargs) -> str:
         """ Call process
 
           Args:
