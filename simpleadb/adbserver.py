@@ -121,30 +121,3 @@ class AdbServer:
         """
         cmd = adbcmds.KILL_SERVER
         return self.__check_call(cmd)
-
-    def usb(self) -> int:
-        """ Restart adb server listening on USB
-
-          Returns:
-            0 if success
-          Raises:
-            CalledProcessError: when failed
-        """
-        cmd = adbcmds.USB
-        return self.__check_call(cmd)
-
-    def tcpip(self, port: Union[int, str]) -> int:
-        """ Restart adb server listening on TCP on PORT
-
-          Args:
-            port (Union[int, str]): Port number
-          Returns:
-            0 if success
-          Raises:
-            CalledProcessError: when failed
-        """
-        cmd = ' '.join([
-            adbcmds.TCPIP,
-            str(port)
-        ])
-        return self.__check_call(cmd)
