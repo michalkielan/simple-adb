@@ -10,7 +10,7 @@
 
 """ Python wrapper for adb protocol """
 import time
-from typing import Optional
+from typing import Optional, Union
 from . import adbcmds
 from . import adbdeviceprocess
 from . import adbprocess
@@ -533,4 +533,31 @@ class AdbDevice:
             cmd += ' '.join(buffers_cmd)
 
         cmd += ' -c'
+        return self.__adb_device_process.check_call(cmd)
+
+    def usb(self) -> int:
+        """ Restart adb server listening on USB
+
+          Returns:
+            0 if success
+          Raises:
+            CalledProcessError: when failed
+        """
+        cmd = adbcmds.USB
+        return self.__adb_device_process.check_call(cmd)
+
+    def tcpip(self, port: Union[int, str]) -> int:
+        """ Restart adb server listening on TCP on PORT
+
+          Args:
+            port (Union[int, str]): Port number
+          Returns:
+            0 if success
+          Raises:
+            CalledProcessError: when failed
+        """
+        cmd = ' '.join([
+            adbcmds.TCPIP,
+            str(port)
+        ])
         return self.__adb_device_process.check_call(cmd)

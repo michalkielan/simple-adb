@@ -7,6 +7,7 @@
 - add return error to: 
   - adb root
   - adb remount
+- move tcpip/usb from adbserver to adbdevice
 
 ### Changed
 - generating description in setup.py due to fd leak
