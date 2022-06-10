@@ -1,6 +1,9 @@
 [Unreleased](https://github.com/michalkielan/simple-adb/compare/0.3.3...HEAD)
 -----------------------------------------------------------------------------
 
+### Removed
+- Deprecate travis
+
 [0.3.3](https://github.com/michalkielan/simple-adb/compare/0.3.2...0.3.3) - 2022-06-10
 --------------------------------------------------------------------------------------
 
