@@ -1,0 +1,939 @@
+
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+    <title>Welcome to simple-adb’s documentation! &#8212; simple-adb pre documentation</title>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="_static/classic.css" />
+    
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="_static/doctools.js"></script>
+    
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="#">simple-adb pre documentation</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Welcome to simple-adb’s documentation!</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <section id="module-simpleadb.adbdevice">
+<span id="welcome-to-simple-adb-s-documentation"></span><h1>Welcome to simple-adb’s documentation!<a class="headerlink" href="#module-simpleadb.adbdevice" title="Permalink to this heading">¶</a></h1>
+<p>This module include AdbDevice class used on device with given serial.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="simpleadb.adbdevice.AdbDevice">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">simpleadb.adbdevice.</span></span><span class="sig-name descname"><span class="pre">AdbDevice</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">device_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">port</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#simpleadb.adbdevice.AdbDevice" title="Permalink to this definition">¶</a></dt>
+<dd><p>AdbDevice is a class representation of adb commands used on device with
+given serial.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>device_id</strong> (<em>str</em>) – Device ID or Host address.</p></li>
+<li><p><strong>port</strong> (<em>Optional</em><em>[</em><em>int</em><em>]</em>) – Port, default is 5555.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Keyword Arguments<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>path</strong> (<em>str</em>) – Adb binary path.</p>
+</dd>
+<dt class="field-odd">Example<span class="colon">:</span></dt>
+<dd class="field-odd"><p></p></dd>
+</dl>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">simpleadb</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">device</span> <span class="o">=</span> <span class="n">simpleadb</span><span class="o">.</span><span class="n">AdbDevice</span><span class="p">(</span><span class="s1">&#39;emulator-5554&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">device</span> <span class="o">=</span> <span class="n">simpleadb</span><span class="o">.</span><span class="n">AdbDevice</span><span class="p">(</span><span class="s1">&#39;emulator-5554&#39;</span><span class="p">,</span> <span class="n">path</span><span class="o">=</span><span class="s1">&#39;/usr/bin/adb&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">device</span> <span class="o">=</span> <span class="n">simpleadb</span><span class="o">.</span><span class="n">AdbDevice</span><span class="p">(</span><span class="s1">&#39;192.168.42.42&#39;</span><span class="p">,</span> <span class="mi">5555</span><span class="p">)</span>
+</pre></div>
+</div>
+<dl class="py method">
+<dt class="sig sig-object py" id="simpleadb.adbdevice.AdbDevice.broadcast">
+<span class="sig-name descname"><span class="pre">broadcast</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">intent</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">int</span></span></span><a class="headerlink" href="#simpleadb.adbdevice.AdbDevice.broadcast" title="Permalink to this definition">¶</a></dt>
+<dd><p>Send broadcast.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>intent</strong> (<em>str</em>) – Intent argument.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>0 if success, error code otherwise.</p>
+</dd>
+<dt class="field-odd">Raises<span class="colon">:</span></dt>
+<dd class="field-odd"><p>CalledProcessError: When failed.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>int</p>
+</dd>
+<dt class="field-odd">Example<span class="colon">:</span></dt>
+<dd class="field-odd"><p></p></dd>
+</dl>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">simpleadb</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">device</span> <span class="o">=</span> <span class="n">simpleadb</span><span class="o">.</span><span class="n">AdbDevice</span><span class="p">(</span><span class="s1">&#39;emulator-5554&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">device</span><span class="o">.</span><span class="n">broadcast</span><span class="p">(</span><span class="s1">&#39;am dummy_intent&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="simpleadb.adbdevice.AdbDevice.clear_logcat">
+<span class="sig-name descname"><span class="pre">clear_logcat</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">buffers</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="headerlink" href="#simpleadb.adbdevice.AdbDevice.clear_logcat" title="Permalink to this definition">¶</a></dt>
+<dd><p>Clear logcat.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>buffers</strong> (<em>Optional</em><em>[</em><em>List</em><em>[</em><em>str</em><em>]</em><em>]</em>) – List of logcat buffers to clear.</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>CalledProcessError</strong> – When failed.</p></li>
+<li><p><strong>TimeoutExpired</strong> – When timeout.</p></li>
+</ul>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>0 if success, otherwise error code.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>str</p>
+</dd>
+<dt class="field-odd">Example<span class="colon">:</span></dt>
+<dd class="field-odd"><p></p></dd>
+</dl>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">simpleadb</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">device</span> <span class="o">=</span> <span class="n">simpleadb</span><span class="o">.</span><span class="n">AdbDevice</span><span class="p">(</span><span class="s1">&#39;emulator-5554&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">device</span><span class="o">.</span><span class="n">clear_logcat</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">device</span><span class="o">.</span><span class="n">clear_logcat</span><span class="p">(</span><span class="s1">&#39;main&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="simpleadb.adbdevice.AdbDevice.dump_logcat">
+<span class="sig-name descname"><span class="pre">dump_logcat</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">buffers</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="headerlink" href="#simpleadb.adbdevice.AdbDevice.dump_logcat" title="Permalink to this definition">¶</a></dt>
+<dd><p>Dump logcat.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>buffers</strong> (<em>Optional</em><em>[</em><em>List</em><em>[</em><em>str</em><em>]</em><em>]</em>) – List of logcat buffers to dump.</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>CalledProcessError</strong> – When failed.</p></li>
+<li><p><strong>TimeoutExpired</strong> – When timeout.</p></li>
+</ul>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Logcat output string.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>str</p>
+</dd>
+<dt class="field-odd">Example<span class="colon">:</span></dt>
+<dd class="field-odd"><p></p></dd>
+</dl>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">simpleadb</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">device</span> <span class="o">=</span> <span class="n">simpleadb</span><span class="o">.</span><span class="n">AdbDevice</span><span class="p">(</span><span class="s1">&#39;emulator-5554&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">dumped_logcat</span> <span class="o">=</span> <span class="n">device</span><span class="o">.</span><span class="n">dump_logcat</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">main_logcat</span> <span class="o">=</span> <span class="n">device</span><span class="o">.</span><span class="n">dump_logcat</span><span class="p">(</span><span class="s1">&#39;main&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="simpleadb.adbdevice.AdbDevice.enable_verity">
+<span class="sig-name descname"><span class="pre">enable_verity</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">enabled</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">int</span></span></span><a class="headerlink" href="#simpleadb.adbdevice.AdbDevice.enable_verity" title="Permalink to this definition">¶</a></dt>
+<dd><p>Enable/Disable verity.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>enabled</strong> (<em>bool</em>) – If true enable verity, otherwise disable</p>
+</dd>
+<dt class="field-even">Raise<span class="colon">:</span></dt>
+<dd class="field-even"><p>CalledProcessError: When failed.</p>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>0 if success, error code otherwise.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>int</p>
+</dd>
+<dt class="field-odd">Example<span class="colon">:</span></dt>
+<dd class="field-odd"><p></p></dd>
+</dl>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">simpleadb</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">device</span> <span class="o">=</span> <span class="n">simpleadb</span><span class="o">.</span><span class="n">AdbDevice</span><span class="p">(</span><span class="s1">&#39;emulator-5554&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">device</span><span class="o">.</span><span class="n">root</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">device</span><span class="o">.</span><span class="n">enable_verity</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">device</span><span class="o">.</span><span class="n">remount</span><span class="p">()</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="simpleadb.adbdevice.AdbDevice.get_app_pid">
+<span class="sig-name descname"><span class="pre">get_app_pid</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">package_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">int</span></span></span><a class="headerlink" href="#simpleadb.adbdevice.AdbDevice.get_app_pid" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the PID of the application.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>package_name</strong> (<em>str</em>) – Package name.</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>CalledProcessError</strong> – When failed.</p>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Package PID.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>int</p>
+</dd>
+<dt class="field-odd">Example<span class="colon">:</span></dt>
+<dd class="field-odd"><p></p></dd>
+</dl>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">simpleadb</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">device</span> <span class="o">=</span> <span class="n">simpleadb</span><span class="o">.</span><span class="n">AdbDevice</span><span class="p">(</span><span class="s1">&#39;emulator-5554&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">device</span><span class="o">.</span><span class="n">get_state</span><span class="p">(</span><span class="s1">&#39;com.dummy.app&#39;</span><span class="p">)</span>
+<span class="go">4367</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="simpleadb.adbdevice.AdbDevice.get_devpath">
+<span class="sig-name descname"><span class="pre">get_devpath</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="headerlink" href="#simpleadb.adbdevice.AdbDevice.get_devpath" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get device path.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Raise<span class="colon">:</span></dt>
+<dd class="field-odd"><p>CalledProcessError: When failed</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Device path.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+<dt class="field-even">Example<span class="colon">:</span></dt>
+<dd class="field-even"><p></p></dd>
+</dl>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">simpleadb</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">device</span> <span class="o">=</span> <span class="n">simpleadb</span><span class="o">.</span><span class="n">AdbDevice</span><span class="p">(</span><span class="s1">&#39;emulator-5554&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">device</span><span class="o">.</span><span class="n">get_devpath</span><span class="p">()</span>
+<span class="go">&#39;usb:3383384308X&#39;</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="simpleadb.adbdevice.AdbDevice.get_id">
+<span class="sig-name descname"><span class="pre">get_id</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="headerlink" href="#simpleadb.adbdevice.AdbDevice.get_id" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get target device id. Return the device id used in constructor.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Device id.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>str</p>
+</dd>
+<dt class="field-odd">Example<span class="colon">:</span></dt>
+<dd class="field-odd"><p></p></dd>
+</dl>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">simpleadb</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">device</span> <span class="o">=</span> <span class="n">simpleadb</span><span class="o">.</span><span class="n">AdbDevice</span><span class="p">(</span><span class="s1">&#39;emulator-5554&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">device</span><span class="o">.</span><span class="n">get_id</span><span class="p">()</span>
+<span class="go">&#39;emulator-5554&#39;</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="simpleadb.adbdevice.AdbDevice.get_serialno">
+<span class="sig-name descname"><span class="pre">get_serialno</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="headerlink" href="#simpleadb.adbdevice.AdbDevice.get_serialno" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get target device serial number.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Raise<span class="colon">:</span></dt>
+<dd class="field-odd"><p>CalledProcessError: When failed.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Serial number.</p>
+</dd>
+<dt class="field-odd">Example<span class="colon">:</span></dt>
+<dd class="field-odd"><p></p></dd>
+</dl>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">simpleadb</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">device</span> <span class="o">=</span> <span class="n">simpleadb</span><span class="o">.</span><span class="n">AdbDevice</span><span class="p">(</span><span class="s1">&#39;emulator-5554&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">device</span><span class="o">.</span><span class="n">get_serialno</span><span class="p">()</span>
+<span class="go">&#39;emulator-5554&#39;</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="simpleadb.adbdevice.AdbDevice.get_state">
+<span class="sig-name descname"><span class="pre">get_state</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="headerlink" href="#simpleadb.adbdevice.AdbDevice.get_state" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get device state. Print offline, bootloader or disconnect.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Raises<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>CalledProcessError</strong> – When failed.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>State offline, bootloader or device.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+<dt class="field-even">Example<span class="colon">:</span></dt>
+<dd class="field-even"><p></p></dd>
+</dl>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">simpleadb</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">device</span> <span class="o">=</span> <span class="n">simpleadb</span><span class="o">.</span><span class="n">AdbDevice</span><span class="p">(</span><span class="s1">&#39;emulator-5554&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">device</span><span class="o">.</span><span class="n">get_state</span><span class="p">()</span>
+<span class="go">&#39;device&#39;</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="simpleadb.adbdevice.AdbDevice.getprop">
+<span class="sig-name descname"><span class="pre">getprop</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">prop</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="headerlink" href="#simpleadb.adbdevice.AdbDevice.getprop" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get android system property value.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>prop</strong> (<em>str</em>) – Property name.</p>
+</dd>
+<dt class="field-even">Raise<span class="colon">:</span></dt>
+<dd class="field-even"><p>CalledProcessError: When failed.</p>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>System property value.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>str</p>
+</dd>
+<dt class="field-odd">Example<span class="colon">:</span></dt>
+<dd class="field-odd"><p></p></dd>
+</dl>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">simpleadb</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">device</span> <span class="o">=</span> <span class="n">simpleadb</span><span class="o">.</span><span class="n">AdbDevice</span><span class="p">(</span><span class="s1">&#39;emulator-5554&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">device</span><span class="o">.</span><span class="n">setprop</span><span class="p">(</span><span class="s1">&#39;persist.dummy.prop 42&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">device</span><span class="o">.</span><span class="n">getprop</span><span class="p">(</span><span class="s1">&#39;persist.dummy.prop&#39;</span><span class="p">)</span>
+<span class="go">&#39;42&#39;</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="simpleadb.adbdevice.AdbDevice.install">
+<span class="sig-name descname"><span class="pre">install</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">apk</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">int</span></span></span><a class="headerlink" href="#simpleadb.adbdevice.AdbDevice.install" title="Permalink to this definition">¶</a></dt>
+<dd><p>Push package to the device and install.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>apk</strong> (<em>str</em>) – Package path.</p>
+</dd>
+<dt class="field-even">Raise<span class="colon">:</span></dt>
+<dd class="field-even"><p>CalledProcessError: When failed.</p>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>0 if success, error code otherwise.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>int</p>
+</dd>
+<dt class="field-odd">Example<span class="colon">:</span></dt>
+<dd class="field-odd"><p></p></dd>
+</dl>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">simpleadb</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">device</span> <span class="o">=</span> <span class="n">simpleadb</span><span class="o">.</span><span class="n">AdbDevice</span><span class="p">(</span><span class="s1">&#39;emulator-5554&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">device</span><span class="o">.</span><span class="n">install</span><span class="p">(</span><span class="s1">&#39;dummy.apk&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="simpleadb.adbdevice.AdbDevice.is_available">
+<span class="sig-name descname"><span class="pre">is_available</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#simpleadb.adbdevice.AdbDevice.is_available" title="Permalink to this definition">¶</a></dt>
+<dd><p>Check if device is available.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>True if available, otherwise False.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>bool</p>
+</dd>
+<dt class="field-odd">Example<span class="colon">:</span></dt>
+<dd class="field-odd"><p></p></dd>
+</dl>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">simpleadb</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">device</span> <span class="o">=</span> <span class="n">simpleadb</span><span class="o">.</span><span class="n">AdbDevice</span><span class="p">(</span><span class="s1">&#39;emulator-5554&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">device</span><span class="o">.</span><span class="n">is_available</span><span class="p">()</span>
+<span class="go">True</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="simpleadb.adbdevice.AdbDevice.is_root">
+<span class="sig-name descname"><span class="pre">is_root</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#simpleadb.adbdevice.AdbDevice.is_root" title="Permalink to this definition">¶</a></dt>
+<dd><p>Check if device has root permissions (experimental). Not guarantee
+to work ‘su’ must be installed on device.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>True if device is rooted, False otherwise.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>bool</p>
+</dd>
+<dt class="field-odd">Example<span class="colon">:</span></dt>
+<dd class="field-odd"><p></p></dd>
+</dl>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">simpleadb</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">device</span> <span class="o">=</span> <span class="n">simpleadb</span><span class="o">.</span><span class="n">AdbDevice</span><span class="p">(</span><span class="s1">&#39;emulator-5554&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">device</span><span class="o">.</span><span class="n">root</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">device</span><span class="o">.</span><span class="n">is_root</span><span class="p">()</span>
+<span class="go">True</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="simpleadb.adbdevice.AdbDevice.pm_grant">
+<span class="sig-name descname"><span class="pre">pm_grant</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">package</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">permission</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="headerlink" href="#simpleadb.adbdevice.AdbDevice.pm_grant" title="Permalink to this definition">¶</a></dt>
+<dd><p>Grant permission.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>package</strong> (<em>str</em>) – Package name.</p></li>
+<li><p><strong>permission</strong> (<em>str</em>) – Android permission.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>0 if success, error code otherwise.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+<dt class="field-even">Example<span class="colon">:</span></dt>
+<dd class="field-even"><p></p></dd>
+</dl>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">simpleadb</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">device</span> <span class="o">=</span> <span class="n">simpleadb</span><span class="o">.</span><span class="n">AdbDevice</span><span class="p">(</span><span class="s1">&#39;emulator-5554&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">device</span><span class="o">.</span><span class="n">pm_grant</span><span class="p">(</span><span class="s1">&#39;com.dummy.app&#39;</span><span class="p">,</span> <span class="s1">&#39;android.permission.PERMISSION&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="simpleadb.adbdevice.AdbDevice.pull">
+<span class="sig-name descname"><span class="pre">pull</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">source</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dest</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'.'</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">int</span></span></span><a class="headerlink" href="#simpleadb.adbdevice.AdbDevice.pull" title="Permalink to this definition">¶</a></dt>
+<dd><p>Pull files or directories from remote device.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>source</strong> (<em>str</em>) – Remote path.</p></li>
+<li><p><strong>dest</strong> (<em>Optional</em><em>[</em><em>str</em><em>]</em>) – Local path, default is <code class="docutils literal notranslate"><span class="pre">'.'</span></code>.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Raise<span class="colon">:</span></dt>
+<dd class="field-even"><p>CalledProcessError: When failed.</p>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>0 if success, error code otherwise.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>int</p>
+</dd>
+<dt class="field-odd">Example<span class="colon">:</span></dt>
+<dd class="field-odd"><p></p></dd>
+</dl>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">simpleadb</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">device</span> <span class="o">=</span> <span class="n">simpleadb</span><span class="o">.</span><span class="n">AdbDevice</span><span class="p">(</span><span class="s1">&#39;emulator-5554&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">device</span><span class="o">.</span><span class="n">push</span><span class="p">(</span><span class="s1">&#39;dummy_file.txt&#39;</span><span class="p">,</span> <span class="s1">&#39;/sdcard/Downloads/&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">device</span><span class="o">.</span><span class="n">pull</span><span class="p">(</span><span class="s1">&#39;/sdcard/Downloads/dummy_file.txt&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">device</span><span class="o">.</span><span class="n">pull</span><span class="p">(</span><span class="s1">&#39;/sdcard/Downloads/dummy_file.txt&#39;</span><span class="p">,</span> <span class="s1">&#39;/tmp&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="simpleadb.adbdevice.AdbDevice.push">
+<span class="sig-name descname"><span class="pre">push</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">source</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dest</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">int</span></span></span><a class="headerlink" href="#simpleadb.adbdevice.AdbDevice.push" title="Permalink to this definition">¶</a></dt>
+<dd><p>Copy local files/dirs to device.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>source</strong> (<em>str</em>) – Local path.</p></li>
+<li><p><strong>dest</strong> (<em>str</em>) – Remote path.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Raise<span class="colon">:</span></dt>
+<dd class="field-even"><p>CalledProcessError: When failed.</p>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>0 if success, error code otherwise.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>int</p>
+</dd>
+<dt class="field-odd">Example<span class="colon">:</span></dt>
+<dd class="field-odd"><p></p></dd>
+</dl>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">simpleadb</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">device</span> <span class="o">=</span> <span class="n">simpleadb</span><span class="o">.</span><span class="n">AdbDevice</span><span class="p">(</span><span class="s1">&#39;emulator-5554&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">device</span><span class="o">.</span><span class="n">push</span><span class="p">(</span><span class="s1">&#39;dummy_file.txt&#39;</span><span class="p">,</span> <span class="s1">&#39;/sdcard/Downloads/&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="simpleadb.adbdevice.AdbDevice.reboot">
+<span class="sig-name descname"><span class="pre">reboot</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">int</span></span></span><a class="headerlink" href="#simpleadb.adbdevice.AdbDevice.reboot" title="Permalink to this definition">¶</a></dt>
+<dd><p>Reboot the device. Defaults to booting system image.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Raise<span class="colon">:</span></dt>
+<dd class="field-odd"><p>CalledProcessError: When failed.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>0 if success, error code otherwise.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+<dt class="field-even">Example<span class="colon">:</span></dt>
+<dd class="field-even"><p></p></dd>
+</dl>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">simpleadb</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">device</span> <span class="o">=</span> <span class="n">simpleadb</span><span class="o">.</span><span class="n">AdbDevice</span><span class="p">(</span><span class="s1">&#39;emulator-5554&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">device</span><span class="o">.</span><span class="n">root</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">device</span><span class="o">.</span><span class="n">remount</span><span class="p">()</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="simpleadb.adbdevice.AdbDevice.remount">
+<span class="sig-name descname"><span class="pre">remount</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">int</span></span></span><a class="headerlink" href="#simpleadb.adbdevice.AdbDevice.remount" title="Permalink to this definition">¶</a></dt>
+<dd><p>Remout partition read-write.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Raises<span class="colon">:</span></dt>
+<dd class="field-odd"><p>CalledProcessError: When failed.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>0 if success, error code otherwise.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+<dt class="field-even">Example<span class="colon">:</span></dt>
+<dd class="field-even"><p></p></dd>
+</dl>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">simpleadb</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">device</span> <span class="o">=</span> <span class="n">simpleadb</span><span class="o">.</span><span class="n">AdbDevice</span><span class="p">(</span><span class="s1">&#39;emulator-5554&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">device</span><span class="o">.</span><span class="n">root</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">device</span><span class="o">.</span><span class="n">remount</span><span class="p">()</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="simpleadb.adbdevice.AdbDevice.rm">
+<span class="sig-name descname"><span class="pre">rm</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">remote_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">int</span></span></span><a class="headerlink" href="#simpleadb.adbdevice.AdbDevice.rm" title="Permalink to this definition">¶</a></dt>
+<dd><p>Remove file in adb device.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>remote_path</strong> (<em>str</em>) – Remote path.</p>
+</dd>
+<dt class="field-even">Raise<span class="colon">:</span></dt>
+<dd class="field-even"><p>CalledProcessError: When failed.</p>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>0 if success, error code otherwise.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>int</p>
+</dd>
+<dt class="field-odd">Example<span class="colon">:</span></dt>
+<dd class="field-odd"><p></p></dd>
+</dl>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">simpleadb</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">device</span> <span class="o">=</span> <span class="n">simpleadb</span><span class="o">.</span><span class="n">AdbDevice</span><span class="p">(</span><span class="s1">&#39;emulator-5554&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">device</span><span class="o">.</span><span class="n">rm</span><span class="p">(</span><span class="s1">&#39;/sdcard/dummy_file&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="simpleadb.adbdevice.AdbDevice.root">
+<span class="sig-name descname"><span class="pre">root</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">timeout_sec</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">int</span></span></span><a class="headerlink" href="#simpleadb.adbdevice.AdbDevice.root" title="Permalink to this definition">¶</a></dt>
+<dd><p>Restart adb with root permission if device has one. Wait for device
+to be in ‘device’ state.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>timeout_sec</strong> (<em>Optional</em><em>[</em><em>int</em><em>]</em>) – Timeout in seconds.</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>CalledProcessError</strong> – When failed.</p></li>
+<li><p><strong>TimeoutExpired</strong> – When timeout.</p></li>
+</ul>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>0 if success, error code otherwise.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>int</p>
+</dd>
+<dt class="field-odd">Example<span class="colon">:</span></dt>
+<dd class="field-odd"><p></p></dd>
+</dl>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">simpleadb</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">device</span> <span class="o">=</span> <span class="n">simpleadb</span><span class="o">.</span><span class="n">AdbDevice</span><span class="p">(</span><span class="s1">&#39;emulator-5554&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">device</span><span class="o">.</span><span class="n">root</span><span class="p">()</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="simpleadb.adbdevice.AdbDevice.screencap">
+<span class="sig-name descname"><span class="pre">screencap</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">int</span></span></span><a class="headerlink" href="#simpleadb.adbdevice.AdbDevice.screencap" title="Permalink to this definition">¶</a></dt>
+<dd><p>Capture screenshot.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Keyword Arguments<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>remote</strong> (<em>str</em>) – Remote path.</p></li>
+<li><p><strong>local</strong> (<em>str</em>) – Local path.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>0 if success, error code otherwise.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+<dt class="field-even">Example<span class="colon">:</span></dt>
+<dd class="field-even"><p></p></dd>
+</dl>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">simpleadb</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">device</span> <span class="o">=</span> <span class="n">simpleadb</span><span class="o">.</span><span class="n">AdbDevice</span><span class="p">(</span><span class="s1">&#39;emulator-5554&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">device</span><span class="o">.</span><span class="n">screencap</span><span class="p">()</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="simpleadb.adbdevice.AdbDevice.setprop">
+<span class="sig-name descname"><span class="pre">setprop</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">prop</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">value</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">int</span></span></span><a class="headerlink" href="#simpleadb.adbdevice.AdbDevice.setprop" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set property.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>prop</strong> (<em>str</em>) – Property name.</p></li>
+<li><p><strong>value</strong> (<em>str</em>) – Property Value.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Raise<span class="colon">:</span></dt>
+<dd class="field-even"><p>CalledProcessError: When failed.</p>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>0 if success, error code otherwise.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>str</p>
+</dd>
+<dt class="field-odd">Example<span class="colon">:</span></dt>
+<dd class="field-odd"><p></p></dd>
+</dl>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">simpleadb</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">device</span> <span class="o">=</span> <span class="n">simpleadb</span><span class="o">.</span><span class="n">AdbDevice</span><span class="p">(</span><span class="s1">&#39;emulator-5554&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">device</span><span class="o">.</span><span class="n">setprop</span><span class="p">(</span><span class="s1">&#39;persist.dummy_prop&#39;</span><span class="p">,</span> <span class="s1">&#39;true&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="simpleadb.adbdevice.AdbDevice.shell">
+<span class="sig-name descname"><span class="pre">shell</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">args</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="headerlink" href="#simpleadb.adbdevice.AdbDevice.shell" title="Permalink to this definition">¶</a></dt>
+<dd><p>Run remote shell command interface.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>args</strong> (<em>str</em>) – Adb shell arguments.</p>
+</dd>
+<dt class="field-even">Raise<span class="colon">:</span></dt>
+<dd class="field-even"><p>CalledProcessError: When failed.</p>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Serial number.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>str</p>
+</dd>
+<dt class="field-odd">Example<span class="colon">:</span></dt>
+<dd class="field-odd"><p></p></dd>
+</dl>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">simpleadb</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">device</span> <span class="o">=</span> <span class="n">simpleadb</span><span class="o">.</span><span class="n">AdbDevice</span><span class="p">(</span><span class="s1">&#39;emulator-5554&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">device</span><span class="o">.</span><span class="n">shell</span><span class="p">(</span><span class="s1">&#39;ls&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="simpleadb.adbdevice.AdbDevice.swipe">
+<span class="sig-name descname"><span class="pre">swipe</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pos_x1</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pos_y1</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pos_x2</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pos_y2</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">int</span></span></span><a class="headerlink" href="#simpleadb.adbdevice.AdbDevice.swipe" title="Permalink to this definition">¶</a></dt>
+<dd><p>Swipe screen.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Param<span class="colon">:</span></dt>
+<dd class="field-odd"><p>int pos_x1: Start x position.</p>
+</dd>
+<dt class="field-even">Param<span class="colon">:</span></dt>
+<dd class="field-even"><p>int pos_y1: Start y position.</p>
+</dd>
+<dt class="field-odd">Param<span class="colon">:</span></dt>
+<dd class="field-odd"><p>int pos_x2: End x position.</p>
+</dd>
+<dt class="field-even">Param<span class="colon">:</span></dt>
+<dd class="field-even"><p>int pos_y2: End y position.</p>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>0 if success, error code otherwise.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>int</p>
+</dd>
+<dt class="field-odd">Example<span class="colon">:</span></dt>
+<dd class="field-odd"><p></p></dd>
+</dl>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">simpleadb</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">device</span> <span class="o">=</span> <span class="n">simpleadb</span><span class="o">.</span><span class="n">AdbDevice</span><span class="p">(</span><span class="s1">&#39;emulator-5554&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">device</span><span class="o">.</span><span class="n">swipe</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">42</span><span class="p">,</span> <span class="mi">42</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="simpleadb.adbdevice.AdbDevice.tap">
+<span class="sig-name descname"><span class="pre">tap</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pos_x</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pos_y</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">int</span></span></span><a class="headerlink" href="#simpleadb.adbdevice.AdbDevice.tap" title="Permalink to this definition">¶</a></dt>
+<dd><p>Tap screen.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>pos_x</strong> (<em>int</em>) – x position.</p></li>
+<li><p><strong>pos_y</strong> (<em>int</em>) – y position.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>0 if success, error code otherwise.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+<dt class="field-even">Example<span class="colon">:</span></dt>
+<dd class="field-even"><p></p></dd>
+</dl>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">simpleadb</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">device</span> <span class="o">=</span> <span class="n">simpleadb</span><span class="o">.</span><span class="n">AdbDevice</span><span class="p">(</span><span class="s1">&#39;emulator-5554&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">device</span><span class="o">.</span><span class="n">tap</span><span class="p">(</span><span class="mi">42</span><span class="p">,</span> <span class="mi">42</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="simpleadb.adbdevice.AdbDevice.tcpip">
+<span class="sig-name descname"><span class="pre">tcpip</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">port</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">int</span></span></span><a class="headerlink" href="#simpleadb.adbdevice.AdbDevice.tcpip" title="Permalink to this definition">¶</a></dt>
+<dd><p>Restart adb server listening on TCP on PORT.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>port</strong> (<em>Union</em><em>[</em><em>[</em><em>int</em><em>, </em><em>str</em><em>]</em>) – Port.</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>CalledProcessError</strong> – When failed.</p>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>0 if success, otherwise error code.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>int</p>
+</dd>
+<dt class="field-odd">Example<span class="colon">:</span></dt>
+<dd class="field-odd"><p></p></dd>
+</dl>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">simpleadb</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">device</span> <span class="o">=</span> <span class="n">simpleadb</span><span class="o">.</span><span class="n">AdbDevice</span><span class="p">(</span><span class="s1">&#39;emulator-5554&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">device</span><span class="o">.</span><span class="n">tcpip</span><span class="p">(</span><span class="mi">5555</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="simpleadb.adbdevice.AdbDevice.uninstall">
+<span class="sig-name descname"><span class="pre">uninstall</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">package</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">int</span></span></span><a class="headerlink" href="#simpleadb.adbdevice.AdbDevice.uninstall" title="Permalink to this definition">¶</a></dt>
+<dd><p>Remove app package from the device.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>apk</strong> (<em>str</em>) – Package name.</p>
+</dd>
+<dt class="field-even">Raise<span class="colon">:</span></dt>
+<dd class="field-even"><p>CalledProcessError: When failed.</p>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>0 if success, error code otherwise.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>int</p>
+</dd>
+<dt class="field-odd">Example<span class="colon">:</span></dt>
+<dd class="field-odd"><p></p></dd>
+</dl>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">simpleadb</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">device</span> <span class="o">=</span> <span class="n">simpleadb</span><span class="o">.</span><span class="n">AdbDevice</span><span class="p">(</span><span class="s1">&#39;emulator-5554&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">device</span><span class="o">.</span><span class="n">uninstall</span><span class="p">(</span><span class="s1">&#39;dummy.apk&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="simpleadb.adbdevice.AdbDevice.unroot">
+<span class="sig-name descname"><span class="pre">unroot</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">timeout_sec</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">int</span></span></span><a class="headerlink" href="#simpleadb.adbdevice.AdbDevice.unroot" title="Permalink to this definition">¶</a></dt>
+<dd><p>Restart adb without root permission.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>timeout_sec</strong> (<em>Optional</em><em>[</em><em>int</em><em>]</em>) – Timeout in seconds.</p>
+</dd>
+<dt class="field-even">Raise<span class="colon">:</span></dt>
+<dd class="field-even"><p>CalledProcessError: When failed.</p>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>0 if success, error code otherwise.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>int</p>
+</dd>
+<dt class="field-odd">Example<span class="colon">:</span></dt>
+<dd class="field-odd"><p></p></dd>
+</dl>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">simpleadb</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">device</span> <span class="o">=</span> <span class="n">simpleadb</span><span class="o">.</span><span class="n">AdbDevice</span><span class="p">(</span><span class="s1">&#39;emulator-5554&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">device</span><span class="o">.</span><span class="n">unroot</span><span class="p">()</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="simpleadb.adbdevice.AdbDevice.usb">
+<span class="sig-name descname"><span class="pre">usb</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">int</span></span></span><a class="headerlink" href="#simpleadb.adbdevice.AdbDevice.usb" title="Permalink to this definition">¶</a></dt>
+<dd><p>Restart adb server listening on USB.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Raises<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>CalledProcessError</strong> – When failed.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>0 if success, otherwise error code.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+<dt class="field-even">Example<span class="colon">:</span></dt>
+<dd class="field-even"><p></p></dd>
+</dl>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">simpleadb</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">device</span> <span class="o">=</span> <span class="n">simpleadb</span><span class="o">.</span><span class="n">AdbDevice</span><span class="p">(</span><span class="s1">&#39;emulator-5554&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">device</span><span class="o">.</span><span class="n">usb</span><span class="p">()</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="simpleadb.adbdevice.AdbDevice.wait_for_device">
+<span class="sig-name descname"><span class="pre">wait_for_device</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">int</span></span></span><a class="headerlink" href="#simpleadb.adbdevice.AdbDevice.wait_for_device" title="Permalink to this definition">¶</a></dt>
+<dd><p>Wait for device available.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Keyword Arguments<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>timeout</strong> (<em>int</em>) – Timeout in sec, default ‘inf’</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>CalledProcessError</strong> – When failed.</p></li>
+<li><p><strong>TimeoutExpired</strong> – When timeout.</p></li>
+</ul>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>0 if success, error code otherwise.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>int</p>
+</dd>
+<dt class="field-odd">Example<span class="colon">:</span></dt>
+<dd class="field-odd"><p></p></dd>
+</dl>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">simpleadb</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">device</span> <span class="o">=</span> <span class="n">simpleadb</span><span class="o">.</span><span class="n">AdbDevice</span><span class="p">(</span><span class="s1">&#39;emulator-5554&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">device</span><span class="o">.</span><span class="n">wait_for_device</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">device</span><span class="o">.</span><span class="n">wait_for_device</span><span class="p">(</span><span class="n">timeout</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</dd></dl>
+
+<div class="toctree-wrapper compound">
+</div>
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/index.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="#">simple-adb pre documentation</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Welcome to simple-adb’s documentation!</a></li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright (c) 2019 Michal Kielan.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 5.0.1.
+    </div>
+  </body>
+</html>
