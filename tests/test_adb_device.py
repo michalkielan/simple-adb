@@ -18,8 +18,7 @@ from . import utils
 TEST_DEVICE_ID = utils.get_test_device_id()
 
 
-class AdbDeviceTest(  # pylint: disable=too-many-public-methods
-        unittest.TestCase):
+class AdbDeviceTest(unittest.TestCase):  # pylint: disable=too-many-public-methods
     """Adb device unit tests"""
 
     @classmethod
@@ -40,15 +39,15 @@ class AdbDeviceTest(  # pylint: disable=too-many-public-methods
         """Check if adb devices exists"""
         devices = self.__adb.devices()
         if not devices:
-            self.fail('No adb devices found')
+            self.fail("No adb devices found")
         test_device = simpleadb.AdbDevice(TEST_DEVICE_ID)
         self.assertTrue(test_device in devices)
 
     def test_device_eq_to_device_string(self):
         """Test equal operator for adb device object"""
-        dev1 = simpleadb.AdbDevice('1234')
-        dev2 = simpleadb.AdbDevice('1234')
-        dev3 = simpleadb.AdbDevice('42')
+        dev1 = simpleadb.AdbDevice("1234")
+        dev2 = simpleadb.AdbDevice("1234")
+        dev3 = simpleadb.AdbDevice("42")
         self.assertEqual(dev1, dev2)
         self.assertNotEqual(dev1, dev3)
 
@@ -59,24 +58,19 @@ class AdbDeviceTest(  # pylint: disable=too-many-public-methods
 
     def test_custom_adb_path(self):
         """Test custom adb binary path"""
-        device = simpleadb.AdbDevice(
-            TEST_DEVICE_ID,
-            path=utils.get_adb_path()
-        )
+        device = simpleadb.AdbDevice(TEST_DEVICE_ID, path=utils.get_adb_path())
         self.assertTrue(device.is_available())
 
     def test_custom_adb_path_no_exists(self):
         """Test custom adb binary path not exists"""
-        device = simpleadb.AdbDevice(
-            TEST_DEVICE_ID,
-            path='dummy/path'
-        )
+        device = simpleadb.AdbDevice(TEST_DEVICE_ID, path="dummy/path")
         with self.assertRaises(subprocess.CalledProcessError):
             device.get_serialno()
 
     @pytest.mark.skipif(
         utils.is_github_workflows_env(),
-        reason='is_root() is "experimental" feature, may fail on emulator')
+        reason='is_root() is "experimental" feature, may fail on emulator',
+    )
     def test_is_root_true(self):
         """Check if device is rooted after adb root command"""
         device = simpleadb.AdbDevice(TEST_DEVICE_ID)
@@ -122,7 +116,7 @@ class AdbDeviceTest(  # pylint: disable=too-many-public-methods
 
     def test_screencap(self):
         """Check if screenshot file exists after screencap"""
-        filepath = './screenshot.png'
+        filepath = "./screenshot.png"
         device = simpleadb.AdbDevice(TEST_DEVICE_ID)
         res = device.screencap(local=filepath)
         device.screencap()
@@ -151,17 +145,15 @@ class AdbDeviceTest(  # pylint: disable=too-many-public-methods
     def test_getprop(self):
         """Verify if property value is correct using getprop command"""
         device = simpleadb.AdbDevice(TEST_DEVICE_ID)
-        prop_name = 'dummy_prop'
-        prop_val = 'true'
+        prop_name = "dummy_prop"
+        prop_val = "true"
         if not device.is_root():
             device.root()
         res = device.setprop(prop_name, prop_val)
         self.assertEqual(res, 0)
         self.assertEqual(prop_val, device.getprop(prop_name))
 
-    @pytest.mark.skipif(
-        utils.is_github_workflows_env(),
-        reason='Failing on emulator')
+    @pytest.mark.skipif(utils.is_github_workflows_env(), reason="Failing on emulator")
     def test_verity(self):
         """Check if verity command is not failing"""
         device = simpleadb.AdbDevice(TEST_DEVICE_ID)
@@ -174,13 +166,13 @@ class AdbDeviceTest(  # pylint: disable=too-many-public-methods
 
     def test_push_pull(self):
         """Verify if file exists after push/pull command"""
-        filename = 'dummy_file'
-        dest = '/sdcard/'
+        filename = "dummy_file"
+        dest = "/sdcard/"
 
         device = simpleadb.AdbDevice(TEST_DEVICE_ID)
         if not device.is_root():
             device.root()
-        os.system('touch ' + filename)
+        os.system("touch " + filename)
         res = device.push(filename, dest)
         self.assertEqual(res, 0)
 
@@ -192,11 +184,11 @@ class AdbDeviceTest(  # pylint: disable=too-many-public-methods
 
     def test_remove(self):
         """Check if file was removed after rm command"""
-        filename = 'test_remove_dummy_file'
-        dest = '/sdcard/'
+        filename = "test_remove_dummy_file"
+        dest = "/sdcard/"
 
         device = simpleadb.AdbDevice(TEST_DEVICE_ID)
-        os.system('touch ' + filename)
+        os.system("touch " + filename)
         res = device.push(filename, dest)
         self.assertEqual(res, 0)
 
@@ -209,7 +201,7 @@ class AdbDeviceTest(  # pylint: disable=too-many-public-methods
 
     def test_remove_failure(self):
         """Check if rm command failed if file not exists"""
-        filename = '/sdcard/no_existing_file'
+        filename = "/sdcard/no_existing_file"
         device = simpleadb.AdbDevice(TEST_DEVICE_ID)
 
         with self.assertRaises(subprocess.CalledProcessError):
@@ -222,7 +214,7 @@ class AdbDeviceTest(  # pylint: disable=too-many-public-methods
         if not device.is_root():
             device.root()
         state = device.get_state()
-        self.assertEqual(state, 'device')
+        self.assertEqual(state, "device")
 
     def test_dump_logcat(self):
         """Test dump logcat"""
@@ -233,7 +225,7 @@ class AdbDeviceTest(  # pylint: disable=too-many-public-methods
     def test_dump_logcat_from_buffer(self):
         """Test dump logcat"""
         device = simpleadb.AdbDevice(TEST_DEVICE_ID)
-        log = device.dump_logcat('main')
+        log = device.dump_logcat("main")
         self.assertNotEqual(log, None)
 
     def test_clear_logcat(self):
@@ -245,12 +237,10 @@ class AdbDeviceTest(  # pylint: disable=too-many-public-methods
     def test_clear_logcat_buf(self):
         """Test clear logcat from main buffer"""
         device = simpleadb.AdbDevice(TEST_DEVICE_ID)
-        res = device.clear_logcat('main')
+        res = device.clear_logcat("main")
         self.assertEqual(res, 0)
 
-    @pytest.mark.skipif(
-        utils.is_github_workflows_env(),
-        reason='Failing on emulator')
+    @pytest.mark.skipif(utils.is_github_workflows_env(), reason="Failing on emulator")
     def test_device_is_available(self):
         """Test if device is available"""
         device = simpleadb.AdbDevice(TEST_DEVICE_ID)
@@ -260,7 +250,7 @@ class AdbDeviceTest(  # pylint: disable=too-many-public-methods
 
     def test_no_available(self):
         """Test if device not available"""
-        device = simpleadb.AdbDevice('dummy_id')
+        device = simpleadb.AdbDevice("dummy_id")
         self.assertFalse(device.is_available())
 
     def test_wait_for_device(self):
@@ -272,7 +262,7 @@ class AdbDeviceTest(  # pylint: disable=too-many-public-methods
     def test_wait_for_device_failed(self):
         """Wait for device failed after timeout if device not exists"""
         with self.assertRaises(subprocess.TimeoutExpired):
-            device = simpleadb.AdbDevice('dummy-device')
+            device = simpleadb.AdbDevice("dummy-device")
             device.wait_for_device(timeout=1)
 
     def test_wait_for_device_timeout(self):
@@ -286,7 +276,7 @@ class AdbDeviceTest(  # pylint: disable=too-many-public-methods
         """Test adb shell input command"""
         device = simpleadb.AdbDevice(TEST_DEVICE_ID)
         device.root()
-        res = device.shell('input text 42')
+        res = device.shell("input text 42")
         self.assertEqual(0, res)
 
     def test_unroot(self):

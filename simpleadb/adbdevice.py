@@ -19,7 +19,7 @@ from .utils import is_valid_ip
 
 
 class AdbDevice:
-    """ AdbDevice is a class representation of adb commands used on device with
+    """AdbDevice is a class representation of adb commands used on device with
     given serial.
 
     :param str device_id: Device ID or Host address.
@@ -35,23 +35,16 @@ class AdbDevice:
     """
 
     def __init__(self, device_id: str, port: Optional[int] = None, **kwargs):
-        options_path = kwargs.get('path')
+        options_path = kwargs.get("path")
         self.__adb_path = options_path if options_path else adbcmds.ADB
-        if (port is not None or device_id ==
-                'localhost' or is_valid_ip(device_id)):
-            self.__id = (
-                device_id + ":" + str(port) if port is not None else device_id)
-            cmd = ' '.join([
-                self.__adb_path,
-                adbcmds.CONNECT,
-                self.__id
-            ])
+        if port is not None or device_id == "localhost" or is_valid_ip(device_id):
+            self.__id = device_id + ":" + str(port) if port is not None else device_id
+            cmd = " ".join([self.__adb_path, adbcmds.CONNECT, self.__id])
             adbprocess.subprocess.check_call(cmd, shell=True, **kwargs)
         else:
             self.__id = device_id
         self.__adb_device_process = adbdeviceprocess.AdbDeviceProcess(
-            self.__id,
-            self.__adb_path
+            self.__id, self.__adb_path
         )
 
     def __str__(self):
@@ -82,7 +75,7 @@ class AdbDevice:
         return self.__id
 
     def get_state(self) -> str:
-        """ Get device state. Print offline, bootloader or disconnect.
+        """Get device state. Print offline, bootloader or disconnect.
 
         :raise CalledProcessError: When failed.
         :return: State offline, bootloader or device.
@@ -99,7 +92,7 @@ class AdbDevice:
         return self.__adb_device_process.check_output(cmd)
 
     def get_app_pid(self, package_name: str) -> int:
-        """ Return the PID of the application.
+        """Return the PID of the application.
 
         :param str package_name: Package name.
         :raise CalledProcessError: When failed.
@@ -113,15 +106,11 @@ class AdbDevice:
         >>> device.get_state('com.dummy.app')
         4367
         """
-        cmd = ' '.join([
-            adbcmds.SHELL,
-            'pidof',
-            package_name
-        ])
+        cmd = " ".join([adbcmds.SHELL, "pidof", package_name])
         return int(self.__adb_device_process.check_output(cmd))
 
     def get_serialno(self) -> str:
-        """ Get target device serial number.
+        """Get target device serial number.
 
         :raise: CalledProcessError: When failed.
         :return: Serial number.
@@ -137,7 +126,7 @@ class AdbDevice:
         return self.__adb_device_process.check_output(cmd)
 
     def is_available(self) -> bool:
-        """ Check if device is available.
+        """Check if device is available.
 
         :return: True if available, otherwise False.
         :rtype: bool
@@ -156,7 +145,7 @@ class AdbDevice:
             return False
 
     def get_devpath(self) -> str:
-        """ Get device path.
+        """Get device path.
 
         :raise: CalledProcessError: When failed
         :return: Device path.
@@ -173,7 +162,7 @@ class AdbDevice:
         return self.__adb_device_process.check_output(cmd)
 
     def remount(self) -> int:
-        """ Remout partition read-write.
+        """Remout partition read-write.
 
         :raises: CalledProcessError: When failed.
         :return: 0 if success, error code otherwise.
@@ -188,12 +177,12 @@ class AdbDevice:
         """
         cmd = adbcmds.REMOUNT
         output = self.__adb_device_process.check_output(cmd)
-        if 'remount failed' in output.lower():
+        if "remount failed" in output.lower():
             return -1
         return 0
 
     def reboot(self) -> int:
-        """ Reboot the device. Defaults to booting system image.
+        """Reboot the device. Defaults to booting system image.
 
         :raise: CalledProcessError: When failed.
         :return: 0 if success, error code otherwise.
@@ -209,10 +198,8 @@ class AdbDevice:
         cmd = adbcmds.REBOOT
         self.__adb_device_process.check_call(cmd)
 
-    def root(
-            self,
-            timeout_sec: Optional[int] = None) -> int:
-        """ Restart adb with root permission if device has one. Wait for device
+    def root(self, timeout_sec: Optional[int] = None) -> int:
+        """Restart adb with root permission if device has one. Wait for device
         to be in 'device' state.
 
         :param Optional[int] timeout_sec: Timeout in seconds.
@@ -229,14 +216,12 @@ class AdbDevice:
         """
         cmd = adbcmds.ROOT
         output = self.__adb_device_process.check_output(cmd)
-        if 'cannot' in output.lower():
+        if "cannot" in output.lower():
             return -1
         return self.wait_for_device(timeout=timeout_sec)
 
-    def unroot(
-            self,
-            timeout_sec: Optional[int] = None) -> int:
-        """ Restart adb without root permission.
+    def unroot(self, timeout_sec: Optional[int] = None) -> int:
+        """Restart adb without root permission.
 
         :param Optional[int] timeout_sec: Timeout in seconds.
         :raise: CalledProcessError: When failed.
@@ -256,7 +241,7 @@ class AdbDevice:
         return res
 
     def is_root(self) -> bool:
-        """ Check if device has root permissions (experimental). Not guarantee
+        """Check if device has root permissions (experimental). Not guarantee
         to work 'su' must be installed on device.
 
         :return: True if device is rooted, False otherwise.
@@ -270,18 +255,20 @@ class AdbDevice:
         >>> device.is_root()
         True
         """
-        try_su = 'su 0 id -u 2>/dev/null'
-        cmd = ' '.join([
-            adbcmds.SHELL,
-            try_su,
-        ])
+        try_su = "su 0 id -u 2>/dev/null"
+        cmd = " ".join(
+            [
+                adbcmds.SHELL,
+                try_su,
+            ]
+        )
         res = self.__adb_device_process.call(cmd)
         if res == 0:
             return True
         return False
 
     def install(self, apk: str) -> int:
-        """ Push package to the device and install.
+        """Push package to the device and install.
 
         :param str apk: Package path.
         :raise: CalledProcessError: When failed.
@@ -294,14 +281,16 @@ class AdbDevice:
         >>> device = simpleadb.AdbDevice('emulator-5554')
         >>> device.install('dummy.apk')
         """
-        cmd = ' '.join([
-            adbcmds.INSTALL,
-            apk,
-        ])
+        cmd = " ".join(
+            [
+                adbcmds.INSTALL,
+                apk,
+            ]
+        )
         return self.__adb_device_process.check_call(cmd)
 
     def uninstall(self, package: str) -> int:
-        """ Remove app package from the device.
+        """Remove app package from the device.
 
         :param str apk: Package name.
         :raise: CalledProcessError: When failed.
@@ -314,14 +303,16 @@ class AdbDevice:
         >>> device = simpleadb.AdbDevice('emulator-5554')
         >>> device.uninstall('dummy.apk')
         """
-        cmd = ' '.join([
-            adbcmds.UNINSTALL,
-            package,
-        ])
+        cmd = " ".join(
+            [
+                adbcmds.UNINSTALL,
+                package,
+            ]
+        )
         return self.__adb_device_process.check_call(cmd)
 
     def shell(self, args: str) -> str:
-        """ Run remote shell command interface.
+        """Run remote shell command interface.
 
         :param str args: Adb shell arguments.
         :raise: CalledProcessError: When failed.
@@ -334,14 +325,16 @@ class AdbDevice:
         >>> device = simpleadb.AdbDevice('emulator-5554')
         >>> device.shell('ls')
         """
-        cmd = ' '.join([
-            adbcmds.SHELL,
-            args,
-        ])
+        cmd = " ".join(
+            [
+                adbcmds.SHELL,
+                args,
+            ]
+        )
         return self.__adb_device_process.check_call(cmd)
 
     def rm(self, remote_path: str) -> int:  # pylint: disable=invalid-name
-        """ Remove file in adb device.
+        """Remove file in adb device.
 
         :param str remote_path: Remote path.
         :raise: CalledProcessError: When failed.
@@ -354,14 +347,16 @@ class AdbDevice:
         >>> device = simpleadb.AdbDevice('emulator-5554')
         >>> device.rm('/sdcard/dummy_file')
         """
-        cmd = ' '.join([
-            adbcmds.RM,
-            remote_path,
-        ])
+        cmd = " ".join(
+            [
+                adbcmds.RM,
+                remote_path,
+            ]
+        )
         return self.shell(cmd)
 
     def tap(self, pos_x: int, pos_y: int) -> int:
-        """ Tap screen.
+        """Tap screen.
 
         :param int pos_x: x position.
         :param int pos_y: y position.
@@ -374,15 +369,17 @@ class AdbDevice:
         >>> device = simpleadb.AdbDevice('emulator-5554')
         >>> device.tap(42, 42)
         """
-        cmd = ' '.join([
-            adbcmds.INPUT_TAP,
-            str(pos_x),
-            str(pos_y),
-        ])
+        cmd = " ".join(
+            [
+                adbcmds.INPUT_TAP,
+                str(pos_x),
+                str(pos_y),
+            ]
+        )
         return self.shell(cmd)
 
     def swipe(self, pos_x1: int, pos_y1: int, pos_x2: int, pos_y2: int) -> int:
-        """ Swipe screen.
+        """Swipe screen.
 
         :param: int pos_x1: Start x position.
         :param: int pos_y1: Start y position.
@@ -397,17 +394,19 @@ class AdbDevice:
         >>> device = simpleadb.AdbDevice('emulator-5554')
         >>> device.swipe(0, 0, 42, 42)
         """
-        cmd = ' '.join([
-            adbcmds.INPUT_SWIPE,
-            str(pos_x1),
-            str(pos_y1),
-            str(pos_x2),
-            str(pos_y2),
-        ])
+        cmd = " ".join(
+            [
+                adbcmds.INPUT_SWIPE,
+                str(pos_x1),
+                str(pos_y1),
+                str(pos_x2),
+                str(pos_y2),
+            ]
+        )
         return self.shell(cmd)
 
     def screencap(self, **kwargs) -> int:
-        """ Capture screenshot.
+        """Capture screenshot.
 
         :keyword str remote: Remote path.
         :keyword str local: Local path.
@@ -420,28 +419,25 @@ class AdbDevice:
         >>> device = simpleadb.AdbDevice('emulator-5554')
         >>> device.screencap()
         """
-        remote_default = '/sdcard/screencap.png'
-        local_default = 'screencap'
+        remote_default = "/sdcard/screencap.png"
+        local_default = "screencap"
         local_default += time.strftime("%Y%m%d-%H%M%S")
-        local_default += '.png'
+        local_default += ".png"
 
-        remote_arg = kwargs.get('remote')
-        local_arg = kwargs.get('local')
+        remote_arg = kwargs.get("remote")
+        local_arg = kwargs.get("local")
 
         remote = remote_arg if remote_arg else remote_default
         local = local_arg if local_arg else local_default
 
-        cmd = ' '.join([
-            adbcmds.SCREENCAP,
-            remote
-        ])
+        cmd = " ".join([adbcmds.SCREENCAP, remote])
         self.shell(cmd)
         self.pull(remote, local)
         self.rm(remote)
         return 0
 
     def broadcast(self, intent: str) -> int:
-        """ Send broadcast.
+        """Send broadcast.
 
         :param str intent: Intent argument.
         :return: 0 if success, error code otherwise.
@@ -454,14 +450,16 @@ class AdbDevice:
         >>> device = simpleadb.AdbDevice('emulator-5554')
         >>> device.broadcast('am dummy_intent')
         """
-        cmd = ' '.join([
-            'am broadcast -a',
-            intent,
-        ])
+        cmd = " ".join(
+            [
+                "am broadcast -a",
+                intent,
+            ]
+        )
         return self.shell(cmd)
 
     def pm_grant(self, package: str, permission: str) -> str:
-        """ Grant permission.
+        """Grant permission.
 
         :param str package: Package name.
         :param str permission: Android permission.
@@ -474,11 +472,13 @@ class AdbDevice:
         >>> device = simpleadb.AdbDevice('emulator-5554')
         >>> device.pm_grant('com.dummy.app', 'android.permission.PERMISSION')
         """
-        cmd = ' '.join([
-            adbcmds.PM_GRANT,
-            package,
-            permission,
-        ])
+        cmd = " ".join(
+            [
+                adbcmds.PM_GRANT,
+                package,
+                permission,
+            ]
+        )
         return self.shell(cmd)
 
     def setprop(self, prop: str, value: str) -> int:
@@ -496,15 +496,11 @@ class AdbDevice:
         >>> device = simpleadb.AdbDevice('emulator-5554')
         >>> device.setprop('persist.dummy_prop', 'true')
         """
-        cmd = ' '.join([
-            adbcmds.SETPROP,
-            prop,
-            value
-        ])
+        cmd = " ".join([adbcmds.SETPROP, prop, value])
         return self.shell(cmd)
 
     def getprop(self, prop: str) -> str:
-        """ Get android system property value.
+        """Get android system property value.
 
         :param str prop: Property name.
         :raise: CalledProcessError: When failed.
@@ -519,15 +515,17 @@ class AdbDevice:
         >>> device.getprop('persist.dummy.prop')
         '42'
         """
-        cmd = ' '.join([
-            adbcmds.SHELL,
-            adbcmds.GETPROP,
-            prop,
-        ])
+        cmd = " ".join(
+            [
+                adbcmds.SHELL,
+                adbcmds.GETPROP,
+                prop,
+            ]
+        )
         return self.__adb_device_process.check_output(cmd)
 
     def enable_verity(self, enabled: bool) -> int:
-        """ Enable/Disable verity.
+        """Enable/Disable verity.
 
         :param bool enabled: If true enable verity, otherwise disable
         :raise: CalledProcessError: When failed.
@@ -542,14 +540,11 @@ class AdbDevice:
         >>> device.enable_verity(False)
         >>> device.remount()
         """
-        cmd = (
-            adbcmds.ENABLE_VERITY if enabled
-            else adbcmds.DISABLE_VERITY
-        )
+        cmd = adbcmds.ENABLE_VERITY if enabled else adbcmds.DISABLE_VERITY
         return self.__adb_device_process.check_call(cmd)
 
     def push(self, source: str, dest: str) -> int:
-        """ Copy local files/dirs to device.
+        """Copy local files/dirs to device.
 
         :param str source: Local path.
         :param str dest: Remote path.
@@ -563,15 +558,17 @@ class AdbDevice:
         >>> device = simpleadb.AdbDevice('emulator-5554')
         >>> device.push('dummy_file.txt', '/sdcard/Downloads/')
         """
-        cmd = ' '.join([
-            adbcmds.PUSH,
-            source,
-            dest,
-        ])
+        cmd = " ".join(
+            [
+                adbcmds.PUSH,
+                source,
+                dest,
+            ]
+        )
         return self.__adb_device_process.check_call(cmd)
 
-    def pull(self, source: str, dest: Optional[str] = '.') -> int:
-        """ Pull files or directories from remote device.
+    def pull(self, source: str, dest: Optional[str] = ".") -> int:
+        """Pull files or directories from remote device.
 
         :param str source: Remote path.
         :param Optional[str] dest: Local path, default is ``'.'``.
@@ -587,15 +584,17 @@ class AdbDevice:
         >>> device.pull('/sdcard/Downloads/dummy_file.txt')
         >>> device.pull('/sdcard/Downloads/dummy_file.txt', '/tmp')
         """
-        cmd = ' '.join([
-            adbcmds.PULL,
-            source,
-            dest,
-        ])
+        cmd = " ".join(
+            [
+                adbcmds.PULL,
+                source,
+                dest,
+            ]
+        )
         return self.__adb_device_process.check_call(cmd)
 
     def wait_for_device(self, **kwargs) -> int:
-        """ Wait for device available.
+        """Wait for device available.
 
         :keyword int timeout: Timeout in sec, default 'inf'
         :raise CalledProcessError: When failed.
@@ -610,16 +609,18 @@ class AdbDevice:
         >>> device.wait_for_device()
         >>> device.wait_for_device(timeout=5)
         """
-        cmd = ' '.join([
-            self.__adb_path,
-            '-s',
-            self.get_id(),
-            adbcmds.WAIT_FOR_DEVICE,
-        ])
+        cmd = " ".join(
+            [
+                self.__adb_path,
+                "-s",
+                self.get_id(),
+                adbcmds.WAIT_FOR_DEVICE,
+            ]
+        )
         return adbprocess.subprocess.check_call(cmd, shell=True, **kwargs)
 
     def dump_logcat(self, *buffers: str) -> str:
-        """ Dump logcat.
+        """Dump logcat.
 
         :param Optional[List[str]] buffers: List of logcat buffers to dump.
         :raise CalledProcessError: When failed.
@@ -634,22 +635,24 @@ class AdbDevice:
         >>> dumped_logcat = device.dump_logcat()
         >>> main_logcat = device.dump_logcat('main')
         """
-        cmd = ' '.join([
-            adbcmds.LOGCAT,
-        ])
+        cmd = " ".join(
+            [
+                adbcmds.LOGCAT,
+            ]
+        )
 
         if buffers:
-            buffers_cmd = [' ']
+            buffers_cmd = [" "]
             for buf in buffers:
-                buffers_cmd.append('-b')
+                buffers_cmd.append("-b")
                 buffers_cmd.append(buf)
-            cmd += ' '.join(buffers_cmd)
+            cmd += " ".join(buffers_cmd)
 
-        cmd += ' -d'
+        cmd += " -d"
         return self.__adb_device_process.check_output(cmd)
 
     def clear_logcat(self, *buffers: str) -> str:
-        """ Clear logcat.
+        """Clear logcat.
 
         :param Optional[List[str]] buffers: List of logcat buffers to clear.
         :raise CalledProcessError: When failed.
@@ -664,22 +667,24 @@ class AdbDevice:
         >>> device.clear_logcat()
         >>> device.clear_logcat('main')
         """
-        cmd = ' '.join([
-            adbcmds.LOGCAT,
-        ])
+        cmd = " ".join(
+            [
+                adbcmds.LOGCAT,
+            ]
+        )
 
         if buffers:
-            buffers_cmd = [' ']
+            buffers_cmd = [" "]
             for buf in buffers:
-                buffers_cmd.append('-b')
+                buffers_cmd.append("-b")
                 buffers_cmd.append(buf)
-            cmd += ' '.join(buffers_cmd)
+            cmd += " ".join(buffers_cmd)
 
-        cmd += ' -c'
+        cmd += " -c"
         return self.__adb_device_process.check_call(cmd)
 
     def usb(self) -> int:
-        """ Restart adb server listening on USB.
+        """Restart adb server listening on USB.
 
         :raise CalledProcessError: When failed.
         :return: 0 if success, otherwise error code.
@@ -695,7 +700,7 @@ class AdbDevice:
         return self.__adb_device_process.check_call(cmd)
 
     def tcpip(self, port: Union[int, str]) -> int:
-        """ Restart adb server listening on TCP on PORT.
+        """Restart adb server listening on TCP on PORT.
 
         :param Union[[int, str] port: Port.
         :raise CalledProcessError: When failed.
@@ -708,8 +713,5 @@ class AdbDevice:
         >>> device = simpleadb.AdbDevice('emulator-5554')
         >>> device.tcpip(5555)
         """
-        cmd = ' '.join([
-            adbcmds.TCPIP,
-            str(port)
-        ])
+        cmd = " ".join([adbcmds.TCPIP, str(port)])
         return self.__adb_device_process.check_call(cmd)

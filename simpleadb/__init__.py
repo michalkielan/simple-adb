@@ -10,4 +10,4 @@
 from .adbdevice import AdbDevice
 from .adbserver import AdbServer
 
-__all__ = ['AdbDevice', 'AdbServer']
+__all__ = ["AdbDevice", "AdbServer"]

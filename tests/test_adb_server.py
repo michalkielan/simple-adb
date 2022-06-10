@@ -28,7 +28,7 @@ class AdbServerTest(unittest.TestCase):
         android_wait_for_emulator()
         devices = adb.devices()
         if not devices:
-            self.fail('No adb devices found')
+            self.fail("No adb devices found")
         device_exists = False
         for device in devices:
             if get_test_device_id() == device.get_id():
