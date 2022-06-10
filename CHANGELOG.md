@@ -8,6 +8,7 @@
   - adb root
   - adb remount
 - move tcpip/usb from adbserver to adbdevice
+- publish sphinx documentation
 
 ### Changed
 - generating description in setup.py due to fd leak
