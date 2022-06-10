@@ -26,7 +26,7 @@ class AdbDevice:
     :param Optional[int] port: Port, default is 5555.
     :keyword str path: Adb binary path.
 
-    :Example:
+    :example:
 
     >>> import simpleadb
     >>> device = simpleadb.AdbDevice('emulator-5554')
@@ -72,7 +72,7 @@ class AdbDevice:
         :return: Device id.
         :rtype: str
 
-        :Example:
+        :example:
 
         >>> import simpleadb
         >>> device = simpleadb.AdbDevice('emulator-5554')
@@ -88,7 +88,7 @@ class AdbDevice:
         :return: State offline, bootloader or device.
         :rtype: str
 
-        :Example:
+        :example:
 
         >>> import simpleadb
         >>> device = simpleadb.AdbDevice('emulator-5554')
@@ -106,7 +106,7 @@ class AdbDevice:
         :return: Package PID.
         :rtype: int
 
-        :Example:
+        :example:
 
         >>> import simpleadb
         >>> device = simpleadb.AdbDevice('emulator-5554')
@@ -126,7 +126,7 @@ class AdbDevice:
         :raise: CalledProcessError: When failed.
         :return: Serial number.
 
-        :Example:
+        :example:
 
         >>> import simpleadb
         >>> device = simpleadb.AdbDevice('emulator-5554')
@@ -142,7 +142,7 @@ class AdbDevice:
         :return: True if available, otherwise False.
         :rtype: bool
 
-        :Example:
+        :example:
 
         >>> import simpleadb
         >>> device = simpleadb.AdbDevice('emulator-5554')
@@ -162,7 +162,7 @@ class AdbDevice:
         :return: Device path.
         :rtype: str
 
-        :Example:
+        :example:
 
         >>> import simpleadb
         >>> device = simpleadb.AdbDevice('emulator-5554')
@@ -176,10 +176,10 @@ class AdbDevice:
         """ Remout partition read-write.
 
         :raises: CalledProcessError: When failed.
-        :return: 0 if success, error code otherwise
+        :return: 0 if success, error code otherwise.
         :rtype: int
 
-        :Example:
+        :example:
 
         >>> import simpleadb
         >>> device = simpleadb.AdbDevice('emulator-5554')
@@ -196,10 +196,10 @@ class AdbDevice:
         """ Reboot the device. Defaults to booting system image.
 
         :raise: CalledProcessError: When failed.
-        :return: 0 if success, error code otherwise
+        :return: 0 if success, error code otherwise.
         :rtype: int
 
-        :Example:
+        :example:
 
         >>> import simpleadb
         >>> device = simpleadb.AdbDevice('emulator-5554')
@@ -218,10 +218,10 @@ class AdbDevice:
         :param Optional[int] timeout_sec: Timeout in seconds.
         :raise CalledProcessError: When failed.
         :raise TimeoutExpired: When timeout.
-        :return: 0 if success, error code otherwise
+        :return: 0 if success, error code otherwise.
         :rtype: int
 
-        :Example:
+        :example:
 
         >>> import simpleadb
         >>> device = simpleadb.AdbDevice('emulator-5554')
@@ -240,10 +240,10 @@ class AdbDevice:
 
         :param Optional[int] timeout_sec: Timeout in seconds.
         :raise: CalledProcessError: When failed.
-        :return: 0 if success, error code otherwise
+        :return: 0 if success, error code otherwise.
         :rtype: int
 
-        :Example:
+        :example:
 
         >>> import simpleadb
         >>> device = simpleadb.AdbDevice('emulator-5554')
@@ -259,10 +259,10 @@ class AdbDevice:
         """ Check if device has root permissions (experimental). Not guarantee
         to work 'su' must be installed on device.
 
-        :return: True if device is rooted, False otherwise
+        :return: True if device is rooted, False otherwise.
         :rtype: bool
 
-        :Example:
+        :example:
 
         >>> import simpleadb
         >>> device = simpleadb.AdbDevice('emulator-5554')
@@ -288,7 +288,7 @@ class AdbDevice:
         :return: 0 if success, error code otherwise.
         :rtype: int
 
-        :Example:
+        :example:
 
         >>> import simpleadb
         >>> device = simpleadb.AdbDevice('emulator-5554')
@@ -308,7 +308,7 @@ class AdbDevice:
         :return: 0 if success, error code otherwise.
         :rtype: int
 
-        :Example:
+        :example:
 
         >>> import simpleadb
         >>> device = simpleadb.AdbDevice('emulator-5554')
@@ -328,7 +328,7 @@ class AdbDevice:
         :return: Serial number.
         :rtype: str
 
-        :Example:
+        :example:
 
         >>> import simpleadb
         >>> device = simpleadb.AdbDevice('emulator-5554')
@@ -348,7 +348,7 @@ class AdbDevice:
         :return: 0 if success, error code otherwise.
         :rtype: int
 
-        :Example:
+        :example:
 
         >>> import simpleadb
         >>> device = simpleadb.AdbDevice('emulator-5554')
@@ -363,13 +363,12 @@ class AdbDevice:
     def tap(self, pos_x: int, pos_y: int) -> int:
         """ Tap screen.
 
-          Args:
         :param int pos_x: x position.
         :param int pos_y: y position.
         :return: 0 if success, error code otherwise.
         :rtype: int
 
-        :Example:
+        :example:
 
         >>> import simpleadb
         >>> device = simpleadb.AdbDevice('emulator-5554')
@@ -392,7 +391,7 @@ class AdbDevice:
         :return: 0 if success, error code otherwise.
         :rtype: int
 
-        :Example:
+        :example:
 
         >>> import simpleadb
         >>> device = simpleadb.AdbDevice('emulator-5554')
@@ -415,7 +414,7 @@ class AdbDevice:
         :return: 0 if success, error code otherwise.
         :rtype: int
 
-        :Example:
+        :example:
 
         >>> import simpleadb
         >>> device = simpleadb.AdbDevice('emulator-5554')
@@ -449,7 +448,7 @@ class AdbDevice:
         :raises: CalledProcessError: When failed.
         :rtype: int
 
-        :Example:
+        :example:
 
         >>> import simpleadb
         >>> device = simpleadb.AdbDevice('emulator-5554')
@@ -469,7 +468,7 @@ class AdbDevice:
         :return: 0 if success, error code otherwise.
         :rtype: int
 
-        :Example:
+        :example:
 
         >>> import simpleadb
         >>> device = simpleadb.AdbDevice('emulator-5554')
@@ -488,10 +487,10 @@ class AdbDevice:
         :param str prop: Property name.
         :param str value: Property Value.
         :raise: CalledProcessError: When failed.
-        :return: 0 if success
+        :return: 0 if success, error code otherwise.
         :rtype: str
 
-        :Example:
+        :example:
 
         >>> import simpleadb
         >>> device = simpleadb.AdbDevice('emulator-5554')
@@ -509,10 +508,10 @@ class AdbDevice:
 
         :param str prop: Property name.
         :raise: CalledProcessError: When failed.
-        :return: Property Value.
+        :return: System property value.
         :rtype: str
 
-        :Example:
+        :example:
 
         >>> import simpleadb
         >>> device = simpleadb.AdbDevice('emulator-5554')
@@ -528,14 +527,14 @@ class AdbDevice:
         return self.__adb_device_process.check_output(cmd)
 
     def enable_verity(self, enabled: bool) -> int:
-        """Enable/Disable verity
+        """ Enable/Disable verity.
 
         :param bool enabled: If true enable verity, otherwise disable
         :raise: CalledProcessError: When failed.
-        :return 0 if success
-        :rtype int
+        :return: 0 if success, error code otherwise.
+        :rtype: int
 
-        :Example:
+        :example:
 
         >>> import simpleadb
         >>> device = simpleadb.AdbDevice('emulator-5554')
@@ -555,10 +554,10 @@ class AdbDevice:
         :param str source: Local path.
         :param str dest: Remote path.
         :raise: CalledProcessError: When failed.
-        :return 0 if success
-        :rtype int
+        :return: 0 if success, error code otherwise.
+        :rtype: int
 
-        :Example:
+        :example:
 
         >>> import simpleadb
         >>> device = simpleadb.AdbDevice('emulator-5554')
@@ -575,12 +574,12 @@ class AdbDevice:
         """ Pull files or directories from remote device.
 
         :param str source: Remote path.
-        :param Optional[str] dest: Local path, default is '.'.
+        :param Optional[str] dest: Local path, default is ``'.'``.
         :raise: CalledProcessError: When failed.
-        :return 0 if success
-        :rtype int
+        :return: 0 if success, error code otherwise.
+        :rtype: int
 
-        :Example:
+        :example:
 
         >>> import simpleadb
         >>> device = simpleadb.AdbDevice('emulator-5554')
@@ -601,14 +600,15 @@ class AdbDevice:
         :keyword int timeout: Timeout in sec, default 'inf'
         :raise CalledProcessError: When failed.
         :raise TimeoutExpired: When timeout.
-        :return: 0 if success, error code otherwise
+        :return: 0 if success, error code otherwise.
         :rtype: int
 
-        :Example:
+        :example:
 
         >>> import simpleadb
         >>> device = simpleadb.AdbDevice('emulator-5554')
         >>> device.wait_for_device()
+        >>> device.wait_for_device(timeout=5)
         """
         cmd = ' '.join([
             self.__adb_path,
@@ -627,7 +627,7 @@ class AdbDevice:
         :return: Logcat output string.
         :rtype: str
 
-        :Example:
+        :example:
 
         >>> import simpleadb
         >>> device = simpleadb.AdbDevice('emulator-5554')
@@ -649,15 +649,15 @@ class AdbDevice:
         return self.__adb_device_process.check_output(cmd)
 
     def clear_logcat(self, *buffers: str) -> str:
-        """ Clear logcat
+        """ Clear logcat.
 
         :param Optional[List[str]] buffers: List of logcat buffers to clear.
         :raise CalledProcessError: When failed.
         :raise TimeoutExpired: When timeout.
-        :return: 0 if sucess, otherwise error code.
+        :return: 0 if success, otherwise error code.
         :rtype: str
 
-        :Example:
+        :example:
 
         >>> import simpleadb
         >>> device = simpleadb.AdbDevice('emulator-5554')
@@ -679,25 +679,34 @@ class AdbDevice:
         return self.__adb_device_process.check_call(cmd)
 
     def usb(self) -> int:
-        """ Restart adb server listening on USB
+        """ Restart adb server listening on USB.
 
-          Returns:
-            0 if success
-          Raises:
-            CalledProcessError: when failed
+        :raise CalledProcessError: When failed.
+        :return: 0 if success, otherwise error code.
+        :rtype: int
+
+        :example:
+
+        >>> import simpleadb
+        >>> device = simpleadb.AdbDevice('emulator-5554')
+        >>> device.usb()
         """
         cmd = adbcmds.USB
         return self.__adb_device_process.check_call(cmd)
 
     def tcpip(self, port: Union[int, str]) -> int:
-        """ Restart adb server listening on TCP on PORT
+        """ Restart adb server listening on TCP on PORT.
 
-          Args:
-            port (Union[int, str]): Port number
-          Returns:
-            0 if success
-          Raises:
-            CalledProcessError: when failed
+        :param Union[[int, str] port: Port.
+        :raise CalledProcessError: When failed.
+        :return: 0 if success, otherwise error code.
+        :rtype: int
+
+        :example:
+
+        >>> import simpleadb
+        >>> device = simpleadb.AdbDevice('emulator-5554')
+        >>> device.tcpip(5555)
         """
         cmd = ' '.join([
             adbcmds.TCPIP,
