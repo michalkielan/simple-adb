@@ -1,6 +1,9 @@
 [Unreleased](https://github.com/michalkielan/simple-adb/compare/0.3.3...HEAD)
 -----------------------------------------------------------------------------
 
+### Added
+- automatic linter
+
 ### Removed
 - Deprecate travis
 
