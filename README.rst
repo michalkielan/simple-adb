@@ -8,12 +8,16 @@ simple adb
 Install
 -------
 
+To install the current release.
+
 ::
 
    $ pip install simpleadb
 
 Usage
 -----
+
+Try your first program.
 
 .. code:: python
 
@@ -27,6 +31,8 @@ Usage
    restarting adbd as root
    0
    >>> emulator.reboot()
+
+For more examples, see API `documentation <https://michalkielan.github.io/simple-adb/index.html#module-simpleadb.adbdevice>`_.
 
 License
 -------
