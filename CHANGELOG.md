@@ -12,6 +12,7 @@
 ### Changed
 - generating description in setup.py due to fd leak
 - api version 27 in CI
+- docstring format to reStructuredText (reST)
 
 ### Changed
 [0.3.2](https://github.com/michalkielan/simple-adb/compare/0.3.1...0.3.2) - 2022-06-07
