@@ -29,5 +29,8 @@ class AdbServerTest(unittest.TestCase):
         devices = adb.devices()
         if not devices:
             self.fail('No adb devices found')
-        emulator = devices[0]
-        self.assertTrue(get_test_device_id() in emulator.get_id())
+        device_exists = False
+        for device in devices:
+            if get_test_device_id() == device.get_id():
+                device_exists = True
+        self.assertTrue(device_exists)
