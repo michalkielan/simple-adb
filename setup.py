@@ -15,7 +15,7 @@ with io.open('README.rst', encoding='utf-8') as readme_file:
 
 setup(
     name='simpleadb',
-    version='0.3.2dev',
+    version='0.3.3',
     description='Python wrapper for adb protocol.',
     long_description=long_description,
     author='Michal Kielan',
