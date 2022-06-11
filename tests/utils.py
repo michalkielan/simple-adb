@@ -20,34 +20,34 @@ DUMMY_PACKAGE_NAME = 'com.dummy_app.dummy'
 
 
 def get_test_device_id() -> str:
-    """ Get test device serial number
+    """ Get test device serial number.
 
-      Returns:
-        Device id
+    :return: Device id.
+    :rtype: str
     """
     return os.environ['TEST_DEVICE_ID']
 
 
 def get_adb_path() -> str:
-    """ Get adb binary path
+    """ Get adb binary path.
 
-      Returns:
-        Adb binary patch
+    :return: Device id.
+    :rtype: str
     """
     return shutil.which('adb')
 
 
 def is_github_workflows_env() -> bool:
-    """ Check if tests are runs in github workflows environment
+    """ Check if tests are runs in github workflows environment.
 
-      Returns:
-        True when run github workflows, otherwise False
+    :return: True when run github workflows, otherwise False.
+    :rtype: bool
     """
     return os.environ.get('ENVIRONMENT', '') == 'GITHUB_WORKFLOWS'
 
 
 def android_wait_for_emulator() -> None:
-    """ Wait for android emulator """
+    """ Wait for android emulator. """
     if is_github_workflows_env():
         os.system(
             "adb wait-for-device shell \'while [[ -z $(getprop \
@@ -56,7 +56,7 @@ def android_wait_for_emulator() -> None:
 
 
 def download_resources() -> None:
-    """ Download resources for tests """
+    """ Download resources for tests. """
     if not os.path.exists(DUMMY_APK_NAME):
         wget.download(DUMMY_APK_URL, DUMMY_APK_NAME)
     while not os.path.exists(DUMMY_APK_NAME):
