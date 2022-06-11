@@ -28,7 +28,7 @@ class AdbCommandError(Exception):
     :param str device_id: Device ID or Host address.
     :param str output: Adb command process output.
     :param Optional[CalledProcessError] called_process_error: Process failed
-    exception.
+        exception.
     """
 
     def __init__(self, device_id: str, output: str,
