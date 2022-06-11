@@ -138,7 +138,7 @@ class AdbDevice:
 
         >>> import simpleadb
         >>> device = simpleadb.AdbDevice('emulator-5554')
-        >>> device.get_state('com.dummy.app')
+        >>> device.get_app_pid('com.dummy.app')
         4367
         """
         cmd = ' '.join([
