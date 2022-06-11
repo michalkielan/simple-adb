@@ -15,7 +15,7 @@ import wget
 DUMMY_APK_VERSION = '0.0.1'
 DUMMY_APK_NAME = 'app-debug.apk'
 DUMMY_APK_URL = (
-    f'https://github.com/michalkielan/AndroidDummyApp/releases/download/{DUMMY_APK_VERSION}/{DUMMY_APK_NAME}')
+    f'https://github.com/michalkielan/AndroidDummyApp/releases/download/{DUMMY_APK_VERSION}/{DUMMY_APK_NAME}')  # noqa: E501
 DUMMY_PACKAGE_NAME = 'com.dummy_app.dummy'
 
 

@@ -81,4 +81,5 @@ class AdbProcess:
         ])
         kwargs.setdefault('shell', True)
         kwargs.setdefault('universal_newlines', True)
+        kwargs.setdefault('stderr', subprocess.STDOUT)
         return subprocess.check_output(cmd, **kwargs)
