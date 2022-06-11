@@ -36,7 +36,7 @@ class AdbDeviceTest(  # pylint: disable=too-many-public-methods
         """Kill adb server in each test"""
         self.__adb.kill()
 
-    def test_devices_exists(self):
+    def test_adb_devices_exists(self):
         """Check if adb devices exists"""
         devices = self.__adb.devices()
         if not devices:
@@ -52,12 +52,12 @@ class AdbDeviceTest(  # pylint: disable=too-many-public-methods
         self.assertEqual(dev1, dev2)
         self.assertNotEqual(dev1, dev3)
 
-    def test_str(self):
+    def test_adb_device_is_str(self):
         """Test qual operator for adb device and object and string devie id"""
         device = simpleadb.AdbDevice(TEST_DEVICE_ID)
         self.assertEqual(TEST_DEVICE_ID, str(device))
 
-    def test_custom_adb_path(self):
+    def test_custom_adb_path_not_failing(self):
         """Test custom adb binary path"""
         device = simpleadb.AdbDevice(
             TEST_DEVICE_ID,
@@ -65,38 +65,42 @@ class AdbDeviceTest(  # pylint: disable=too-many-public-methods
         )
         self.assertTrue(device.is_available())
 
-    def test_custom_adb_path_no_exists(self):
+    def test_custom_adb_path_not_exists(self):
         """Test custom adb binary path not exists"""
         device = simpleadb.AdbDevice(
             TEST_DEVICE_ID,
             path='dummy/path'
         )
-        with self.assertRaises(subprocess.CalledProcessError):
+        with self.assertRaises(simpleadb.AdbCommandError):
             device.get_serialno()
 
     @pytest.mark.skipif(
         utils.is_github_workflows_env(),
         reason='is_root() is "experimental" feature, may fail on emulator')
-    def test_is_root_true(self):
+    def test_is_root_true_when_device_rooted(self):
         """Check if device is rooted after adb root command"""
         device = simpleadb.AdbDevice(TEST_DEVICE_ID)
-        res = device.root(timeout_sec=10)
-        self.assertEqual(res, 0)
+        try:
+            device.root(timeout_sec=10)
+        except simpleadb.AdbCommandError:
+            self.fail("AdbCommandError unexpectedly")
         self.assertTrue(device.is_root())
 
-    def test_adb_root(self):
+    def test_adb_root_not_failing(self):
         """Check adb root command not failing"""
         device = simpleadb.AdbDevice(TEST_DEVICE_ID)
-        res = device.root()
-        self.assertEqual(res, 0)
+        try:
+            device.root()
+        except simpleadb.AdbCommandError:
+            self.fail("AdbCommandError unexpectedly")
 
-    def test_get_id(self):
+    def test_get_id_returns_correct_id(self):
         """Check if get_id is equal to test device id"""
         device = simpleadb.AdbDevice(TEST_DEVICE_ID)
         test_device_id = device.get_id()
         self.assertEqual(test_device_id, TEST_DEVICE_ID)
 
-    def test_get_serialno(self):
+    def test_get_serialno_returns_correct_id(self):
         """Check if get_serialno is equal to test device id"""
         device = simpleadb.AdbDevice(TEST_DEVICE_ID)
         if not device.is_root():
@@ -104,49 +108,58 @@ class AdbDeviceTest(  # pylint: disable=too-many-public-methods
         test_device_id = device.get_serialno()
         self.assertEqual(test_device_id, TEST_DEVICE_ID)
 
-    def test_input_tap(self):
+    def test_input_tap_not_failing(self):
         """Check if input tap is not failing"""
         device = simpleadb.AdbDevice(TEST_DEVICE_ID)
         if not device.is_root():
             device.root()
-        res = device.tap(1, 1)
-        self.assertEqual(res, 0)
+        try:
+            device.tap(1, 1)
+        except simpleadb.AdbCommandError:
+            self.fail("AdbCommandError unexpectedly")
 
-    def test_input_swipe(self):
+    def test_input_swipe_not_failing(self):
         """Check if input swipe is not failing"""
         device = simpleadb.AdbDevice(TEST_DEVICE_ID)
         if not device.is_root():
             device.root()
-        res = device.swipe(1, 1, 2, 2)
-        self.assertEqual(res, 0)
+        try:
+            device.swipe(1, 1, 2, 2)
+        except simpleadb.AdbCommandError:
+            self.fail("AdbCommandError unexpectedly")
 
-    def test_screencap(self):
+    def test_screenshot_if_screenshot_file_exists(self):
         """Check if screenshot file exists after screencap"""
         filepath = './screenshot.png'
         device = simpleadb.AdbDevice(TEST_DEVICE_ID)
-        res = device.screencap(local=filepath)
-        device.screencap()
-        self.assertEqual(res, 0)
+        try:
+            device.screencap(local=filepath)
+            device.screencap()
+        except simpleadb.AdbCommandError:
+            self.fail("AdbCommandError unexpectedly")
         self.assertTrue(os.path.isfile(filepath))
 
-    def test_install(self):
+    def test_install_apk_if_success(self):
         """Check if install and uninstall apk are not failing"""
         device = simpleadb.AdbDevice(TEST_DEVICE_ID)
         if not device.is_root():
             device.root()
         device.remount()
-        res = device.install(utils.DUMMY_APK_NAME)
-        self.assertEqual(res, 0)
-        res = device.uninstall(utils.DUMMY_PACKAGE_NAME)
-        self.assertEqual(res, 0)
+        try:
+            device.install(utils.DUMMY_APK_NAME)
+            device.uninstall(utils.DUMMY_PACKAGE_NAME)
+        except simpleadb.AdbCommandError:
+            self.fail("AdbCommandError unexpectedly")
 
-    def test_setprop(self):
+    def test_set_setprop_is_not_failing(self):
         """Check if setprop is not failing"""
         device = simpleadb.AdbDevice(TEST_DEVICE_ID)
         if not device.is_root():
             device.root()
-        res = device.setprop("dummy_prop", "true")
-        self.assertEqual(res, 0)
+        try:
+            device.setprop("dummy_prop", "true")
+        except simpleadb.AdbCommandError:
+            self.fail("AdbCommandError unexpectedly")
 
     def test_getprop(self):
         """Verify if property value is correct using getprop command"""
@@ -155,8 +168,10 @@ class AdbDeviceTest(  # pylint: disable=too-many-public-methods
         prop_val = 'true'
         if not device.is_root():
             device.root()
-        res = device.setprop(prop_name, prop_val)
-        self.assertEqual(res, 0)
+        try:
+            device.setprop(prop_name, prop_val)
+        except simpleadb.AdbCommandError:
+            self.fail("AdbCommandError unexpectedly")
         self.assertEqual(prop_val, device.getprop(prop_name))
 
     @pytest.mark.skipif(
@@ -167,10 +182,11 @@ class AdbDeviceTest(  # pylint: disable=too-many-public-methods
         device = simpleadb.AdbDevice(TEST_DEVICE_ID)
         device.root()
         device.remount()
-        res = device.enable_verity(True)
-        self.assertEqual(res, 0)
-        res = device.enable_verity(False)
-        self.assertEqual(res, 0)
+        try:
+            device.enable_verity(True)
+            device.enable_verity(False)
+        except simpleadb.AdbCommandError:
+            self.fail("AdbCommandError unexpectedly")
 
     def test_push_pull(self):
         """Verify if file exists after push/pull command"""
@@ -181,42 +197,40 @@ class AdbDeviceTest(  # pylint: disable=too-many-public-methods
         if not device.is_root():
             device.root()
         os.system('touch ' + filename)
-        res = device.push(filename, dest)
-        self.assertEqual(res, 0)
-
-        os.remove(filename)
-        self.assertFalse(os.path.isfile(filename))
-        res = device.pull(dest + filename)
-        self.assertEqual(res, 0)
-        self.assertTrue(os.path.isfile(filename))
+        try:
+            device.push(filename, dest)
+            os.remove(filename)
+            self.assertFalse(os.path.isfile(filename))
+            device.pull(dest + filename)
+            self.assertTrue(os.path.isfile(filename))
+        except simpleadb.AdbCommandError:
+            self.fail("AdbCommandError unexpectedly")
 
     def test_remove(self):
         """Check if file was removed after rm command"""
         filename = 'test_remove_dummy_file'
         dest = '/sdcard/'
-
         device = simpleadb.AdbDevice(TEST_DEVICE_ID)
         os.system('touch ' + filename)
-        res = device.push(filename, dest)
-        self.assertEqual(res, 0)
+        try:
+            device.push(filename, dest)
+            os.remove(filename)
+            device.rm(dest + filename)
+        except simpleadb.AdbCommandError:
+            self.fail("AdbCommandError unexpectedly")
 
-        os.remove(filename)
-        device.rm(dest + filename)
+        with self.assertRaises(simpleadb.AdbCommandError):
+            device.pull(dest + filename)
 
-        with self.assertRaises(subprocess.CalledProcessError):
-            res = device.pull(dest + filename)
-            self.assertNotEqual(res, 0)
-
-    def test_remove_failure(self):
+    def test_remove_not_existing_file_failure(self):
         """Check if rm command failed if file not exists"""
         filename = '/sdcard/no_existing_file'
         device = simpleadb.AdbDevice(TEST_DEVICE_ID)
 
-        with self.assertRaises(subprocess.CalledProcessError):
-            res = device.rm(filename)
-            self.assertNotEqual(res, 0)
+        with self.assertRaises(simpleadb.AdbCommandError):
+            device.rm(filename)
 
-    def test_get_state(self):
+    def test_get_state_returns_correct_state(self):
         """Check adb get state command"""
         device = simpleadb.AdbDevice(TEST_DEVICE_ID)
         if not device.is_root():
@@ -239,14 +253,18 @@ class AdbDeviceTest(  # pylint: disable=too-many-public-methods
     def test_clear_logcat(self):
         """Test clear logcat"""
         device = simpleadb.AdbDevice(TEST_DEVICE_ID)
-        res = device.clear_logcat()
-        self.assertEqual(res, 0)
+        try:
+            device.clear_logcat()
+        except simpleadb.AdbCommandError:
+            self.fail("AdbCommandError unexpectedly")
 
     def test_clear_logcat_buf(self):
         """Test clear logcat from main buffer"""
         device = simpleadb.AdbDevice(TEST_DEVICE_ID)
-        res = device.clear_logcat('main')
-        self.assertEqual(res, 0)
+        try:
+            device.clear_logcat('main')
+        except simpleadb.AdbCommandError:
+            self.fail("AdbCommandError unexpectedly")
 
     @pytest.mark.skipif(
         utils.is_github_workflows_env(),
@@ -266,31 +284,40 @@ class AdbDeviceTest(  # pylint: disable=too-many-public-methods
     def test_wait_for_device(self):
         """Test wait for device"""
         device = simpleadb.AdbDevice(TEST_DEVICE_ID)
-        res = device.wait_for_device()
-        self.assertEqual(0, res)
+        try:
+            device.wait_for_device()
+        except simpleadb.AdbCommandError:
+            self.fail("AdbCommandError unexpectedly")
 
     def test_wait_for_device_failed(self):
         """Wait for device failed after timeout if device not exists"""
         with self.assertRaises(subprocess.TimeoutExpired):
             device = simpleadb.AdbDevice('dummy-device')
-            device.wait_for_device(timeout=1)
+            device.wait_for_device(1)
 
     def test_wait_for_device_timeout(self):
         """Test wait for device with custom timeout"""
         device = simpleadb.AdbDevice(TEST_DEVICE_ID)
-        device.root()
-        res = device.wait_for_device(timeout=5)
-        self.assertEqual(0, res)
+        if not device.is_root():
+            device.root()
+        try:
+            device.wait_for_device(5)
+        except simpleadb.AdbCommandError:
+            self.fail("AdbCommandError unexpectedly")
 
     def test_adb_shell(self):
         """Test adb shell input command"""
         device = simpleadb.AdbDevice(TEST_DEVICE_ID)
         device.root()
-        res = device.shell('input text 42')
-        self.assertEqual(0, res)
+        try:
+            device.shell('input text 42')
+        except simpleadb.AdbCommandError:
+            self.fail("AdbCommandError unexpectedly")
 
     def test_unroot(self):
         """Test unroot"""
         device = simpleadb.AdbDevice(TEST_DEVICE_ID)
-        res = device.unroot()
-        self.assertEqual(res, 0)
+        try:
+            device.unroot()
+        except simpleadb.AdbCommandError:
+            self.fail("AdbCommandError unexpectedly")

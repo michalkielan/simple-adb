@@ -8,6 +8,7 @@
 
 """ simpleadb init module """
 from .adbdevice import AdbDevice
+from .adbdevice import AdbCommandError
 from .adbserver import AdbServer
 
-__all__ = ['AdbDevice', 'AdbServer']
+__all__ = ['AdbDevice', 'AdbCommandError', 'AdbServer']

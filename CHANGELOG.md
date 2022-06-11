@@ -3,6 +3,7 @@
 
 ### Added
 - automatic linter
+- exception for adb commands failures
 
 ### Removed
 - Deprecate travis
