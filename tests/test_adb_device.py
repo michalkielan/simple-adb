@@ -321,5 +321,6 @@ class AdbDeviceTest(  # pylint: disable=too-many-public-methods
         try:
             device = simpleadb.AdbDevice('localhost', 5555)
             device.wait_for_device()
+            simpleadb.AdbServer().disconnect('localhost')
         except simpleadb.AdbCommandError as err:
             self.fail(err)
