@@ -238,7 +238,7 @@ given serial.</p>
 </dl>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">simpleadb</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">device</span> <span class="o">=</span> <span class="n">simpleadb</span><span class="o">.</span><span class="n">AdbDevice</span><span class="p">(</span><span class="s1">&#39;emulator-5554&#39;</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">device</span><span class="o">.</span><span class="n">get_state</span><span class="p">(</span><span class="s1">&#39;com.dummy.app&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">device</span><span class="o">.</span><span class="n">get_app_pid</span><span class="p">(</span><span class="s1">&#39;com.dummy.app&#39;</span><span class="p">)</span>
 <span class="go">4367</span>
 </pre></div>
 </div>
@@ -287,6 +287,34 @@ given serial.</p>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">device</span> <span class="o">=</span> <span class="n">simpleadb</span><span class="o">.</span><span class="n">AdbDevice</span><span class="p">(</span><span class="s1">&#39;emulator-5554&#39;</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">device</span><span class="o">.</span><span class="n">get_id</span><span class="p">()</span>
 <span class="go">&#39;emulator-5554&#39;</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="simpleadb.adbdevice.AdbDevice.get_ip">
+<span class="sig-name descname"><span class="pre">get_ip</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">interface</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'wlan0'</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="headerlink" href="#simpleadb.adbdevice.AdbDevice.get_ip" title="Permalink to this definition"></a></dt>
+<dd><p>Return the device IP address.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>interface</strong> (<em>Optional</em><em>[</em><em>str</em><em>]</em>) – Network interface, default wlan0.</p>
+</dd>
+<dt class="field-even">Raise</dt>
+<dd class="field-even"><p>AdbCommandError: When failed.</p>
+</dd>
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>Device ip address.</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>str</p>
+</dd>
+<dt class="field-odd">Example</dt>
+<dd class="field-odd"><p></p></dd>
+</dl>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">simpleadb</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">device</span> <span class="o">=</span> <span class="n">simpleadb</span><span class="o">.</span><span class="n">AdbDevice</span><span class="p">(</span><span class="s1">&#39;emulator-5554&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">device</span><span class="o">.</span><span class="n">get_ip</span><span class="p">(</span><span class="s1">&#39;wlan0&#39;</span><span class="p">)</span>
+<span class="go">&#39;192.168.42.42&#39;</span>
 </pre></div>
 </div>
 </dd></dl>
