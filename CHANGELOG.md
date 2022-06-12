@@ -4,6 +4,8 @@
 ### Added
 - automatic linter
 - exception for adb commands failures
+- adb device supported commands:
+	- get ip address
 
 ### Removed
 - Deprecate travis
