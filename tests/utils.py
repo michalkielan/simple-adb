@@ -55,6 +55,15 @@ def android_wait_for_emulator() -> None:
         )
 
 
+def enable_root_tests() -> bool:
+    """ Enable tests for rooted devices.
+
+    :return: True when root test enabled, otherwise False.
+    :rtype: bool
+    """
+    return os.environ.get('ROOTABLE_DEVICE', '') != '0'
+
+
 def download_resources() -> None:
     """ Download resources for tests. """
     if not os.path.exists(DUMMY_APK_NAME):
