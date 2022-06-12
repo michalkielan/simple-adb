@@ -1,5 +1,17 @@
-[Unreleased](https://github.com/michalkielan/simple-adb/compare/0.3.2...HEAD)
+[Unreleased](https://github.com/michalkielan/simple-adb/compare/0.3.3...HEAD)
 -----------------------------------------------------------------------------
+
+### Added
+- automatic linter
+- exception for adb commands failures
+- adb device supported commands:
+	- get ip address
+
+### Removed
+- Deprecate travis
+
+[0.3.3](https://github.com/michalkielan/simple-adb/compare/0.3.2...0.3.3) - 2022-06-10
+--------------------------------------------------------------------------------------
 
 ### Added
 - minor refactor
@@ -8,13 +20,13 @@
   - adb root
   - adb remount
 - move tcpip/usb from adbserver to adbdevice
+- publish sphinx documentation
 
 ### Changed
 - generating description in setup.py due to fd leak
 - api version 27 in CI
 - docstring format to reStructuredText (reST)
 
-### Changed
 [0.3.2](https://github.com/michalkielan/simple-adb/compare/0.3.1...0.3.2) - 2022-06-07
 --------------------------------------------------------------------------------------
 

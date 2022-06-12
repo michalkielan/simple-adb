@@ -6,21 +6,27 @@
 # SPDX-License-Identifier: GPL-3.0-only
 #
 
-"""Utils"""
+""" Module contains utility functions """
 import re
 
 IP_ADDRESS_REGEX = (
-    r'^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])$'
+    r'^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])$'  # noqa: E501
 )
 
 
 def is_valid_ip(address: str) -> bool:
-    """Check for valid ip address using regex
+    """ Check for valid ip address using regex.
 
-       Args:
-         address (str): Ip address
-       Returns:
-         True if address is ip, False otherwise
+    :param str address: Package name.
+    :return: True is address is a valid IP address, False otherwise.
+    :rtype: bool
+
+    :example:
+
+    >> is_valid_ip('192.168.42.42')
+    True
+    >> is_valid_ip('localhost')
+    False
     """
     try:
         ip_valid = re.match(IP_ADDRESS_REGEX, address)
