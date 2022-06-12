@@ -151,6 +151,33 @@ class AdbDevice:
         except CalledProcessError as err:
             raise AdbCommandError(self.get_id(), None, err) from err
 
+    def get_ip(self, interface: Optional[str] = 'wlan0') -> str:
+        """ Return the device IP address.
+
+        :param Optional[str] interface: Network interface, default wlan0.
+        :raise: AdbCommandError: When failed.
+        :return: Device ip address.
+        :rtype: str
+
+        :example:
+
+        >>> import simpleadb
+        >>> device = simpleadb.AdbDevice('emulator-5554')
+        >>> device.get_ip('wlan0')
+        '192.168.42.42'
+        """
+        if_config = (
+            f'ifconfig {interface} | grep "inet addr" | cut -d: -f2 | awk "{{print $1}}"'  # noqa: E501
+        )
+        cmd = ' '.join([
+            adbcmds.SHELL,
+            if_config
+        ])
+        try:
+            return self.__adb_device_process.check_output(cmd)
+        except CalledProcessError as err:
+            raise AdbCommandError(self.get_id(), None, err) from err
+
     def get_serialno(self) -> str:
         """ Get target device serial number.
 
