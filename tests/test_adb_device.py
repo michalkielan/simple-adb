@@ -312,3 +312,14 @@ class AdbDeviceTest(  # pylint: disable=too-many-public-methods
             device.unroot()
         except simpleadb.AdbCommandError as err:
             self.fail(err)
+
+    @pytest.mark.skipif(
+        not utils.is_github_workflows_env(),
+        reason='Failing on non emulator')
+    def test_adb_connect_emulator_success(self):
+        """Test adb connect to emulator. """
+        try:
+            device = simpleadb.AdbDevice('localhost', 5555)
+            device.wait_for_device()
+        except simpleadb.AdbCommandError as err:
+            self.fail(err)
