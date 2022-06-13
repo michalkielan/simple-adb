@@ -7,6 +7,9 @@
 - adb device supported commands:
 	- get ip address
 
+### Changed
+- fix for adb disconnect
+
 ### Removed
 - Deprecate travis
 
