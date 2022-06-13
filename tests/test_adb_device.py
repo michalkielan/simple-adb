@@ -56,6 +56,11 @@ class AdbDeviceTest(  # pylint: disable=too-many-public-methods
             self.assertEqual(device_id, err.device_id)
             self.assertEqual(None, err.called_process_error)
 
+    def test_adb_device_repr_is_same_as_id(self):
+        """ Check if repr is same as get_id(). """
+        test_device = simpleadb.AdbDevice(TEST_DEVICE_ID)
+        self.assertEqual(repr(test_device), test_device.get_id())
+
     def test_adb_devices_exists(self):
         """Check if adb devices exists. """
         adb_server = simpleadb.AdbServer()
