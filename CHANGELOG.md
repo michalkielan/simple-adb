@@ -1,5 +1,8 @@
-[Unreleased](https://github.com/michalkielan/simple-adb/compare/0.3.3...HEAD)
+[Unreleased](https://github.com/michalkielan/simple-adb/compare/0.3.4...HEAD)
 -----------------------------------------------------------------------------
+
+[0.3.4](https://github.com/michalkielan/simple-adb/compare/0.3.3...0.3.4) - 2022-06-12
+--------------------------------------------------------------------------------------
 
 ### Added
 - automatic linter
