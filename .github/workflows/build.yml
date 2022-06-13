@@ -28,7 +28,7 @@ jobs:
       - name: Install python dependencies
         run: |
           python -m pip install --upgrade pip
-          pip install flake8 pylint pytest sphinx sphinx-rtd-theme wget
+          pip install flake8 pylint pytest sphinx sphinx-rtd-theme wget interruptingcow
           if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
 
       - name: Pylint
