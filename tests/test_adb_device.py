@@ -34,6 +34,17 @@ class AdbDeviceTest(  # pylint: disable=too-many-public-methods
         """ Start adb server in each test. """
         utils.android_wait_for_emulator()
 
+    def test_adb_check_command_exception_error(self):
+        """Check AdbCommandError exception. """
+        device_id = 'dummy_device_id'
+        output = 'dummy_output'
+        try:
+            raise simpleadb.AdbCommandError(device_id, output, None)
+        except simpleadb.AdbCommandError as err:
+            self.assertEqual(output, str(err))
+            self.assertEqual(device_id, err.device_id)
+            self.assertEqual(None, err.called_process_error)
+
     def test_adb_devices_exists(self):
         """Check if adb devices exists. """
         adb_server = simpleadb.AdbServer()
