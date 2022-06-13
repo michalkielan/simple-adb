@@ -155,6 +155,18 @@ class AdbDeviceTest(  # pylint: disable=too-many-public-methods
         except simpleadb.AdbCommandError as err:
             self.fail(err)
 
+    def test_install_non_exist_apk_failed(self):
+        """ Check if install is failing. """
+        device = simpleadb.AdbDevice(TEST_DEVICE_ID)
+        with self.assertRaises(simpleadb.AdbCommandError):
+            device.install('apk_not_exists')
+
+    def test_uninstall_non_exist_apk_failed(self):
+        """ Check if uninstall apk is failing. """
+        device = simpleadb.AdbDevice(TEST_DEVICE_ID)
+        with self.assertRaises(simpleadb.AdbCommandError):
+            device.uninstall('apk_not_exists')
+
     @pytest.mark.skipif(
         not utils.enable_root_tests(),
         reason='Failing on not rootable devices')
