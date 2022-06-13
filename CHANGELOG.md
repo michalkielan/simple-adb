@@ -6,6 +6,11 @@
 - exception for adb commands failures
 - adb device supported commands:
 	- get ip address
+- add unit tests:
+  - exceptions
+  - get pid
+  - get ip
+  - connect/disconnect
 
 ### Changed
 - fix for adb disconnect

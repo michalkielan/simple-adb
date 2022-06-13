@@ -182,7 +182,7 @@ class AdbDeviceTest(  # pylint: disable=too-many-public-methods
         except RuntimeError as err:
             self.fail(err)
         try:
-            device.uninstall(DUMMY_PACKAGE_NAME)
+            device.uninstall(package)
         except simpleadb.AdbCommandError as err:
             self.fail(err)
 
