@@ -167,14 +167,17 @@ class AdbDevice:
         '192.168.42.42'
         """
         if_config = (
-            f'ifconfig {interface} | grep "inet addr" | cut -d: -f2 | awk "{{print $1}}"'  # noqa: E501
+            f"ifconfig {interface} | grep 'inet addr' | cut -d: -f2 | awk '{{print $1}}'"  # noqa: E501
         )
         cmd = ' '.join([
             adbcmds.SHELL,
             if_config
         ])
         try:
-            return self.__adb_device_process.check_output(cmd)
+            output = self.__adb_device_process.check_output(cmd)
+            if not is_valid_ip(output):
+                raise AdbCommandError(self.get_id(), output, None)
+            return output
         except CalledProcessError as err:
             raise AdbCommandError(self.get_id(), None, err) from err
 
