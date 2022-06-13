@@ -13,10 +13,21 @@ import unittest
 import os
 import subprocess
 import pytest
+from interruptingcow import timeout
 import simpleadb
-from . import utils
+from simpleadb.utils import is_valid_ip
+from .utils import (
+    DUMMY_APK_NAME,
+    DUMMY_PACKAGE_NAME,
+    android_wait_for_emulator,
+    download_resources,
+    enable_root_tests,
+    get_adb_path,
+    get_test_device_id,
+    is_github_workflows_env,
+)
 
-TEST_DEVICE_ID = utils.get_test_device_id()
+TEST_DEVICE_ID = get_test_device_id()
 
 
 class AdbDeviceTest(  # pylint: disable=too-many-public-methods
@@ -28,11 +39,22 @@ class AdbDeviceTest(  # pylint: disable=too-many-public-methods
         """ Start adb server and download tests resources at the beginning of
         the tests. """
         simpleadb.AdbServer()
-        utils.download_resources()
+        download_resources()
 
     def setUp(self):
         """ Start adb server in each test. """
-        utils.android_wait_for_emulator()
+        android_wait_for_emulator()
+
+    def test_adb_check_command_exception_error(self):
+        """Check AdbCommandError exception. """
+        device_id = 'dummy_device_id'
+        output = 'dummy_output'
+        try:
+            raise simpleadb.AdbCommandError(device_id, output, None)
+        except simpleadb.AdbCommandError as err:
+            self.assertEqual(output, str(err))
+            self.assertEqual(device_id, err.device_id)
+            self.assertEqual(None, err.called_process_error)
 
     def test_adb_devices_exists(self):
         """Check if adb devices exists. """
@@ -60,7 +82,7 @@ class AdbDeviceTest(  # pylint: disable=too-many-public-methods
         """Test custom adb binary path"""
         device = simpleadb.AdbDevice(
             TEST_DEVICE_ID,
-            path=utils.get_adb_path()
+            path=get_adb_path()
         )
         self.assertTrue(device.is_available())
 
@@ -74,7 +96,7 @@ class AdbDeviceTest(  # pylint: disable=too-many-public-methods
             device.get_serialno()
 
     @pytest.mark.skipif(
-        utils.is_github_workflows_env() or not utils.enable_root_tests(),
+        is_github_workflows_env() or not enable_root_tests(),
         reason='is_root() is "experimental" feature, may fail on emulator')
     def test_is_root_true_when_device_rooted(self):
         """Check if device is rooted after adb root command. """
@@ -86,7 +108,7 @@ class AdbDeviceTest(  # pylint: disable=too-many-public-methods
         self.assertTrue(device.is_root())
 
     @pytest.mark.skipif(
-        not utils.enable_root_tests(),
+        not enable_root_tests(),
         reason='Failing on not rootable devices')
     def test_adb_root_not_failing(self):
         """Check adb root command not failing. """
@@ -135,17 +157,49 @@ class AdbDeviceTest(  # pylint: disable=too-many-public-methods
             self.fail(err)
         self.assertTrue(os.path.isfile(filepath))
 
-    def test_install_apk_if_success(self):
-        """Check if install and uninstall apk are not failing"""
+    def test_get_pid_of_running_app(self):
+        """ Get PID of running app. """
         device = simpleadb.AdbDevice(TEST_DEVICE_ID)
+        package = DUMMY_PACKAGE_NAME
         try:
-            device.install(utils.DUMMY_APK_NAME)
-            device.uninstall(utils.DUMMY_PACKAGE_NAME)
+            device.install(DUMMY_APK_NAME)
+            device.shell(
+                f'am start -n {package}/{package}.MainActivity'
+            )
+        except simpleadb.AdbCommandError as err:
+            self.fail(err)
+        wait_for_start_app_sec = 10
+        try:
+            with timeout(wait_for_start_app_sec, exception=RuntimeError):
+                while True:
+                    try:
+                        pid = device.get_app_pid(package)
+                        self.assertTrue(isinstance(pid, int))
+                        self.assertTrue(pid != 0)
+                        break
+                    except simpleadb.AdbCommandError:
+                        pass
+        except RuntimeError as err:
+            self.fail(err)
+        try:
+            device.uninstall(package)
         except simpleadb.AdbCommandError as err:
             self.fail(err)
 
+    def test_install_non_exist_apk_failed(self):
+        """ Check if install is failing. """
+        device = simpleadb.AdbDevice(TEST_DEVICE_ID)
+        with self.assertRaises(simpleadb.AdbCommandError):
+            device.install('apk_not_exists')
+
+    def test_uninstall_non_exist_apk_failed(self):
+        """ Check if uninstall apk is failing. """
+        device = simpleadb.AdbDevice(TEST_DEVICE_ID)
+        with self.assertRaises(simpleadb.AdbCommandError):
+            device.uninstall('apk_not_exists')
+
     @pytest.mark.skipif(
-        not utils.enable_root_tests(),
+        not enable_root_tests(),
         reason='Failing on not rootable devices')
     def test_set_setprop_is_not_failing(self):
         """Check if setprop is not failing"""
@@ -156,7 +210,7 @@ class AdbDeviceTest(  # pylint: disable=too-many-public-methods
             self.fail(err)
 
     @pytest.mark.skipif(
-        not utils.enable_root_tests(),
+        not enable_root_tests(),
         reason='Failing on not rootable devices')
     def test_getprop(self):
         """Verify if property value is correct using getprop command. """
@@ -170,8 +224,8 @@ class AdbDeviceTest(  # pylint: disable=too-many-public-methods
         self.assertEqual(prop_val, device.getprop(prop_name))
 
     @pytest.mark.skipif(
-        utils.is_github_workflows_env(),
-        not utils.enable_root_tests(),
+        is_github_workflows_env(),
+        not enable_root_tests(),
         reason='Failing on emulator')
     def test_verity(self):
         """Check if verity command is not failing. """
@@ -221,9 +275,23 @@ class AdbDeviceTest(  # pylint: disable=too-many-public-methods
         """Check if rm command failed if file not exists. """
         filename = '/sdcard/no_existing_file'
         device = simpleadb.AdbDevice(TEST_DEVICE_ID)
-
         with self.assertRaises(simpleadb.AdbCommandError):
             device.rm(filename)
+
+    def test_get_ip_is_correct_ip(self):
+        """Check get ip from ifconfig command. """
+        device = simpleadb.AdbDevice(TEST_DEVICE_ID)
+        try:
+            ip_address = device.get_ip()
+            self.assertTrue(is_valid_ip(ip_address))
+        except simpleadb.AdbCommandError as err:
+            self.fail(err)
+
+    def test_get_ip_fails_when_wrong_interface(self):
+        """Check get ip from ifconfig command from not existing interface. """
+        device = simpleadb.AdbDevice(TEST_DEVICE_ID)
+        with self.assertRaises(simpleadb.AdbCommandError):
+            device.get_ip('dummy_interface')
 
     def test_get_state_returns_correct_state(self):
         """Check adb get state command. """
@@ -260,7 +328,7 @@ class AdbDeviceTest(  # pylint: disable=too-many-public-methods
             self.fail(err)
 
     @pytest.mark.skipif(
-        utils.is_github_workflows_env(),
+        is_github_workflows_env(),
         reason='Failing on emulator')
     def test_device_is_available(self):
         """Test if device is available. """
@@ -303,12 +371,24 @@ class AdbDeviceTest(  # pylint: disable=too-many-public-methods
             self.fail(err)
 
     @pytest.mark.skipif(
-        not utils.enable_root_tests(),
+        not enable_root_tests(),
         reason='Failing on not rootable devices')
     def test_unroot(self):
         """Test unroot"""
         device = simpleadb.AdbDevice(TEST_DEVICE_ID)
         try:
             device.unroot()
+        except simpleadb.AdbCommandError as err:
+            self.fail(err)
+
+    @pytest.mark.skipif(
+        not is_github_workflows_env(),
+        reason='Failing on non emulator')
+    def test_adb_connect_emulator_success(self):
+        """Test adb connect to emulator. """
+        try:
+            device = simpleadb.AdbDevice('localhost', 5555)
+            device.wait_for_device()
+            simpleadb.AdbServer().disconnect('localhost')
         except simpleadb.AdbCommandError as err:
             self.fail(err)

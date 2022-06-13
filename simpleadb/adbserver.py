@@ -104,8 +104,7 @@ class AdbServer:
         """
         cmd = ' '.join([
             adbcmds.DISCONNECT,
-            address,
-            str(port),
+            address + f':{port}' if port is not None else ''
         ])
         res = self.__check_call(cmd)
         return res
