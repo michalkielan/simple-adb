@@ -299,6 +299,12 @@ class AdbDeviceTest(  # pylint: disable=too-many-public-methods
         state = device.get_state()
         self.assertEqual(state, 'device')
 
+    def test_get_state_when_id_wrong_failed(self):
+        """Check adb get state command. """
+        device = simpleadb.AdbDevice('wrong id')
+        with self.assertRaises(simpleadb.AdbCommandError):
+            device.get_state()
+
     def test_dump_logcat(self):
         """Test dump logcat. """
         device = simpleadb.AdbDevice(TEST_DEVICE_ID)
