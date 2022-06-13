@@ -14,6 +14,7 @@ import os
 import subprocess
 import pytest
 import simpleadb
+from simpleadb.utils import is_valid_ip
 from . import utils
 
 TEST_DEVICE_ID = utils.get_test_device_id()
@@ -244,9 +245,23 @@ class AdbDeviceTest(  # pylint: disable=too-many-public-methods
         """Check if rm command failed if file not exists. """
         filename = '/sdcard/no_existing_file'
         device = simpleadb.AdbDevice(TEST_DEVICE_ID)
-
         with self.assertRaises(simpleadb.AdbCommandError):
             device.rm(filename)
+
+    def test_get_ip_is_correct_ip(self):
+        """Check get ip from ifconfig command. """
+        device = simpleadb.AdbDevice(TEST_DEVICE_ID)
+        try:
+            ip_address = device.get_ip()
+            self.assertTrue(is_valid_ip(ip_address))
+        except simpleadb.AdbCommandError as err:
+            self.fail(err)
+
+    def test_get_ip_fails_when_wrong_interface(self):
+        """Check get ip from ifconfig command from not existing interface. """
+        device = simpleadb.AdbDevice(TEST_DEVICE_ID)
+        with self.assertRaises(simpleadb.AdbCommandError):
+            device.get_ip('dummy_interface')
 
     def test_get_state_returns_correct_state(self):
         """Check adb get state command. """

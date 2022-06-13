@@ -9,6 +9,7 @@
 
 ### Changed
 - fix for adb disconnect
+- fix get ip address
 
 ### Removed
 - Deprecate travis
