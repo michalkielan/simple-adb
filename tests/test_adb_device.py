@@ -13,11 +13,21 @@ import unittest
 import os
 import subprocess
 import pytest
+from interruptingcow import timeout
 import simpleadb
 from simpleadb.utils import is_valid_ip
-from . import utils
+from .utils import (
+    DUMMY_APK_NAME,
+    DUMMY_PACKAGE_NAME,
+    android_wait_for_emulator,
+    download_resources,
+    enable_root_tests,
+    get_adb_path,
+    get_test_device_id,
+    is_github_workflows_env,
+)
 
-TEST_DEVICE_ID = utils.get_test_device_id()
+TEST_DEVICE_ID = get_test_device_id()
 
 
 class AdbDeviceTest(  # pylint: disable=too-many-public-methods
@@ -29,11 +39,11 @@ class AdbDeviceTest(  # pylint: disable=too-many-public-methods
         """ Start adb server and download tests resources at the beginning of
         the tests. """
         simpleadb.AdbServer()
-        utils.download_resources()
+        download_resources()
 
     def setUp(self):
         """ Start adb server in each test. """
-        utils.android_wait_for_emulator()
+        android_wait_for_emulator()
 
     def test_adb_check_command_exception_error(self):
         """Check AdbCommandError exception. """
@@ -72,7 +82,7 @@ class AdbDeviceTest(  # pylint: disable=too-many-public-methods
         """Test custom adb binary path"""
         device = simpleadb.AdbDevice(
             TEST_DEVICE_ID,
-            path=utils.get_adb_path()
+            path=get_adb_path()
         )
         self.assertTrue(device.is_available())
 
@@ -86,7 +96,7 @@ class AdbDeviceTest(  # pylint: disable=too-many-public-methods
             device.get_serialno()
 
     @pytest.mark.skipif(
-        utils.is_github_workflows_env() or not utils.enable_root_tests(),
+        is_github_workflows_env() or not enable_root_tests(),
         reason='is_root() is "experimental" feature, may fail on emulator')
     def test_is_root_true_when_device_rooted(self):
         """Check if device is rooted after adb root command. """
@@ -98,7 +108,7 @@ class AdbDeviceTest(  # pylint: disable=too-many-public-methods
         self.assertTrue(device.is_root())
 
     @pytest.mark.skipif(
-        not utils.enable_root_tests(),
+        not enable_root_tests(),
         reason='Failing on not rootable devices')
     def test_adb_root_not_failing(self):
         """Check adb root command not failing. """
@@ -147,12 +157,32 @@ class AdbDeviceTest(  # pylint: disable=too-many-public-methods
             self.fail(err)
         self.assertTrue(os.path.isfile(filepath))
 
-    def test_install_apk_if_success(self):
-        """Check if install and uninstall apk are not failing"""
+    def test_get_pid_of_running_app(self):
+        """ Get PID of running app. """
         device = simpleadb.AdbDevice(TEST_DEVICE_ID)
+        package = DUMMY_PACKAGE_NAME
         try:
-            device.install(utils.DUMMY_APK_NAME)
-            device.uninstall(utils.DUMMY_PACKAGE_NAME)
+            device.install(DUMMY_APK_NAME)
+            device.shell(
+                f'am start -n {package}/{package}.MainActivity'
+            )
+        except simpleadb.AdbCommandError as err:
+            self.fail(err)
+        wait_for_start_app_sec = 10
+        try:
+            with timeout(wait_for_start_app_sec, exception=RuntimeError):
+                while True:
+                    try:
+                        pid = device.get_app_pid(package)
+                        self.assertTrue(isinstance(pid, int))
+                        self.assertTrue(pid != 0)
+                        break
+                    except simpleadb.AdbCommandError:
+                        pass
+        except RuntimeError as err:
+            self.fail(err)
+        try:
+            device.uninstall(DUMMY_PACKAGE_NAME)
         except simpleadb.AdbCommandError as err:
             self.fail(err)
 
@@ -169,7 +199,7 @@ class AdbDeviceTest(  # pylint: disable=too-many-public-methods
             device.uninstall('apk_not_exists')
 
     @pytest.mark.skipif(
-        not utils.enable_root_tests(),
+        not enable_root_tests(),
         reason='Failing on not rootable devices')
     def test_set_setprop_is_not_failing(self):
         """Check if setprop is not failing"""
@@ -180,7 +210,7 @@ class AdbDeviceTest(  # pylint: disable=too-many-public-methods
             self.fail(err)
 
     @pytest.mark.skipif(
-        not utils.enable_root_tests(),
+        not enable_root_tests(),
         reason='Failing on not rootable devices')
     def test_getprop(self):
         """Verify if property value is correct using getprop command. """
@@ -194,8 +224,8 @@ class AdbDeviceTest(  # pylint: disable=too-many-public-methods
         self.assertEqual(prop_val, device.getprop(prop_name))
 
     @pytest.mark.skipif(
-        utils.is_github_workflows_env(),
-        not utils.enable_root_tests(),
+        is_github_workflows_env(),
+        not enable_root_tests(),
         reason='Failing on emulator')
     def test_verity(self):
         """Check if verity command is not failing. """
@@ -298,7 +328,7 @@ class AdbDeviceTest(  # pylint: disable=too-many-public-methods
             self.fail(err)
 
     @pytest.mark.skipif(
-        utils.is_github_workflows_env(),
+        is_github_workflows_env(),
         reason='Failing on emulator')
     def test_device_is_available(self):
         """Test if device is available. """
@@ -341,7 +371,7 @@ class AdbDeviceTest(  # pylint: disable=too-many-public-methods
             self.fail(err)
 
     @pytest.mark.skipif(
-        not utils.enable_root_tests(),
+        not enable_root_tests(),
         reason='Failing on not rootable devices')
     def test_unroot(self):
         """Test unroot"""
@@ -352,7 +382,7 @@ class AdbDeviceTest(  # pylint: disable=too-many-public-methods
             self.fail(err)
 
     @pytest.mark.skipif(
-        not utils.is_github_workflows_env(),
+        not is_github_workflows_env(),
         reason='Failing on non emulator')
     def test_adb_connect_emulator_success(self):
         """Test adb connect to emulator. """
