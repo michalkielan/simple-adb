@@ -8,8 +8,33 @@
 
 """ Interface for adb process"""
 import subprocess
+from subprocess import CalledProcessError
 from typing import Optional
 from . import adbcmds
+
+
+class AdbCommandError(Exception):
+    """Adb command error exception.
+
+    Raised when adb command failed or the process returns a non-zero exit
+    status.
+
+    :param str device_id: Device ID or Host address.
+    :param str output: Adb command process output.
+    :param Optional[CalledProcessError] called_process_error: Process failed
+        exception.
+    """
+
+    def __init__(self, device_id: str, output: str,
+                 called_process_error: Optional[CalledProcessError] = None):
+        super().__init__()
+        self.device_id = device_id
+        self.called_process_error = called_process_error
+        self.output = called_process_error.output if (
+            output is None and called_process_error is not None) else output
+
+    def __str__(self):
+        return self.output
 
 
 class AdbProcess:
@@ -23,44 +48,6 @@ class AdbProcess:
 
     def __init__(self, path: Optional[str] = adbcmds.ADB):
         self.__adb_path = path
-
-    def call(self, args, **kwargs):
-        """ Call process
-
-          Args:
-            args (str): Arguments
-            **kwargs: Arbitrary keyword arguments
-          Keyword Args:
-            timeout (int): Timeout in sec
-          Returns:
-            0 if success, otherwise error code
-        """
-        cmd = ' '.join([
-            self.__adb_path,
-            args,
-        ])
-        kwargs.setdefault('shell', True)
-        return subprocess.call(cmd, **kwargs)
-
-    def check_call(self, args: str, **kwargs) -> int:
-        """ Call process
-
-          Args:
-            args (str): Arguments
-            **kwargs: Arbitrary keyword arguments
-          Keyword Args:
-            timeout (int): Timeout in sec
-          Returns:
-            0 if success
-          Raises:
-            CalledProcessError: when failed
-        """
-        cmd = ' '.join([
-            self.__adb_path,
-            args,
-        ])
-        kwargs.setdefault('shell', True)
-        return subprocess.check_call(cmd, **kwargs)
 
     def check_output(self, args: str, **kwargs) -> str:
         """ Call process
