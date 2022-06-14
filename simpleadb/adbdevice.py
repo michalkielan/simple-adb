@@ -16,31 +16,8 @@ from typing import Optional, Union
 from . import adbcmds
 from . import adbdeviceprocess
 from . import adbprocess
+from .adbprocess import AdbCommandError
 from .utils import is_valid_ip
-
-
-class AdbCommandError(Exception):
-    """Adb command error exception.
-
-    Raised when adb command failed or the process returns a non-zero exit
-    status.
-
-    :param str device_id: Device ID or Host address.
-    :param str output: Adb command process output.
-    :param Optional[CalledProcessError] called_process_error: Process failed
-        exception.
-    """
-
-    def __init__(self, device_id: str, output: str,
-                 called_process_error: Optional[CalledProcessError] = None):
-        super().__init__()
-        self.device_id = device_id
-        self.called_process_error = called_process_error
-        self.output = called_process_error.output if (
-            output is None and called_process_error is not None) else output
-
-    def __str__(self):
-        return self.output
 
 
 class AdbDevice:

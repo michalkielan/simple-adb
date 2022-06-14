@@ -9,9 +9,10 @@
 """ This module includes AdbServer class used for adb server operations. """
 
 from typing import List, Optional, Union
-from . import adbprocess
+from subprocess import CalledProcessError
 from . import adbcmds
 from . import adbdevice
+from .adbprocess import AdbCommandError, AdbProcess
 
 
 class AdbServer:
@@ -30,16 +31,13 @@ class AdbServer:
     def __init__(self, port: Optional[int] = None, **kwargs):
         options_path = kwargs.get('path')
         adb_path = options_path if options_path else adbcmds.ADB
-        self.__adb_process = adbprocess.AdbProcess(adb_path)
+        self.__adb_process = AdbProcess(adb_path)
         self.start(port)
-
-    def __check_call(self, args: str) -> int:
-        return self.__adb_process.check_call(args)
 
     def devices(self) -> List[str]:
         """ Get list connected adb devices.
 
-        :raise CalledProcessError: When failed.
+        :raise: AdbCommandError: When failed.
         :return: List of connected devices serial numbers.
         :rtype: List[str]
 
@@ -51,7 +49,10 @@ class AdbServer:
         ['emulator-5554']
         """
         cmd = adbcmds.DEVICES
-        output = self.__adb_process.check_output(cmd)
+        try:
+            output = self.__adb_process.check_output(cmd)
+        except CalledProcessError as err:
+            raise AdbCommandError(None, None, err) from err
         devices = []
         devices_list = output.splitlines()
         devices_list.pop(0)
@@ -62,14 +63,12 @@ class AdbServer:
                 devices.append(adbdevice.AdbDevice(device_id))
         return devices
 
-    def connect(self, address, port: Optional[Union[int, str]] = 5555):
+    def connect(self, address, port: Optional[Union[int, str]] = 5555) -> None:
         """ Connect a device via TCP/IP.
 
         :param str address: Host address.
         :param port (Optional[Union[int,str]]): Port, default 5555.
         :raise CalledProcessError: When failed.
-        :return: 0 if success, error code otherwise.
-        :rtype: int
 
         :Example:
 
@@ -82,18 +81,18 @@ class AdbServer:
             address,
             str(port),
         ])
-        res = self.__check_call(cmd)
-        return res
+        try:
+            self.__adb_process.check_output(cmd)
+        except CalledProcessError as err:
+            raise AdbCommandError(None, None, err) from err
 
     def disconnect(
-            self, address, port: Optional[Union[int, str]] = None) -> int:
+            self, address, port: Optional[Union[int, str]] = None) -> None:
         """ Disconnect from given TCP/IP device.
 
         :param address str: Host address.
         :param (Optional[Union[int, str] port]): Port.
-        :raise CalledProcessError: When failed.
-        :return: 0 if success, error code otherwise.
-        :rtype: int
+        :raise: AdbCommandError: When failed.
 
         :Example:
 
@@ -106,17 +105,17 @@ class AdbServer:
             adbcmds.DISCONNECT,
             address + f':{port}' if port is not None else ''
         ])
-        res = self.__check_call(cmd)
-        return res
+        try:
+            self.__adb_process.check_output(cmd)
+        except CalledProcessError as err:
+            raise AdbCommandError(None, None, err) from err
 
-    def start(self, port: Optional[Union[int, str]] = None) -> int:
+    def start(self, port: Optional[Union[int, str]] = None) -> None:
         """ Start adb and ensure that there is running.
 
         :param address str: Host address.
         :param (Optional[Union[int, str] port]): Port, default adb server port.
-        :raise CalledProcessError: When failed.
-        :return: 0 if success, error code otherwise.
-        :rtype: int
+        :raise: AdbCommandError: When failed.
 
         :Example:
 
@@ -132,15 +131,15 @@ class AdbServer:
             port_arg,
             adbcmds.START_SERVER,
         ])
-        res = self.__check_call(cmd)
-        return res
+        try:
+            self.__adb_process.check_output(cmd)
+        except CalledProcessError as err:
+            raise AdbCommandError(None, None, err) from err
 
     def kill(self) -> int:
         """ Kill the server if it is running.
 
-        :raise CalledProcessError: When failed.
-        :return: 0 if success, error code otherwise.
-        :rtype: int
+        :raise: AdbCommandError: When failed.
 
         :Example:
 
@@ -149,4 +148,7 @@ class AdbServer:
         >>> adb_server.kill()
         """
         cmd = adbcmds.KILL_SERVER
-        return self.__check_call(cmd)
+        try:
+            self.__adb_process.check_output(cmd)
+        except CalledProcessError as err:
+            raise AdbCommandError(None, None, err) from err
