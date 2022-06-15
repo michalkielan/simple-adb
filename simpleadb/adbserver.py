@@ -31,7 +31,7 @@ class AdbServer:
     def __init__(self, port: Optional[int] = None, **kwargs):
         options_path = kwargs.get('path')
         adb_path = options_path if options_path else adbcmds.ADB
-        self.__adb_process = AdbProcess(adb_path)
+        self.__adb_process = AdbProcess(None, adb_path)
         self.start(port)
 
     def devices(self) -> List[str]:
@@ -48,7 +48,8 @@ class AdbServer:
         >>> adb_server.devices()
         ['emulator-5554']
         """
-        cmd = adbcmds.DEVICES
+        cmd = []
+        cmd.append(adbcmds.DEVICES)
         try:
             output = self.__adb_process.check_output(cmd)
         except CalledProcessError as err:
@@ -76,15 +77,11 @@ class AdbServer:
         >>> adb_server = simpleadb.AdbServer(5555)
         >>> adb_server.connect('192.168.42.42', 5555)
         """
-        cmd = ' '.join([
-            adbcmds.CONNECT,
-            address,
-            str(port),
-        ])
-        try:
-            self.__adb_process.check_output(cmd)
-        except CalledProcessError as err:
-            raise AdbCommandError(None, None, err) from err
+        cmd = []
+        cmd.append(adbcmds.CONNECT)
+        cmd.append(address)
+        cmd.append(str(port))
+        self.__adb_process.check_output(cmd)
 
     def disconnect(
             self, address, port: Optional[Union[int, str]] = None) -> None:
@@ -101,14 +98,10 @@ class AdbServer:
         >>> adb_server.connect('192.168.42.42', 5555)
         >>> adb_server.disconnect('192.168.42.42')
         """
-        cmd = ' '.join([
-            adbcmds.DISCONNECT,
-            address + f':{port}' if port is not None else ''
-        ])
-        try:
-            self.__adb_process.check_output(cmd)
-        except CalledProcessError as err:
-            raise AdbCommandError(None, None, err) from err
+        cmd = []
+        cmd.append(adbcmds.DISCONNECT)
+        cmd.append(address + f':{port}' if port is not None else '')
+        self.__adb_process.check_output(cmd)
 
     def start(self, port: Optional[Union[int, str]] = None) -> None:
         """ Start adb and ensure that there is running.
@@ -124,13 +117,10 @@ class AdbServer:
         >>> adb_server.start()
         >>> adb_server.start(5037)
         """
-        port_arg = ''
+        cmd = []
         if port is not None:
-            port_arg += ' '.join(['-P', str(port)])
-        cmd = ' '.join([
-            port_arg,
-            adbcmds.START_SERVER,
-        ])
+            cmd.append(' '.join(['-P', str(port)]))
+        cmd.append(adbcmds.START_SERVER)
         try:
             self.__adb_process.check_output(cmd)
         except CalledProcessError as err:
@@ -147,8 +137,6 @@ class AdbServer:
         >>> adb_server = simpleadb.AdbServer(5555)
         >>> adb_server.kill()
         """
-        cmd = adbcmds.KILL_SERVER
-        try:
-            self.__adb_process.check_output(cmd)
-        except CalledProcessError as err:
-            raise AdbCommandError(None, None, err) from err
+        cmd = []
+        cmd.append(adbcmds.KILL_SERVER)
+        self.__adb_process.check_output(cmd)

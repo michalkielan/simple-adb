@@ -1,6 +1,12 @@
 [Unreleased](https://github.com/michalkielan/simple-adb/compare/0.3.4...HEAD)
 -----------------------------------------------------------------------------
 
+### Changed
+- Merge adb process classes
+
+### Removed
+- AdbDeviceProcess class
+
 [0.3.4](https://github.com/michalkielan/simple-adb/compare/0.3.3...0.3.4) - 2022-06-12
 --------------------------------------------------------------------------------------
 
