@@ -614,7 +614,7 @@ class AdbDevice:
     def dump_logcat(self, *buffers: str) -> str:
         """ Dump logcat.
 
-        :param Optional[List[str]] buffers: List of logcat buffers to dump.
+        :param str *buffers: Additional logcat buffers to dump.
         :raise: AdbCommandError: When failed.
         :return: Logcat output string.
         :rtype: str
@@ -624,7 +624,8 @@ class AdbDevice:
         >>> import simpleadb
         >>> device = simpleadb.AdbDevice('emulator-5554')
         >>> dumped_logcat = device.dump_logcat()
-        >>> main_logcat = device.dump_logcat('main')
+        >>> logcat = device.dump_logcat('main')
+        >>> logcat = device.clear_logcat('main', 'kernel')
         """
         cmd = []
         cmd.append(adbcmds.LOGCAT)
@@ -638,7 +639,7 @@ class AdbDevice:
     def clear_logcat(self, *buffers: str) -> None:
         """ Clear logcat.
 
-        :param Optional[List[str]] buffers: List of logcat buffers to clear.
+        :param str *buffers: Additional logcat buffers to clear.
         :raise: AdbCommandError: When failed.
 
         :example:
@@ -647,6 +648,7 @@ class AdbDevice:
         >>> device = simpleadb.AdbDevice('emulator-5554')
         >>> device.clear_logcat()
         >>> device.clear_logcat('main')
+        >>> device.clear_logcat('main', 'kernel')
         """
         cmd = []
         cmd.append(adbcmds.LOGCAT)
