@@ -7,7 +7,8 @@
 #
 
 # pylint: disable=no-member
-"""Unit tests for adb subprocess"""
+""" Unit tests for adb subprocess. """
+
 import unittest
 import subprocess
 import simpleadb
@@ -15,27 +16,20 @@ from simpleadb import adbprocess
 
 
 class AdbProcessTest(unittest.TestCase):
-    """Adb process unit tests"""
+    """ Adb process unit tests. """
 
-    def setUp(self):
-        """Start adb server in each test"""
-        self.__adb = simpleadb.AdbServer()
-
-    def tearDown(self):
-        """Kill adb server in each test"""
-        self.__adb.kill()
-
-    def test_check_output_success(self):
-        """Check for check call output process success"""
+    def test_when_valind_commdn_check_output_success(self):
+        """ Check for check call output process success. """
+        self.adb_server = simpleadb.AdbServer()
         adb_process = adbprocess.AdbProcess()
         try:
-            output = adb_process.check_output('devices')
+            output = adb_process.check_output(['devices'])
             self.assertIsNotNone(output)
-        except subprocess.CalledProcessError:
-            self.fail('Failed, CalledProcessError raised')
+        except simpleadb.AdbCommandError as err:
+            self.fail(err)
 
-    def test_check_output_failure(self):
-        """Check for check call output process failed"""
+    def test_when_invalid_command_check_output_fails(self):
+        """ Check for check call output process failed. """
         adb_process = adbprocess.AdbProcess()
-        with self.assertRaises(subprocess.CalledProcessError):
-            adb_process.check_output('invalid4r4j838r')
+        with self.assertRaises(simpleadb.AdbCommandError):
+            adb_process.check_output(['invalid4r4j838r'])
