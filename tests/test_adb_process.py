@@ -10,7 +10,6 @@
 """ Unit tests for adb subprocess. """
 
 import unittest
-import subprocess
 import simpleadb
 from simpleadb import adbprocess
 
