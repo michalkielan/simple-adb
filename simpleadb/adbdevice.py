@@ -614,7 +614,7 @@ class AdbDevice:
     def dump_logcat(self, *buffers: str) -> str:
         """ Dump logcat.
 
-        :param str *buffers: Additional logcat buffers to dump.
+        :param str \*buffers: Additional logcat buffers to dump.
         :raise: AdbCommandError: When failed.
         :return: Logcat output string.
         :rtype: str
@@ -639,7 +639,7 @@ class AdbDevice:
     def clear_logcat(self, *buffers: str) -> None:
         """ Clear logcat.
 
-        :param str *buffers: Additional logcat buffers to clear.
+        :param str \*buffers: Additional logcat buffers to clear.
         :raise: AdbCommandError: When failed.
 
         :example:
