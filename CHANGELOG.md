@@ -1,6 +1,21 @@
 [Unreleased](https://github.com/michalkielan/simple-adb/compare/0.3.4...HEAD)
 -----------------------------------------------------------------------------
 
+### Added
+- timeout expired exception
+- export exception classess to __init__ module
+- 3.10 builds
+- basic API doc
+
+### Changed
+- merge adb process classes
+- replace all subprocess: call,check_call to check_output
+- update actions/setup-python@v4
+
+### Removed
+- AdbDeviceProcess class
+- redundant try except block
+
 [0.3.4](https://github.com/michalkielan/simple-adb/compare/0.3.3...0.3.4) - 2022-06-12
 --------------------------------------------------------------------------------------
 

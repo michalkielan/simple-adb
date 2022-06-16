@@ -13,9 +13,12 @@
 Welcome to simple-adb's documentation!
 ======================================
 
-.. automodule:: simpleadb.adbdevice
-    :members:
+Contents
+========
 
 .. toctree::
-   :maxdepth: 2
-   :caption: Contents:
+    :maxdepth: 2
+
+    adbdevice
+    adbserver
+    exceptions

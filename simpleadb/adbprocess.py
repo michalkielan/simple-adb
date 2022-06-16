@@ -8,78 +8,97 @@
 
 """ Interface for adb process"""
 import subprocess
-from typing import Optional
+from subprocess import CalledProcessError, TimeoutExpired
+from typing import List, Optional
 from . import adbcmds
 
 
-class AdbProcess:
-    """AdbProcess this class is used to call adb process
+class AdbCommandError(Exception):
+    """Adb command error exception.
 
-      Args:
-        path (Optional[str]): adb path, default: 'adb'
-      Returns:
-        0 if success, otherwise error code
+    Raised when adb command failed or the process returns a non-zero exit
+    status.
+
+    :param str device_id: Device ID or Host address.
+    :param str output: Adb command process output.
+    :param Optional[CalledProcessError] called_process_error: Process failed
+        exception.
     """
 
-    def __init__(self, path: Optional[str] = adbcmds.ADB):
-        self.__adb_path = path
+    def __init__(self, device_id: str, output: str,
+                 called_process_error: Optional[CalledProcessError] = None):
+        super().__init__()
+        self.device_id = device_id
+        self.called_process_error = called_process_error
+        self.output = called_process_error.output if (
+            output is None and called_process_error is not None) else output
 
-    def call(self, args, **kwargs):
-        """ Call process
+    def __str__(self):
+        return self.output
 
-          Args:
-            args (str): Arguments
-            **kwargs: Arbitrary keyword arguments
-          Keyword Args:
-            timeout (int): Timeout in sec
-          Returns:
-            0 if success, otherwise error code
+
+class AdbCommandTimeoutExpired(Exception):
+    """ Adb command timeout expired exception. Raised when adb command timeout
+        expired.
+
+    :param str device_id: Device ID or Host address.
+    :param TimeoutExpired timeout_expired: Process failed.
+    """
+
+    def __init__(self, device_id: str, timeout_expired: TimeoutExpired):
+        self.device_id = device_id
+        self.timeout_expired = timeout_expired
+
+    def __str__(self):
+        return (
+            f'Command "{self.timeout_expired.cmd}" timed out after \
+            {self.timeout_expired.timeout} seconds.'
+        )
+
+
+class AdbProcess:
+    """ AdbProcess this class is used to call adb process.
+
+    :param Optional[str] device_id: Device ID, used when called adb command on
+        device.
+    :param: adb_path (Optional[str]): adb path, default: 'adb'
+    """
+
+    def __init__(self, device_id: Optional[str] = None,
+                 adb_path: Optional[str] = adbcmds.ADB):
+        self.device_id = device_id
+        self.adb_path = adb_path
+
+    def create_use_on_device_arg(self) -> str:
+        """ Create use on device argument.
+
+        :return: Concatenated string used for adb commands '-s <device_id>', or
+            empty string.
+        :rtype: str
         """
-        cmd = ' '.join([
-            self.__adb_path,
-            args,
-        ])
-        kwargs.setdefault('shell', True)
-        return subprocess.call(cmd, **kwargs)
+        return '-s ' + \
+            str(self.device_id) if self.device_id is not None else ''
 
-    def check_call(self, args: str, **kwargs) -> int:
-        """ Call process
+    def check_output(self, args: List[str], **kwargs) -> str:
+        """ Call adb subprocess.
 
-          Args:
-            args (str): Arguments
-            **kwargs: Arbitrary keyword arguments
-          Keyword Args:
-            timeout (int): Timeout in sec
-          Returns:
-            0 if success
-          Raises:
-            CalledProcessError: when failed
+        :param List[str] prop: Arguments.
+        :keyword str timeout: Timeout in sec.
+        :raise: AdbCommandError: When failed.
+        :return: Process output.
         """
-        cmd = ' '.join([
-            self.__adb_path,
-            args,
-        ])
-        kwargs.setdefault('shell', True)
-        return subprocess.check_call(cmd, **kwargs)
-
-    def check_output(self, args: str, **kwargs) -> str:
-        """ Call process
-
-          Args:
-            args (str): Arguments
-            **kwargs: Arbitrary keyword arguments
-          Keyword Args:
-            timeout (int): Timeout in sec
-          Returns:
-            0 if success
-          Raises:
-            CalledProcessError: when failed
-        """
-        cmd = ' '.join([
-            self.__adb_path,
-            args,
-        ])
+        cmd = []
+        cmd_args = [self.adb_path]
+        if self.device_id is not None:
+            cmd_args += [self.create_use_on_device_arg()]
+        cmd_args += args
+        cmd = ' '.join(cmd_args)
         kwargs.setdefault('shell', True)
         kwargs.setdefault('universal_newlines', True)
         kwargs.setdefault('stderr', subprocess.STDOUT)
-        return subprocess.check_output(cmd, **kwargs)
+        try:
+            return subprocess.check_output(cmd, **kwargs).rstrip('\n\r')
+        except CalledProcessError as err:
+            raise AdbCommandError(self.device_id, None, err) from err
+        except TimeoutExpired as err:
+            raise AdbCommandTimeoutExpired(self.device_id, err) from err

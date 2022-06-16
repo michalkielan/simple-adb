@@ -11,7 +11,6 @@
 
 import unittest
 import os
-import subprocess
 import pytest
 from interruptingcow import timeout
 import simpleadb
@@ -55,6 +54,11 @@ class AdbDeviceTest(  # pylint: disable=too-many-public-methods
             self.assertEqual(output, str(err))
             self.assertEqual(device_id, err.device_id)
             self.assertEqual(None, err.called_process_error)
+
+    def test_adb_device_repr_is_same_as_id(self):
+        """ Check if repr is same as get_id(). """
+        test_device = simpleadb.AdbDevice(TEST_DEVICE_ID)
+        self.assertEqual(repr(test_device), test_device.get_id())
 
     def test_adb_devices_exists(self):
         """Check if adb devices exists. """
@@ -299,6 +303,12 @@ class AdbDeviceTest(  # pylint: disable=too-many-public-methods
         state = device.get_state()
         self.assertEqual(state, 'device')
 
+    def test_get_state_when_id_wrong_failed(self):
+        """Check adb get state command. """
+        device = simpleadb.AdbDevice('wrong id')
+        with self.assertRaises(simpleadb.AdbCommandError):
+            device.get_state()
+
     def test_dump_logcat(self):
         """Test dump logcat. """
         device = simpleadb.AdbDevice(TEST_DEVICE_ID)
@@ -350,7 +360,7 @@ class AdbDeviceTest(  # pylint: disable=too-many-public-methods
 
     def test_wait_for_device_failed(self):
         """Wait for device failed after timeout if device not exists. """
-        with self.assertRaises(subprocess.TimeoutExpired):
+        with self.assertRaises(simpleadb.AdbCommandTimeoutExpired):
             device = simpleadb.AdbDevice('dummy-device')
             device.wait_for_device(1)
 
