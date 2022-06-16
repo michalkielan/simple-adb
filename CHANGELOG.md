@@ -5,6 +5,7 @@
 - timeout expired exception
 - export exception classess to __init__ module
 - 3.10 builds
+- basic API doc
 
 ### Changed
 - merge adb process classes
