@@ -8,7 +8,7 @@
 
 """ Interface for adb process"""
 import subprocess
-from subprocess import CalledProcessError
+from subprocess import CalledProcessError, TimeoutExpired
 from typing import List, Optional
 from . import adbcmds
 
@@ -35,6 +35,25 @@ class AdbCommandError(Exception):
 
     def __str__(self):
         return self.output
+
+
+class AdbCommandTimeoutExpired(Exception):
+    """ Adb command timeout expired exception. Raised when adb command timeout
+        expired.
+
+    :param str device_id: Device ID or Host address.
+    :param TimeoutExpired timeout_expired: Process failed.
+    """
+
+    def __init__(self, device_id: str, timeout_expired: TimeoutExpired):
+        self.device_id = device_id
+        self.timeout_expired = timeout_expired
+
+    def __str__(self):
+        return (
+            f'Command "{self.timeout_expired.cmd}" timed out after \
+            {self.timeout_expired.timeout} seconds.'
+        )
 
 
 class AdbProcess:
@@ -81,3 +100,5 @@ class AdbProcess:
             return subprocess.check_output(cmd, **kwargs).rstrip('\n\r')
         except CalledProcessError as err:
             raise AdbCommandError(self.device_id, None, err) from err
+        except TimeoutExpired as err:
+            raise AdbCommandTimeoutExpired(self.device_id, err) from err

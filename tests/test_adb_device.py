@@ -11,7 +11,6 @@
 
 import unittest
 import os
-import subprocess
 import pytest
 from interruptingcow import timeout
 import simpleadb
@@ -361,7 +360,7 @@ class AdbDeviceTest(  # pylint: disable=too-many-public-methods
 
     def test_wait_for_device_failed(self):
         """Wait for device failed after timeout if device not exists. """
-        with self.assertRaises(subprocess.TimeoutExpired):
+        with self.assertRaises(simpleadb.AdbCommandTimeoutExpired):
             device = simpleadb.AdbDevice('dummy-device')
             device.wait_for_device(1)
 
