@@ -4,10 +4,12 @@
 ### Added
 - timeout expired exception
 - export exception classess to __init__ module
+- 3.10 builds
 
 ### Changed
 - merge adb process classes
 - replace all subprocess: call,check_call to check_output
+- update actions/setup-python@v4
 
 ### Removed
 - AdbDeviceProcess class
