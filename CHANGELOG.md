@@ -3,12 +3,15 @@
 
 ### Added
 - timeout expired exception
+- export exception classess to __init__ module
 
 ### Changed
-- Merge adb process classes
+- merge adb process classes
+- replace all subprocess: call,check_call to check_output
 
 ### Removed
 - AdbDeviceProcess class
+- redundant try except block
 
 [0.3.4](https://github.com/michalkielan/simple-adb/compare/0.3.3...0.3.4) - 2022-06-12
 --------------------------------------------------------------------------------------

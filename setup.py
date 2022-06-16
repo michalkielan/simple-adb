@@ -6,7 +6,8 @@
 # SPDX-License-Identifier: GPL-3.0-only
 #
 
-"""Installation package"""
+""" Installation package. """
+
 import io
 from setuptools import setup, find_packages
 
