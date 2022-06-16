@@ -1,6 +1,9 @@
 [Unreleased](https://github.com/michalkielan/simple-adb/compare/0.3.4...HEAD)
 -----------------------------------------------------------------------------
 
+### Added
+- timeout expired exception
+
 ### Changed
 - Merge adb process classes
 
