@@ -1,5 +1,8 @@
-[Unreleased](https://github.com/michalkielan/simple-adb/compare/0.3.4...HEAD)
+[Unreleased](https://github.com/michalkielan/simple-adb/compare/0.4.0...HEAD)
 -----------------------------------------------------------------------------
+
+[0.4.0](https://github.com/michalkielan/simple-adb/compare/0.3.4...0.4.0) - 2022-06-15
+--------------------------------------------------------------------------------------
 
 ### Added
 - timeout expired exception
