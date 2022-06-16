@@ -126,7 +126,7 @@ class AdbServer:
         except CalledProcessError as err:
             raise AdbCommandError(None, None, err) from err
 
-    def kill(self) -> int:
+    def kill(self) -> None:
         """ Kill the server if it is running.
 
         :raise: AdbCommandError: When failed.

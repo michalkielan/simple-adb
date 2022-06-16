@@ -200,7 +200,7 @@ class AdbDevice:
         cmd.append(adbcmds.DEVPATH)
         return self.__adb_process.check_output(cmd)
 
-    def remount(self) -> int:
+    def remount(self) -> None:
         """ Remout partition read-write.
 
         :raise: AdbCommandError: When failed.
@@ -218,7 +218,7 @@ class AdbDevice:
         if 'remount failed' in output.lower():
             raise AdbCommandError(self.get_id(), output, None)
 
-    def reboot(self) -> int:
+    def reboot(self) -> None:
         """ Reboot the device. Defaults to booting system image.
 
         :raise: AdbCommandError: When failed.
@@ -551,7 +551,7 @@ class AdbDevice:
         ))
         self.__adb_process.check_output(cmd)
 
-    def push(self, source: str, dest: str) -> int:
+    def push(self, source: str, dest: str) -> None:
         """ Copy local files/dirs to device.
 
         :param str source: Local path.
@@ -591,14 +591,12 @@ class AdbDevice:
         cmd.append(dest)
         return self.__adb_process.check_output(cmd)
 
-    def wait_for_device(self, timeout_sec: Optional[int] = None) -> int:
+    def wait_for_device(self, timeout_sec: Optional[int] = None) -> None:
         """ Wait for device available.
 
         :keyword int timeout: Timeout in sec, default 'inf'
         :raise: AdbCommandError: When failed.
         :raise TimeoutExpired: When timeout.
-        :return: 0 if success, error code otherwise.
-        :rtype: int
 
         :example:
 
@@ -609,7 +607,7 @@ class AdbDevice:
         """
         cmd = []
         cmd.append(adbcmds.WAIT_FOR_DEVICE)
-        return self.__adb_process.check_output(cmd, timeout=timeout_sec)
+        self.__adb_process.check_output(cmd, timeout=timeout_sec)
 
     def dump_logcat(self, *buffers: str) -> str:
         """ Dump logcat.
