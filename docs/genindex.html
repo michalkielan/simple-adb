@@ -35,8 +35,14 @@
   </form>
 </div>
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
-              <!-- Local TOC -->
-              <div class="local-toc"></div>
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="adbdevice.html">adbdevice</a></li>
+<li class="toctree-l1"><a class="reference internal" href="adbserver.html">adbserver</a></li>
+<li class="toctree-l1"><a class="reference internal" href="exceptions.html">Exceptions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="exceptions.html#adbcommanderror">AdbCommandError</a></li>
+<li class="toctree-l1"><a class="reference internal" href="exceptions.html#adbcommandtimeoutexpired">AdbCommandTimeoutExpired</a></li>
+</ul>
+
         </div>
       </div>
     </nav>
@@ -71,6 +77,7 @@
  | <a href="#E"><strong>E</strong></a>
  | <a href="#G"><strong>G</strong></a>
  | <a href="#I"><strong>I</strong></a>
+ | <a href="#K"><strong>K</strong></a>
  | <a href="#M"><strong>M</strong></a>
  | <a href="#P"><strong>P</strong></a>
  | <a href="#R"><strong>R</strong></a>
@@ -83,11 +90,15 @@
 <h2 id="A">A</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="index.html#simpleadb.adbdevice.AdbCommandError">AdbCommandError</a>
+      <li><a href="exceptions.html#simpleadb.adbprocess.AdbCommandError">AdbCommandError (class in simpleadb.adbprocess)</a>
+</li>
+      <li><a href="exceptions.html#simpleadb.adbprocess.AdbCommandTimeoutExpired">AdbCommandTimeoutExpired (class in simpleadb.adbprocess)</a>
 </li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="index.html#simpleadb.adbdevice.AdbDevice">AdbDevice (class in simpleadb.adbdevice)</a>
+      <li><a href="adbdevice.html#simpleadb.adbdevice.AdbDevice">AdbDevice (class in simpleadb.adbdevice)</a>
+</li>
+      <li><a href="adbserver.html#simpleadb.adbserver.AdbServer">AdbServer (class in simpleadb.adbserver)</a>
 </li>
   </ul></td>
 </tr></table>
@@ -95,7 +106,7 @@
 <h2 id="B">B</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="index.html#simpleadb.adbdevice.AdbDevice.broadcast">broadcast() (simpleadb.adbdevice.AdbDevice method)</a>
+      <li><a href="adbdevice.html#simpleadb.adbdevice.AdbDevice.broadcast">broadcast() (simpleadb.adbdevice.AdbDevice method)</a>
 </li>
   </ul></td>
 </tr></table>
@@ -103,7 +114,11 @@
 <h2 id="C">C</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="index.html#simpleadb.adbdevice.AdbDevice.clear_logcat">clear_logcat() (simpleadb.adbdevice.AdbDevice method)</a>
+      <li><a href="adbdevice.html#simpleadb.adbdevice.AdbDevice.clear_logcat">clear_logcat() (simpleadb.adbdevice.AdbDevice method)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="adbserver.html#simpleadb.adbserver.AdbServer.connect">connect() (simpleadb.adbserver.AdbServer method)</a>
 </li>
   </ul></td>
 </tr></table>
@@ -111,7 +126,13 @@
 <h2 id="D">D</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="index.html#simpleadb.adbdevice.AdbDevice.dump_logcat">dump_logcat() (simpleadb.adbdevice.AdbDevice method)</a>
+      <li><a href="adbserver.html#simpleadb.adbserver.AdbServer.devices">devices() (simpleadb.adbserver.AdbServer method)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="adbserver.html#simpleadb.adbserver.AdbServer.disconnect">disconnect() (simpleadb.adbserver.AdbServer method)</a>
+</li>
+      <li><a href="adbdevice.html#simpleadb.adbdevice.AdbDevice.dump_logcat">dump_logcat() (simpleadb.adbdevice.AdbDevice method)</a>
 </li>
   </ul></td>
 </tr></table>
@@ -119,7 +140,7 @@
 <h2 id="E">E</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="index.html#simpleadb.adbdevice.AdbDevice.enable_verity">enable_verity() (simpleadb.adbdevice.AdbDevice method)</a>
+      <li><a href="adbdevice.html#simpleadb.adbdevice.AdbDevice.enable_verity">enable_verity() (simpleadb.adbdevice.AdbDevice method)</a>
 </li>
   </ul></td>
 </tr></table>
@@ -127,21 +148,21 @@
 <h2 id="G">G</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="index.html#simpleadb.adbdevice.AdbDevice.get_app_pid">get_app_pid() (simpleadb.adbdevice.AdbDevice method)</a>
+      <li><a href="adbdevice.html#simpleadb.adbdevice.AdbDevice.get_app_pid">get_app_pid() (simpleadb.adbdevice.AdbDevice method)</a>
 </li>
-      <li><a href="index.html#simpleadb.adbdevice.AdbDevice.get_devpath">get_devpath() (simpleadb.adbdevice.AdbDevice method)</a>
+      <li><a href="adbdevice.html#simpleadb.adbdevice.AdbDevice.get_devpath">get_devpath() (simpleadb.adbdevice.AdbDevice method)</a>
 </li>
-      <li><a href="index.html#simpleadb.adbdevice.AdbDevice.get_id">get_id() (simpleadb.adbdevice.AdbDevice method)</a>
+      <li><a href="adbdevice.html#simpleadb.adbdevice.AdbDevice.get_id">get_id() (simpleadb.adbdevice.AdbDevice method)</a>
 </li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="index.html#simpleadb.adbdevice.AdbDevice.get_ip">get_ip() (simpleadb.adbdevice.AdbDevice method)</a>
+      <li><a href="adbdevice.html#simpleadb.adbdevice.AdbDevice.get_ip">get_ip() (simpleadb.adbdevice.AdbDevice method)</a>
 </li>
-      <li><a href="index.html#simpleadb.adbdevice.AdbDevice.get_serialno">get_serialno() (simpleadb.adbdevice.AdbDevice method)</a>
+      <li><a href="adbdevice.html#simpleadb.adbdevice.AdbDevice.get_serialno">get_serialno() (simpleadb.adbdevice.AdbDevice method)</a>
 </li>
-      <li><a href="index.html#simpleadb.adbdevice.AdbDevice.get_state">get_state() (simpleadb.adbdevice.AdbDevice method)</a>
+      <li><a href="adbdevice.html#simpleadb.adbdevice.AdbDevice.get_state">get_state() (simpleadb.adbdevice.AdbDevice method)</a>
 </li>
-      <li><a href="index.html#simpleadb.adbdevice.AdbDevice.getprop">getprop() (simpleadb.adbdevice.AdbDevice method)</a>
+      <li><a href="adbdevice.html#simpleadb.adbdevice.AdbDevice.getprop">getprop() (simpleadb.adbdevice.AdbDevice method)</a>
 </li>
   </ul></td>
 </tr></table>
@@ -149,13 +170,21 @@
 <h2 id="I">I</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="index.html#simpleadb.adbdevice.AdbDevice.install">install() (simpleadb.adbdevice.AdbDevice method)</a>
+      <li><a href="adbdevice.html#simpleadb.adbdevice.AdbDevice.install">install() (simpleadb.adbdevice.AdbDevice method)</a>
 </li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="index.html#simpleadb.adbdevice.AdbDevice.is_available">is_available() (simpleadb.adbdevice.AdbDevice method)</a>
+      <li><a href="adbdevice.html#simpleadb.adbdevice.AdbDevice.is_available">is_available() (simpleadb.adbdevice.AdbDevice method)</a>
 </li>
-      <li><a href="index.html#simpleadb.adbdevice.AdbDevice.is_root">is_root() (simpleadb.adbdevice.AdbDevice method)</a>
+      <li><a href="adbdevice.html#simpleadb.adbdevice.AdbDevice.is_root">is_root() (simpleadb.adbdevice.AdbDevice method)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="K">K</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="adbserver.html#simpleadb.adbserver.AdbServer.kill">kill() (simpleadb.adbserver.AdbServer method)</a>
 </li>
   </ul></td>
 </tr></table>
@@ -167,7 +196,9 @@
     module
 
       <ul>
-        <li><a href="index.html#module-simpleadb.adbdevice">simpleadb.adbdevice</a>
+        <li><a href="adbdevice.html#module-simpleadb.adbdevice">simpleadb.adbdevice</a>
+</li>
+        <li><a href="adbserver.html#module-simpleadb.adbserver">simpleadb.adbserver</a>
 </li>
       </ul></li>
   </ul></td>
@@ -176,13 +207,13 @@
 <h2 id="P">P</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="index.html#simpleadb.adbdevice.AdbDevice.pm_grant">pm_grant() (simpleadb.adbdevice.AdbDevice method)</a>
+      <li><a href="adbdevice.html#simpleadb.adbdevice.AdbDevice.pm_grant">pm_grant() (simpleadb.adbdevice.AdbDevice method)</a>
 </li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="index.html#simpleadb.adbdevice.AdbDevice.pull">pull() (simpleadb.adbdevice.AdbDevice method)</a>
+      <li><a href="adbdevice.html#simpleadb.adbdevice.AdbDevice.pull">pull() (simpleadb.adbdevice.AdbDevice method)</a>
 </li>
-      <li><a href="index.html#simpleadb.adbdevice.AdbDevice.push">push() (simpleadb.adbdevice.AdbDevice method)</a>
+      <li><a href="adbdevice.html#simpleadb.adbdevice.AdbDevice.push">push() (simpleadb.adbdevice.AdbDevice method)</a>
 </li>
   </ul></td>
 </tr></table>
@@ -190,15 +221,15 @@
 <h2 id="R">R</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="index.html#simpleadb.adbdevice.AdbDevice.reboot">reboot() (simpleadb.adbdevice.AdbDevice method)</a>
+      <li><a href="adbdevice.html#simpleadb.adbdevice.AdbDevice.reboot">reboot() (simpleadb.adbdevice.AdbDevice method)</a>
 </li>
-      <li><a href="index.html#simpleadb.adbdevice.AdbDevice.remount">remount() (simpleadb.adbdevice.AdbDevice method)</a>
+      <li><a href="adbdevice.html#simpleadb.adbdevice.AdbDevice.remount">remount() (simpleadb.adbdevice.AdbDevice method)</a>
 </li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="index.html#simpleadb.adbdevice.AdbDevice.rm">rm() (simpleadb.adbdevice.AdbDevice method)</a>
+      <li><a href="adbdevice.html#simpleadb.adbdevice.AdbDevice.rm">rm() (simpleadb.adbdevice.AdbDevice method)</a>
 </li>
-      <li><a href="index.html#simpleadb.adbdevice.AdbDevice.root">root() (simpleadb.adbdevice.AdbDevice method)</a>
+      <li><a href="adbdevice.html#simpleadb.adbdevice.AdbDevice.root">root() (simpleadb.adbdevice.AdbDevice method)</a>
 </li>
   </ul></td>
 </tr></table>
@@ -206,22 +237,31 @@
 <h2 id="S">S</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="index.html#simpleadb.adbdevice.AdbDevice.screencap">screencap() (simpleadb.adbdevice.AdbDevice method)</a>
+      <li><a href="adbdevice.html#simpleadb.adbdevice.AdbDevice.screencap">screencap() (simpleadb.adbdevice.AdbDevice method)</a>
 </li>
-      <li><a href="index.html#simpleadb.adbdevice.AdbDevice.setprop">setprop() (simpleadb.adbdevice.AdbDevice method)</a>
+      <li><a href="adbdevice.html#simpleadb.adbdevice.AdbDevice.setprop">setprop() (simpleadb.adbdevice.AdbDevice method)</a>
 </li>
-      <li><a href="index.html#simpleadb.adbdevice.AdbDevice.shell">shell() (simpleadb.adbdevice.AdbDevice method)</a>
+      <li><a href="adbdevice.html#simpleadb.adbdevice.AdbDevice.shell">shell() (simpleadb.adbdevice.AdbDevice method)</a>
 </li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li>
     simpleadb.adbdevice
 
       <ul>
-        <li><a href="index.html#module-simpleadb.adbdevice">module</a>
+        <li><a href="adbdevice.html#module-simpleadb.adbdevice">module</a>
 </li>
       </ul></li>
-      <li><a href="index.html#simpleadb.adbdevice.AdbDevice.swipe">swipe() (simpleadb.adbdevice.AdbDevice method)</a>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li>
+    simpleadb.adbserver
+
+      <ul>
+        <li><a href="adbserver.html#module-simpleadb.adbserver">module</a>
+</li>
+      </ul></li>
+      <li><a href="adbserver.html#simpleadb.adbserver.AdbServer.start">start() (simpleadb.adbserver.AdbServer method)</a>
+</li>
+      <li><a href="adbdevice.html#simpleadb.adbdevice.AdbDevice.swipe">swipe() (simpleadb.adbdevice.AdbDevice method)</a>
 </li>
   </ul></td>
 </tr></table>
@@ -229,11 +269,11 @@
 <h2 id="T">T</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="index.html#simpleadb.adbdevice.AdbDevice.tap">tap() (simpleadb.adbdevice.AdbDevice method)</a>
+      <li><a href="adbdevice.html#simpleadb.adbdevice.AdbDevice.tap">tap() (simpleadb.adbdevice.AdbDevice method)</a>
 </li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="index.html#simpleadb.adbdevice.AdbDevice.tcpip">tcpip() (simpleadb.adbdevice.AdbDevice method)</a>
+      <li><a href="adbdevice.html#simpleadb.adbdevice.AdbDevice.tcpip">tcpip() (simpleadb.adbdevice.AdbDevice method)</a>
 </li>
   </ul></td>
 </tr></table>
@@ -241,13 +281,13 @@
 <h2 id="U">U</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="index.html#simpleadb.adbdevice.AdbDevice.uninstall">uninstall() (simpleadb.adbdevice.AdbDevice method)</a>
+      <li><a href="adbdevice.html#simpleadb.adbdevice.AdbDevice.uninstall">uninstall() (simpleadb.adbdevice.AdbDevice method)</a>
 </li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="index.html#simpleadb.adbdevice.AdbDevice.unroot">unroot() (simpleadb.adbdevice.AdbDevice method)</a>
+      <li><a href="adbdevice.html#simpleadb.adbdevice.AdbDevice.unroot">unroot() (simpleadb.adbdevice.AdbDevice method)</a>
 </li>
-      <li><a href="index.html#simpleadb.adbdevice.AdbDevice.usb">usb() (simpleadb.adbdevice.AdbDevice method)</a>
+      <li><a href="adbdevice.html#simpleadb.adbdevice.AdbDevice.usb">usb() (simpleadb.adbdevice.AdbDevice method)</a>
 </li>
   </ul></td>
 </tr></table>
@@ -255,7 +295,7 @@
 <h2 id="W">W</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="index.html#simpleadb.adbdevice.AdbDevice.wait_for_device">wait_for_device() (simpleadb.adbdevice.AdbDevice method)</a>
+      <li><a href="adbdevice.html#simpleadb.adbdevice.AdbDevice.wait_for_device">wait_for_device() (simpleadb.adbdevice.AdbDevice method)</a>
 </li>
   </ul></td>
 </tr></table>
