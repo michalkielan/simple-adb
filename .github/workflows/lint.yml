@@ -1,12 +1,6 @@
 name: Lint
 
-on:
-  push:
-    branches:
-      - master
-  pull_request:
-    branches:
-      - master
+on: [push, pull_request]
 
 jobs:
   run-linters:
@@ -23,11 +17,11 @@ jobs:
           python-version: 3.8
 
       - name: Install Python dependencies
-        run: pip install autopep8 flake8
+        run: pip install black flake8
 
       - name: Run linters
         uses: wearerequired/lint-action@v2
         with:
           auto_fix: true
-          autopep8: true
+          black: true
           flake8: true

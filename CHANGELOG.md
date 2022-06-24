@@ -3,6 +3,12 @@
 
 ### Changed
 - fixed wrong type hints
+- formatter: autopep8 -> black
+- adb test VM from macos 11 to 12
+- tests python version 3.6->3.8
+
+### Added
+- pylint and flake8 configuration files
 
 [0.4.0](https://github.com/michalkielan/simple-adb/compare/0.3.4...0.4.0) - 2022-06-15
 --------------------------------------------------------------------------------------
