@@ -1,0 +1,6 @@
+[flake8]
+max-line-length = 88
+extend-ignore = E203
+per-file-ignores =
+    simpleadb/utils.py:E501
+    tests/utils.py:E501

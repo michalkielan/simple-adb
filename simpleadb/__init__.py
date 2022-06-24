@@ -13,9 +13,4 @@ from .adbprocess import AdbCommandTimeoutExpired
 from .adbdevice import AdbDevice
 from .adbserver import AdbServer
 
-__all__ = [
-    'AdbCommandError',
-    'AdbCommandTimeoutExpired',
-    'AdbDevice',
-    'AdbServer'
-]
+__all__ = ["AdbCommandError", "AdbCommandTimeoutExpired", "AdbDevice", "AdbServer"]

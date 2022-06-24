@@ -16,7 +16,7 @@ from .adbprocess import AdbCommandError, AdbProcess
 
 
 class AdbServer:
-    """ AdbServer in a class representation for adb server operations.
+    """AdbServer in a class representation for adb server operations.
 
     :param Optional[int] port: Port, default is 5555.
     :keyword str path: Adb binary path.
@@ -29,13 +29,13 @@ class AdbServer:
     """
 
     def __init__(self, port: Optional[int] = None, **kwargs):
-        options_path = kwargs.get('path')
+        options_path = kwargs.get("path")
         adb_path = options_path if options_path else adbcmds.ADB
         self.__adb_process = AdbProcess(None, adb_path)
         self.start(port)
 
     def devices(self) -> List[str]:
-        """ Get list connected adb devices.
+        """Get list connected adb devices.
 
         :raise: AdbCommandError: When failed.
         :return: List of connected devices serial numbers.
@@ -65,7 +65,7 @@ class AdbServer:
         return devices
 
     def connect(self, address, port: Optional[Union[int, str]] = 5555) -> None:
-        """ Connect a device via TCP/IP.
+        """Connect a device via TCP/IP.
 
         :param str address: Host address.
         :param port (Optional[Union[int,str]]): Port, default 5555.
@@ -83,9 +83,8 @@ class AdbServer:
         cmd.append(str(port))
         self.__adb_process.check_output(cmd)
 
-    def disconnect(
-            self, address, port: Optional[Union[int, str]] = None) -> None:
-        """ Disconnect from given TCP/IP device.
+    def disconnect(self, address, port: Optional[Union[int, str]] = None) -> None:
+        """Disconnect from given TCP/IP device.
 
         :param address str: Host address.
         :param (Optional[Union[int, str] port]): Port.
@@ -100,11 +99,11 @@ class AdbServer:
         """
         cmd = []
         cmd.append(adbcmds.DISCONNECT)
-        cmd.append(address + f':{port}' if port is not None else '')
+        cmd.append(address + f":{port}" if port is not None else "")
         self.__adb_process.check_output(cmd)
 
     def start(self, port: Optional[Union[int, str]] = None) -> None:
-        """ Start adb and ensure that there is running.
+        """Start adb and ensure that there is running.
 
         :param address str: Host address.
         :param (Optional[Union[int, str] port]): Port, default adb server port.
@@ -119,7 +118,7 @@ class AdbServer:
         """
         cmd = []
         if port is not None:
-            cmd.append(' '.join(['-P', str(port)]))
+            cmd.append(" ".join(["-P", str(port)]))
         cmd.append(adbcmds.START_SERVER)
         try:
             self.__adb_process.check_output(cmd)
@@ -127,7 +126,7 @@ class AdbServer:
             raise AdbCommandError(None, None, err) from err
 
     def kill(self) -> None:
-        """ Kill the server if it is running.
+        """Kill the server if it is running.
 
         :raise: AdbCommandError: When failed.
 
