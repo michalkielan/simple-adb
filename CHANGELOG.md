@@ -6,6 +6,7 @@
 - formatter: autopep8 -> black
 - adb test VM from macos 11 to 12
 - tests python version 3.6->3.8
+- switch from python 3.8 to 3.10
 
 ### Added
 - pylint and flake8 configuration files
