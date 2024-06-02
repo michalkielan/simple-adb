@@ -15,7 +15,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        python-version: ["3.6", "3.11"]
+        python-version: ["3.8", "3.12"]
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -28,7 +28,7 @@ jobs:
       - name: Install python dependencies
         run: |
           python -m pip install --upgrade pip
-          pip install flake8 pylint pytest sphinx sphinx-rtd-theme wget interruptingcow
+          pip install flake8 pylint pytest setuptools sphinx sphinx-rtd-theme wget interruptingcow
           if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
 
       - name: Pylint
