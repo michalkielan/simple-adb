@@ -321,7 +321,7 @@ class AdbDevice:
         cmd.append(package)
         self.__adb_process.check_output(cmd)
 
-    def shell(self, args: str) -> None:
+    def shell(self, args: str) -> str:
         """Run remote shell command interface.
 
         :param str args: Adb shell arguments.
@@ -338,7 +338,7 @@ class AdbDevice:
         cmd = []
         cmd.append(adbcmds.SHELL)
         cmd.append(args)
-        self.__adb_process.check_output(cmd)
+        return self.__adb_process.check_output(cmd)
 
     def rm(self, remote_path: str) -> None:
         """Remove file in adb device.
