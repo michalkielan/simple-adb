@@ -70,4 +70,6 @@ jobs:
             coverage run --source=simpleadb -m pytest -v tests
 
       - name: Upload Coverage to Codecov
-        uses: codecov/codecov-action@v2
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+        uses: codecov/codecov-action@v5
