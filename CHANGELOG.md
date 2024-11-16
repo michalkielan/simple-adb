@@ -8,6 +8,7 @@
 - tests python version 3.6->3.8
 - switch from python 3.8 to 3.11
 - switch from python 3.11 to 3.12
+- update codecov to v5
 
 ### Added
 - pylint and flake8 configuration files
