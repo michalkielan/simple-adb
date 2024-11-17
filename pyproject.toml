@@ -12,7 +12,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "simpleadb"
-version = "0.4.0"
+version = "0.4.1"
 description = "Python wrapper for adb protocol."
 readme = "README.rst"
 authors = [{ name = "Michal Kielan", email = "michalkielan@protonmail.com" }]

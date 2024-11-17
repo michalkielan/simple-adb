@@ -1,5 +1,8 @@
-[Unreleased](https://github.com/michalkielan/simple-adb/compare/0.4.0...HEAD)
+[Unreleased](https://github.com/michalkielan/simple-adb/compare/0.4.1...HEAD)
 -----------------------------------------------------------------------------
+
+[0.4.1](https://github.com/michalkielan/simple-adb/compare/0.4.0...0.4.1) - 2024-11-17
+--------------------------------------------------------------------------------------
 
 ### Changed
 - fixed wrong type hints
