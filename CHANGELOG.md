@@ -10,6 +10,7 @@
 - switch from python 3.11 to 3.12
 - update codecov to v5
 - migrate from setup.py to pyproject.toml
+- update to checkout/v4
 
 ### Added
 - pylint and flake8 configuration files
