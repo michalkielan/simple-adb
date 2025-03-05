@@ -1,5 +1,30 @@
-[Unreleased](https://github.com/michalkielan/simple-adb/compare/0.3.4...HEAD)
+[Unreleased](https://github.com/michalkielan/simple-adb/compare/0.4.1...HEAD)
 -----------------------------------------------------------------------------
+
+### Changed
+- switch from python 3.12 to 3.13
+- update actions/setup-python@v5
+- update to macos-13
+
+[0.4.1](https://github.com/michalkielan/simple-adb/compare/0.4.0...0.4.1) - 2024-11-17
+--------------------------------------------------------------------------------------
+
+### Changed
+- fixed wrong type hints
+- formatter: autopep8 -> black
+- adb test VM from macos 11 to 12
+- tests python version 3.6->3.8
+- switch from python 3.8 to 3.11
+- switch from python 3.11 to 3.12
+- update codecov to v5
+- migrate from setup.py to pyproject.toml
+- update to checkout/v4
+
+### Added
+- pylint and flake8 configuration files
+
+[0.4.0](https://github.com/michalkielan/simple-adb/compare/0.3.4...0.4.0) - 2022-06-15
+--------------------------------------------------------------------------------------
 
 ### Added
 - timeout expired exception

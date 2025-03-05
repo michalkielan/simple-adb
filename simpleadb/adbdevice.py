@@ -1,3 +1,4 @@
+# pylint: disable=too-many-public-methods
 #
 # file adbdevice.py
 #
@@ -6,9 +7,8 @@
 # SPDX-License-Identifier: GPL-3.0-only
 #
 
-# pylint: disable=too-many-public-methods
 
-""" This module includes AdbDevice class used on device with given serial. """
+"""This module includes AdbDevice class used on device with given serial."""
 
 import time
 from typing import Optional, Union
@@ -19,7 +19,7 @@ from .utils import is_valid_ip
 
 
 class AdbDevice:
-    """ AdbDevice is a class representation of adb commands used on device with
+    """AdbDevice is a class representation of adb commands used on device with
     given serial.
 
     :param str device_id: Device ID or Host address.
@@ -35,24 +35,15 @@ class AdbDevice:
     """
 
     def __init__(self, device_id: str, port: Optional[int] = None, **kwargs):
-        options_path = kwargs.get('path')
+        options_path = kwargs.get("path")
         self.__adb_path = options_path if options_path else adbcmds.ADB
-        if (port is not None or device_id ==
-                'localhost' or is_valid_ip(device_id)):
-            self.__id = (
-                device_id + ":" + str(port) if port is not None else device_id)
-            cmd = ' '.join([
-                self.__adb_path,
-                adbcmds.CONNECT,
-                self.__id
-            ])
+        if port is not None or device_id == "localhost" or is_valid_ip(device_id):
+            self.__id = device_id + ":" + str(port) if port is not None else device_id
+            cmd = " ".join([self.__adb_path, adbcmds.CONNECT, self.__id])
             adbprocess.subprocess.check_call(cmd, shell=True, **kwargs)
         else:
             self.__id = device_id
-        self.__adb_process = adbprocess.AdbProcess(
-            self.__id,
-            self.__adb_path
-        )
+        self.__adb_process = adbprocess.AdbProcess(self.__id, self.__adb_path)
 
     def __str__(self):
         return self.get_id()
@@ -82,7 +73,7 @@ class AdbDevice:
         return self.__id
 
     def get_state(self) -> str:
-        """ Get device state. Print offline, bootloader or disconnect.
+        """Get device state. Print offline, bootloader or disconnect.
 
         :raise: AdbCommandError: When failed.
         :return: State offline, bootloader or device.
@@ -100,7 +91,7 @@ class AdbDevice:
         return self.__adb_process.check_output(cmd)
 
     def get_app_pid(self, package_name: str) -> int:
-        """ Return the PID of the application.
+        """Return the PID of the application.
 
         :param str package_name: Package name.
         :raise: AdbCommandError: When failed.
@@ -116,14 +107,14 @@ class AdbDevice:
         """
         cmd = []
         cmd.append(adbcmds.SHELL)
-        cmd.append('pidof')
+        cmd.append("pidof")
         cmd.append(package_name)
         return int(self.__adb_process.check_output(cmd))
 
-    def get_ip(self, interface: Optional[str] = 'wlan0') -> str:
-        """ Return the device IP address.
+    def get_ip(self, iface: Optional[str] = "wlan0") -> str:
+        """Return the device IP address.
 
-        :param Optional[str] interface: Network interface, default wlan0.
+        :param Optional[str] iface: Network interface, default wlan0.
         :raise: AdbCommandError: When failed.
         :return: Device ip address.
         :rtype: str
@@ -136,7 +127,7 @@ class AdbDevice:
         '192.168.42.42'
         """
         if_config = (
-            f"ifconfig {interface} | grep 'inet addr' | cut -d: -f2 | awk '{{print $1}}'"  # noqa: E501
+            f"ifconfig {iface} | grep 'inet addr' | cut -d: -f2 | awk '{{print $1}}'"
         )
         cmd = []
         cmd.append(adbcmds.SHELL)
@@ -147,7 +138,7 @@ class AdbDevice:
         return output
 
     def get_serialno(self) -> str:
-        """ Get target device serial number.
+        """Get target device serial number.
 
         :raise: AdbCommandError: When failed.
         :return: Serial number.
@@ -164,7 +155,7 @@ class AdbDevice:
         return self.__adb_process.check_output(cmd)
 
     def is_available(self) -> bool:
-        """ Check if device is available.
+        """Check if device is available.
 
         :return: True if available, otherwise False.
         :rtype: bool
@@ -183,7 +174,7 @@ class AdbDevice:
             return False
 
     def get_devpath(self) -> str:
-        """ Get device path.
+        """Get device path.
 
         :raise: AdbCommandError: When failed.
         :return: Device path.
@@ -200,8 +191,8 @@ class AdbDevice:
         cmd.append(adbcmds.DEVPATH)
         return self.__adb_process.check_output(cmd)
 
-    def remount(self) -> int:
-        """ Remout partition read-write.
+    def remount(self) -> None:
+        """Remout partition read-write.
 
         :raise: AdbCommandError: When failed.
 
@@ -215,11 +206,11 @@ class AdbDevice:
         cmd = []
         cmd.append(adbcmds.REMOUNT)
         output = self.__adb_process.check_output(cmd)
-        if 'remount failed' in output.lower():
+        if "remount failed" in output.lower():
             raise AdbCommandError(self.get_id(), output, None)
 
-    def reboot(self) -> int:
-        """ Reboot the device. Defaults to booting system image.
+    def reboot(self) -> None:
+        """Reboot the device. Defaults to booting system image.
 
         :raise: AdbCommandError: When failed.
 
@@ -233,10 +224,8 @@ class AdbDevice:
         cmd.append(adbcmds.REBOOT)
         self.__adb_process.check_output(cmd)
 
-    def root(
-            self,
-            timeout_sec: Optional[int] = None) -> None:
-        """ Restart adb with root permission if device has one. Wait for device
+    def root(self, timeout_sec: Optional[int] = None) -> None:
+        """Restart adb with root permission if device has one. Wait for device
         to be in 'device' state.
 
         :param Optional[int] timeout_sec: Timeout in seconds.
@@ -252,14 +241,12 @@ class AdbDevice:
         cmd = []
         cmd.append(adbcmds.ROOT)
         output = self.__adb_process.check_output(cmd)
-        if ('cannot' or 'unable') in output.lower():
+        if ("cannot" or "unable") in output.lower():
             raise AdbCommandError(self.get_id(), output)
         self.wait_for_device(timeout_sec)
 
-    def unroot(
-            self,
-            timeout_sec: Optional[int] = None) -> None:
-        """ Restart adb without root permission.
+    def unroot(self, timeout_sec: Optional[int] = None) -> None:
+        """Restart adb without root permission.
 
         :param Optional[int] timeout_sec: Timeout in seconds.
         :raise: AdbCommandError: When failed.
@@ -276,7 +263,7 @@ class AdbDevice:
         self.wait_for_device(timeout_sec)
 
     def is_root(self) -> bool:
-        """ Check if device has root permissions (experimental). Not guarantee
+        """Check if device has root permissions (experimental). Not guarantee
         to work 'su' must be installed on device.
 
         :return: True if device is rooted, False otherwise.
@@ -290,7 +277,7 @@ class AdbDevice:
         >>> device.is_root()
         True
         """
-        try_su = 'su 0 id -u 2>/dev/null'
+        try_su = "su 0 id -u 2>/dev/null"
         cmd = []
         cmd.append(adbcmds.SHELL)
         cmd.append(try_su)
@@ -301,7 +288,7 @@ class AdbDevice:
             return False
 
     def install(self, apk: str) -> None:
-        """ Push package to the device and install.
+        """Push package to the device and install.
 
         :param str apk: Package path.
         :raise: AdbCommandError: When failed.
@@ -318,7 +305,7 @@ class AdbDevice:
         self.__adb_process.check_output(cmd)
 
     def uninstall(self, package: str) -> None:
-        """ Remove app package from the device.
+        """Remove app package from the device.
 
         :param str apk: Package name.
         :raise: AdbCommandError: When failed.
@@ -334,8 +321,8 @@ class AdbDevice:
         cmd.append(package)
         self.__adb_process.check_output(cmd)
 
-    def shell(self, args: str) -> None:
-        """ Run remote shell command interface.
+    def shell(self, args: str) -> str:
+        """Run remote shell command interface.
 
         :param str args: Adb shell arguments.
         :raise: AdbCommandError: When failed.
@@ -351,10 +338,10 @@ class AdbDevice:
         cmd = []
         cmd.append(adbcmds.SHELL)
         cmd.append(args)
-        self.__adb_process.check_output(cmd)
+        return self.__adb_process.check_output(cmd)
 
-    def rm(self, remote_path: str) -> None:  # pylint: disable=invalid-name
-        """ Remove file in adb device.
+    def rm(self, remote_path: str) -> None:
+        """Remove file in adb device.
 
         :param str remote_path: Remote path.
         :raise: AdbCommandError: When failed.
@@ -372,7 +359,7 @@ class AdbDevice:
         self.__adb_process.check_output(cmd)
 
     def tap(self, pos_x: int, pos_y: int) -> None:
-        """ Tap screen.
+        """Tap screen.
 
         :param int pos_x: x position.
         :param int pos_y: y position.
@@ -391,9 +378,8 @@ class AdbDevice:
         cmd.append(str(pos_y))
         self.__adb_process.check_output(cmd)
 
-    def swipe(self, pos_x1: int, pos_y1: int,
-              pos_x2: int, pos_y2: int) -> None:
-        """ Swipe screen.
+    def swipe(self, pos_x1: int, pos_y1: int, pos_x2: int, pos_y2: int) -> None:
+        """Swipe screen.
 
         :param: int pos_x1: Start x position.
         :param: int pos_y1: Start y position.
@@ -417,7 +403,7 @@ class AdbDevice:
         self.__adb_process.check_output(cmd)
 
     def screencap(self, **kwargs) -> None:
-        """ Capture screenshot.
+        """Capture screenshot.
 
         :keyword str remote: Remote path.
         :keyword str local: Local path.
@@ -429,13 +415,13 @@ class AdbDevice:
         >>> device = simpleadb.AdbDevice('emulator-5554')
         >>> device.screencap()
         """
-        remote_default = '/sdcard/screencap.png'
-        local_default = 'screencap'
+        remote_default = "/sdcard/screencap.png"
+        local_default = "screencap"
         local_default += time.strftime("%Y%m%d-%H%M%S")
-        local_default += '.png'
+        local_default += ".png"
 
-        remote_arg = kwargs.get('remote')
-        local_arg = kwargs.get('local')
+        remote_arg = kwargs.get("remote")
+        local_arg = kwargs.get("local")
 
         remote = remote_arg if remote_arg else remote_default
         local = local_arg if local_arg else local_default
@@ -449,7 +435,7 @@ class AdbDevice:
         self.rm(remote)
 
     def broadcast(self, intent: str) -> None:
-        """ Send broadcast.
+        """Send broadcast.
 
         :param str intent: Intent argument.
         :raise: AdbCommandError: When failed.
@@ -463,12 +449,12 @@ class AdbDevice:
         """
         cmd = []
         cmd.append(adbcmds.SHELL)
-        cmd.append('am broadcast -a')
+        cmd.append("am broadcast -a")
         cmd.append(intent)
         self.__adb_process.check_output(cmd)
 
     def pm_grant(self, package: str, permission: str) -> str:
-        """ Grant permission.
+        """Grant permission.
 
         :param str package: Package name.
         :param str permission: Android permission.
@@ -509,7 +495,7 @@ class AdbDevice:
         self.__adb_process.check_output(cmd)
 
     def getprop(self, prop: str) -> str:
-        """ Get android system property value.
+        """Get android system property value.
 
         :param str prop: Property name.
         :raise: AdbCommandError: When failed.
@@ -531,7 +517,7 @@ class AdbDevice:
         return self.__adb_process.check_output(cmd)
 
     def enable_verity(self, enabled: bool) -> None:
-        """ Enable/Disable verity.
+        """Enable/Disable verity.
 
         :param bool enabled: If true enable verity, otherwise disable
         :raise: AdbCommandError: When failed.
@@ -545,14 +531,11 @@ class AdbDevice:
         >>> device.remount()
         """
         cmd = []
-        cmd.append((
-            adbcmds.ENABLE_VERITY if enabled
-            else adbcmds.DISABLE_VERITY
-        ))
+        cmd.append((adbcmds.ENABLE_VERITY if enabled else adbcmds.DISABLE_VERITY))
         self.__adb_process.check_output(cmd)
 
-    def push(self, source: str, dest: str) -> int:
-        """ Copy local files/dirs to device.
+    def push(self, source: str, dest: str) -> None:
+        """Copy local files/dirs to device.
 
         :param str source: Local path.
         :param str dest: Remote path.
@@ -570,8 +553,8 @@ class AdbDevice:
         cmd.append(dest)
         self.__adb_process.check_output(cmd)
 
-    def pull(self, source: str, dest: Optional[str] = '.') -> None:
-        """ Pull files or directories from remote device.
+    def pull(self, source: str, dest: Optional[str] = ".") -> None:
+        """Pull files or directories from remote device.
 
         :param str source: Remote path.
         :param Optional[str] dest: Local path, default is ``'.'``.
@@ -591,14 +574,12 @@ class AdbDevice:
         cmd.append(dest)
         return self.__adb_process.check_output(cmd)
 
-    def wait_for_device(self, timeout_sec: Optional[int] = None) -> int:
-        """ Wait for device available.
+    def wait_for_device(self, timeout_sec: Optional[int] = None) -> None:
+        """Wait for device available.
 
         :keyword int timeout: Timeout in sec, default 'inf'
         :raise: AdbCommandError: When failed.
         :raise TimeoutExpired: When timeout.
-        :return: 0 if success, error code otherwise.
-        :rtype: int
 
         :example:
 
@@ -609,10 +590,10 @@ class AdbDevice:
         """
         cmd = []
         cmd.append(adbcmds.WAIT_FOR_DEVICE)
-        return self.__adb_process.check_output(cmd, timeout=timeout_sec)
+        self.__adb_process.check_output(cmd, timeout=timeout_sec)
 
     def dump_logcat(self, *buffers: str) -> str:
-        """ Dump logcat.
+        """Dump logcat.
 
         :param str \\*buffers: Additional logcat buffers to dump.
         :raise: AdbCommandError: When failed.
@@ -631,13 +612,13 @@ class AdbDevice:
         cmd.append(adbcmds.LOGCAT)
         if buffers:
             for buf in buffers:
-                cmd.append('-b')
+                cmd.append("-b")
                 cmd.append(buf)
-        cmd.append('-d')
+        cmd.append("-d")
         return self.__adb_process.check_output(cmd)
 
     def clear_logcat(self, *buffers: str) -> None:
-        """ Clear logcat.
+        """Clear logcat.
 
         :param str \\*buffers: Additional logcat buffers to clear.
         :raise: AdbCommandError: When failed.
@@ -655,13 +636,13 @@ class AdbDevice:
 
         if buffers:
             for buf in buffers:
-                cmd.append('-b')
+                cmd.append("-b")
                 cmd.append(buf)
-        cmd.append('-c')
+        cmd.append("-c")
         self.__adb_process.check_output(cmd)
 
     def usb(self) -> None:
-        """ Restart adb server listening on USB.
+        """Restart adb server listening on USB.
 
         :raise: AdbCommandError: When failed.
 
@@ -676,7 +657,7 @@ class AdbDevice:
         self.__adb_process.check_output(cmd)
 
     def tcpip(self, port: Union[int, str]) -> None:
-        """ Restart adb server listening on TCP on PORT.
+        """Restart adb server listening on TCP on PORT.
 
         :param Union[[int, str] port: Port.
         :raise: AdbCommandError: When failed.
