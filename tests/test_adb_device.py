@@ -7,7 +7,7 @@
 #
 
 # pylint: disable=no-member
-""" Unit tests for adb commands. """
+"""Unit tests for adb commands."""
 
 import unittest
 import os

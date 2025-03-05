@@ -6,7 +6,7 @@
 # SPDX-License-Identifier: GPL-3.0-only
 #
 
-""" This module includes AdbServer class used for adb server operations. """
+"""This module includes AdbServer class used for adb server operations."""
 
 from typing import List, Optional, Union
 from subprocess import CalledProcessError

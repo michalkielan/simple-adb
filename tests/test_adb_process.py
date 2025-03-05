@@ -7,7 +7,7 @@
 #
 
 # pylint: disable=no-member
-""" Unit tests for adb subprocess. """
+"""Unit tests for adb subprocess."""
 
 import unittest
 import simpleadb

@@ -7,7 +7,7 @@
 # SPDX-License-Identifier: GPL-3.0-only
 #
 
-""" Utils for tests """
+"""Utils for tests"""
 import os
 import shutil
 import time

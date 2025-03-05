@@ -6,7 +6,7 @@
 # SPDX-License-Identifier: GPL-3.0-only
 #
 
-""" Interface for adb process"""
+"""Interface for adb process"""
 import subprocess
 from subprocess import CalledProcessError, TimeoutExpired
 from typing import List, Optional

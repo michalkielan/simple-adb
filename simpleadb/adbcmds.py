@@ -6,7 +6,7 @@
 # SPDX-License-Identifier: GPL-3.0-only
 #
 
-""" List of strings with adb commands """
+"""List of strings with adb commands"""
 
 ENV_SERVER_PORT = "ANDROID_ADB_SERVER_PORT"
 ENV_ADB_TRACE = "ADB_TRACE"

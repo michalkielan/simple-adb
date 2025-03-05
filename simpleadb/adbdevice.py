@@ -8,7 +8,7 @@
 #
 
 
-""" This module includes AdbDevice class used on device with given serial. """
+"""This module includes AdbDevice class used on device with given serial."""
 
 import time
 from typing import Optional, Union

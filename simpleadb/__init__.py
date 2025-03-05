@@ -6,7 +6,7 @@
 # SPDX-License-Identifier: GPL-3.0-only
 #
 
-""" simpleadb init module. """
+"""simpleadb init module."""
 
 from .adbprocess import AdbCommandError
 from .adbprocess import AdbCommandTimeoutExpired
