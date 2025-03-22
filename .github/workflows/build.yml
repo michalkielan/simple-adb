@@ -6,6 +6,7 @@
 # SPDX-License-Identifier: GPL-3.0-only
 #
 
+---
 name: build
 
 on: [push, pull_request]

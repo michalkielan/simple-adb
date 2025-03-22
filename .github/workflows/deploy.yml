@@ -5,13 +5,14 @@
 #
 # SPDX-License-Identifier: GPL-3.0-only
 #
+
 ---
 name: deploy
 
 on:
   push:
     tags:
-      - "v*.*.*" 
+      - "v*.*.*"
 
 jobs:
   publish:
