@@ -1,0 +1,40 @@
+#
+# file deploy.yml
+#
+# SPDX-FileCopyrightText: (c) 2025 Michal Kielan
+#
+# SPDX-License-Identifier: GPL-3.0-only
+#
+---
+name: deploy
+
+on:
+  push:
+    tags:
+      - "v*.*.*" 
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.13"
+
+      - name: Install python dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install build setuptools twine
+
+      - name: Build the package
+        run: |
+          python -m build
+
+      - name: Publish to PyPI
+        run: |
+          python -m twine upload --repository simpleadb dist/*
