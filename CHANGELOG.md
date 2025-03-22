@@ -6,6 +6,9 @@
 - update actions/setup-python@v5
 - update to macos-13
 
+### Added
+- dependency automation bot
+
 [0.4.1](https://github.com/michalkielan/simple-adb/compare/0.4.0...0.4.1) - 2024-11-17
 --------------------------------------------------------------------------------------
 
