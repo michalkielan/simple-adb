@@ -1,6 +1,9 @@
 [Unreleased](https://github.com/michalkielan/simple-adb/compare/0.4.1...HEAD)
 -----------------------------------------------------------------------------
 
+[0.5.0](https://github.com/michalkielan/simple-adb/compare/0.4.1...0.5.0) - 2025-03-23
+--------------------------------------------------------------------------------------
+
 ### Changed
 - switch from python 3.12 to 3.13
 - update actions/setup-python@v5
