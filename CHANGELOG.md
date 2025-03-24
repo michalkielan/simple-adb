@@ -1,5 +1,7 @@
 [Unreleased](https://github.com/michalkielan/simple-adb/compare/0.5.1...HEAD)
 -----------------------------------------------------------------------------
+### Changed
+- move env variables in deployment script
 
 [0.5.1](https://github.com/michalkielan/simple-adb/compare/0.5.0...0.5.1) - 2025-03-24
 --------------------------------------------------------------------------------------
