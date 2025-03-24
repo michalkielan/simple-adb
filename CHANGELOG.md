@@ -1,11 +1,14 @@
 [Unreleased](https://github.com/michalkielan/simple-adb/compare/0.5.3...HEAD)
 -----------------------------------------------------------------------------
 
+### Fixed
+- ci unit tests regression
+
 [0.5.3](https://github.com/michalkielan/simple-adb/compare/0.5.2...0.5.3) - 2025-03-24
 --------------------------------------------------------------------------------------
 
 ### Fixed
-- Automatic pkg deployment
+- automatic pkg deployment
 
 ### Changed
 - remove repository section from deployment script
