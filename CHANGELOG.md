@@ -1,6 +1,9 @@
 [Unreleased](https://github.com/michalkielan/simple-adb/compare/0.5.3...HEAD)
 -----------------------------------------------------------------------------
+
 [0.5.3](https://github.com/michalkielan/simple-adb/compare/0.5.2...0.5.3) - 2025-03-24
+--------------------------------------------------------------------------------------
+
 ### Fixed
 - Automatic pkg deployment
 
@@ -8,11 +11,14 @@
 - remove repository section from deployment script
 
 [0.5.2](https://github.com/michalkielan/simple-adb/compare/0.5.1...0.5.2) - 2025-03-24
+--------------------------------------------------------------------------------------
+
 ### Changed
 - move env variables in deployment script
 
 [0.5.1](https://github.com/michalkielan/simple-adb/compare/0.5.0...0.5.1) - 2025-03-24
 --------------------------------------------------------------------------------------
+
 ### Changed
 - attempt to fix pypi api token
 
