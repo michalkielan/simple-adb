@@ -38,4 +38,6 @@ jobs:
 
       - name: Publish to PyPI
         run: |
+          TWINE_USERNAME: __token__
+          TWINE_PASSWORD: ${{ secrets.PYPI_API_TOKEN }}
           python -m twine upload --repository simpleadb dist/*

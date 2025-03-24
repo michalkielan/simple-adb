@@ -1,5 +1,7 @@
 [Unreleased](https://github.com/michalkielan/simple-adb/compare/0.4.1...HEAD)
 -----------------------------------------------------------------------------
+### Changed
+- attempt to fix pypi api token
 
 [0.5.0](https://github.com/michalkielan/simple-adb/compare/0.4.1...0.5.0) - 2025-03-23
 --------------------------------------------------------------------------------------
