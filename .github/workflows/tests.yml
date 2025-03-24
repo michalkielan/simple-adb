@@ -69,9 +69,24 @@ jobs:
           emulator-options: |
               -no-snapshot-save -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none
           disable-animations: true
-          script: |
-            adb wait-for-device shell 'while [[ -z $(getprop sys.boot_completed) ]]; do sleep 1; done; input keyevent 82'
-            coverage run --source=simpleadb -m pytest -v tests
+          script: >
+            adb wait-for-device
+            &&
+            adb shell 'while [ -z "$(getprop sys.boot_completed)" ]; do sleep 1; done'
+            &&
+            adb shell input keyevent 82
+            &&
+            coverage run --source=simpleadb -m pytest -v tests;
+            TEST_EXIT_CODE=$?;
+            echo "=== Starting emulator cleanup ===";
+            adb emu kill || echo "ADB kill failed - proceeding to force kill";
+            pkill -9 -f "emulator" || true;
+            pkill -9 -f "qemu" || true;
+            pkill -9 -f "adb" || true;
+            pkill -9 -f "crashpad_handler" || true;
+            echo "=== Remaining processes ===";
+            ps aux | grep -E 'qemu|emulator' || true;
+            exit $TEST_EXIT_CODE
 
       - name: Upload Coverage to Codecov
         uses: codecov/codecov-action@v5
