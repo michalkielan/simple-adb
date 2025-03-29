@@ -4,6 +4,7 @@
 ### Fixed
 - ci unit tests regression
 - use 3.9 as minimum python version in project config file
+- wrong return types in adbdevice
 
 [0.5.3](https://github.com/michalkielan/simple-adb/compare/0.5.2...0.5.3) - 2025-03-24
 --------------------------------------------------------------------------------------
