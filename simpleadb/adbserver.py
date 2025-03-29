@@ -53,7 +53,7 @@ class AdbServer:
         try:
             output = self.__adb_process.check_output(cmd)
         except CalledProcessError as err:
-            raise AdbCommandError(None, None, err) from err
+            raise AdbCommandError("", "", err) from err
         devices = []
         devices_list = output.splitlines()
         devices_list.pop(0)
@@ -123,7 +123,7 @@ class AdbServer:
         try:
             self.__adb_process.check_output(cmd)
         except CalledProcessError as err:
-            raise AdbCommandError(None, None, err) from err
+            raise AdbCommandError("", "", err) from err
 
     def kill(self) -> None:
         """Kill the server if it is running.
