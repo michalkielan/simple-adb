@@ -230,7 +230,7 @@ class AdbDevice:
 
         :param Optional[int] timeout_sec: Timeout in seconds.
         :raise: AdbCommandError: When failed.
-        :raise TimeoutExpired: When timeout.
+        :raise: TimeoutExpired: When timeout.
 
         :example:
 
@@ -579,7 +579,7 @@ class AdbDevice:
 
         :keyword int timeout: Timeout in sec, default 'inf'
         :raise: AdbCommandError: When failed.
-        :raise TimeoutExpired: When timeout.
+        :raise: TimeoutExpired: When timeout.
 
         :example:
 
