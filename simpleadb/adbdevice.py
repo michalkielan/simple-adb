@@ -453,13 +453,12 @@ class AdbDevice:
         cmd.append(intent)
         self.__adb_process.check_output(cmd)
 
-    def pm_grant(self, package: str, permission: str) -> str:
+    def pm_grant(self, package: str, permission: str) -> None:
         """Grant permission.
 
         :param str package: Package name.
         :param str permission: Android permission.
-        :return: 0 if success, error code otherwise.
-        :rtype: int
+        :raise: AdbCommandError: When failed.
 
         :example:
 
@@ -572,7 +571,7 @@ class AdbDevice:
         cmd.append(adbcmds.PULL)
         cmd.append(source)
         cmd.append(dest)
-        return self.__adb_process.check_output(cmd)
+        self.__adb_process.check_output(cmd)
 
     def wait_for_device(self, timeout_sec: Optional[int] = None) -> None:
         """Wait for device available.
