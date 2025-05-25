@@ -7,6 +7,7 @@
 #
 
 """Interface for adb process"""
+
 import subprocess
 from subprocess import CalledProcessError, TimeoutExpired
 from typing import List, Optional
@@ -98,13 +99,13 @@ class AdbProcess:
         if self.device_id is not None:
             cmd_args += [self.create_use_on_device_arg()]
         cmd_args += args
-        cmd = " ".join(cmd_args)
+        cmd = " ".join(arg for arg in cmd_args if arg is not None)
         kwargs.setdefault("shell", True)
         kwargs.setdefault("universal_newlines", True)
         kwargs.setdefault("stderr", subprocess.STDOUT)
         try:
             return subprocess.check_output(cmd, **kwargs).rstrip("\n\r")
         except CalledProcessError as err:
-            raise AdbCommandError(self.device_id, None, err) from err
+            raise AdbCommandError(self.device_id or "", "", err) from err
         except TimeoutExpired as err:
-            raise AdbCommandTimeoutExpired(self.device_id, err) from err
+            raise AdbCommandTimeoutExpired(self.device_id or "", err) from err
