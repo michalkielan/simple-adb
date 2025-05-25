@@ -1,5 +1,7 @@
 [Unreleased](https://github.com/michalkielan/simple-adb/compare/0.5.4...HEAD)
 -----------------------------------------------------------------------------
+### Fixed
+- wrong types errors
 
 [0.5.4](https://github.com/michalkielan/simple-adb/compare/0.5.3...0.5.4) - 2025-03-29
 --------------------------------------------------------------------------------------
