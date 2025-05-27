@@ -7,6 +7,7 @@
 #
 
 """Unit tests for adb commands"""
+
 import pytest
 import simpleadb
 
@@ -16,6 +17,7 @@ import simpleadb
     [
         ("127.0.0.1", True),
         ("192.168.0.1", True),
+        ("2001:0db8:85a3:0000:0000:8a2e:0370:7334", True),
         ("0.0.0.0", True),
         ("localhost", False),
         ("192.169.256", False),
