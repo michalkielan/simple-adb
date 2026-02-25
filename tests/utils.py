@@ -8,6 +8,7 @@
 #
 
 """Utils for tests"""
+
 import os
 import shutil
 import time
@@ -49,10 +50,8 @@ def is_github_workflows_env() -> bool:
 def android_wait_for_emulator() -> None:
     """Wait for android emulator."""
     if is_github_workflows_env():
-        os.system(
-            "adb wait-for-device shell 'while [[ -z $(getprop \
-            sys.boot_completed)]]; do sleep 1; done; input keyevent 82'"
-        )
+        os.system("adb wait-for-device shell 'while [[ -z $(getprop \
+            sys.boot_completed)]]; do sleep 1; done; input keyevent 82'")
 
 
 def enable_root_tests() -> bool:

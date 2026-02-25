@@ -7,6 +7,7 @@
 #
 
 """Unit tests for adb commands"""
+
 import pytest
 import simpleadb
 

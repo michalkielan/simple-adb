@@ -8,6 +8,7 @@
 
 # pylint: disable=no-member
 """Unit tests for adb commands"""
+
 import unittest
 import simpleadb
 from .utils import android_wait_for_emulator, get_test_device_id
